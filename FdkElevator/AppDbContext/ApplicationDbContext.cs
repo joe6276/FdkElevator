@@ -1,4 +1,5 @@
-﻿using FdkElevator.Models.Organization;
+﻿using FdkElevator.Models.Auth;
+using FdkElevator.Models.Organization;
 using FdkElevator.Models.Tenant;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,5 +15,7 @@ namespace FdkElevator.AppDbContext
         public DbSet<TenantSub> TenantSubs { get; set; }
 
         public DbSet<Organization> Organizations { get; set; }
+
+        public DbSet<User> Users { get; set; }
     }
 }
