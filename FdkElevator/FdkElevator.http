@@ -1,0 +1,6 @@
+@FdkElevator_HostAddress = http://localhost:5207
+
+GET {{FdkElevator_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
