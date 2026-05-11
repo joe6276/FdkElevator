@@ -1,4 +1,5 @@
 ﻿using FdkElevator.Models.Auth;
+using FdkElevator.Models.Leads;
 using FdkElevator.Models.Organization;
 using FdkElevator.Models.Tenants;
 using Microsoft.EntityFrameworkCore;
@@ -17,5 +18,7 @@ namespace FdkElevator.AppDbContext
         public DbSet<Organization> Organizations { get; set; }
 
         public DbSet<User> Users { get; set; }
+
+        public DbSet<Lead> Leads { get; set; }
     }
 }

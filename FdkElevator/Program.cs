@@ -1,9 +1,11 @@
 using FdkElevator.AppDbContext;
 using FdkElevator.DTOS.Auth;
+using FdkElevator.DTOS.LeadDTOS;
 using FdkElevator.DTOS.OrganizationDTOS;
 using FdkElevator.DTOS.TenantDTOS;
 using FdkElevator.Extensions;
 using FdkElevator.Models.Auth;
+using FdkElevator.Models.Leads;
 using FdkElevator.Models.Organization;
 using FdkElevator.Models.Tenants;
 using FdkElevator.Services;
@@ -43,6 +45,8 @@ builder.Services.AddAutoMapper(cfg =>
     cfg.CreateMap<OrganizationDTO, Organization>();
     cfg.CreateMap<TenantSubDTO, TenantSub>();
     cfg.CreateMap<UserDTO, User>();
+    cfg.CreateMap<ResponseUserDTO, User>().ReverseMap();
+    cfg.CreateMap<LeadDTO, Lead>();
 });
 
 //Services
@@ -54,6 +58,7 @@ builder.Services.AddScoped<ITenantSub, TenantSubService>();
 builder.Services.AddScoped<IJwt, JwtService>();
 builder.Services.AddScoped<IUser, UserService>();
 builder.Services.AddScoped<IEmail, EmailService>();
+builder.Services.AddScoped<ILead, LeadService>();
 
 //custom
 

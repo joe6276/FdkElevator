@@ -67,7 +67,7 @@ namespace FdkElevator.Controllers
         }
 
         [HttpGet("users/tenant/{TenantId}")]
-        public ActionResult<List<UserDTO>> listUsers(Guid TenantId)
+        public ActionResult<List<ResponseUserDTO>> listUsers(Guid TenantId)
         {
             try
             {
