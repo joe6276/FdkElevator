@@ -15,7 +15,6 @@ namespace FdkElevator.Controllers
         private readonly IMapper _mapper;
 
 
-        //string updateSurvey(Survey survey);
         public SurveyController(ISurvey survey, IMapper mapper)
         {
             _survey = survey;
@@ -24,14 +23,14 @@ namespace FdkElevator.Controllers
 
 
         [HttpPost("addSurvey")]
-        public ActionResult<string> AddSurvey(SurveyDTO newSurvey)
+        public async  Task<ActionResult<string>> AddSurvey(SurveyDTO newSurvey)
         {
             try
             {
 
                 var survey = _mapper.Map<Survey>(newSurvey);
 
-                var result = _survey.addSurvey(survey);
+                var result =  await _survey.addSurvey(survey);
 
                 return Ok(result);
 

@@ -1,4 +1,5 @@
 ﻿using FdkElevator.Models.Auth;
+using FdkElevator.Models.Quotations;
 using FdkElevator.Models.Surveyors;
 using FdkElevator.Models.Tenants;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -69,7 +70,8 @@ namespace FdkElevator.Models.Leads
         public Status leadStatus { get; set; } = Status.New;
 
         public Survey survey { get; set; }
-
+      
+        public Quotation quotation { get; set; }
 
     }
 }

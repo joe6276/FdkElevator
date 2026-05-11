@@ -5,7 +5,7 @@ namespace FdkElevator.Services.IServices
     public interface ISurvey
     {
 
-        string addSurvey(Survey survey);
+        Task<string> addSurvey(Survey survey);
 
         List<Survey> GetSurveys(Guid tenantId);
 

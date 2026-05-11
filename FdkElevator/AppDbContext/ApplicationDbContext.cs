@@ -1,6 +1,7 @@
 ﻿using FdkElevator.Models.Auth;
 using FdkElevator.Models.Leads;
 using FdkElevator.Models.Organization;
+using FdkElevator.Models.Quotations;
 using FdkElevator.Models.Surveyors;
 using FdkElevator.Models.Tenants;
 using Microsoft.EntityFrameworkCore;
@@ -23,5 +24,11 @@ namespace FdkElevator.AppDbContext
         public DbSet<Lead> Leads { get; set; }
 
         public DbSet<Survey> Surveys { get; set; }
+
+        public DbSet<Quotation> Quotations { get; set; }
+
+        public DbSet<QuoteItem> QuoteItems { get; set; }
+
+
     }
 }
