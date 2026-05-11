@@ -23,6 +23,7 @@ namespace FdkElevator.Models.Leads
     {
         New,
         Contacted,
+        Being_Surveyed,
         Qualified,
         Lost,
         Converted

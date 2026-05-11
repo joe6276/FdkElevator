@@ -102,7 +102,7 @@ namespace FdkElevator.Controllers
 
                 var updatedLead = _mapper.Map(uLead, lead);
 
-                var result= _lead.UpdateLead(updatedLead);
+                var result = _lead.UpdateLead(updatedLead);
                 return Ok(result);
             }
             catch (Exception ex)
@@ -132,5 +132,19 @@ namespace FdkElevator.Controllers
             }
         }
 
+        [HttpGet("getnewleads/{TenantId}")]
+        public ActionResult<List<Lead>> getAllNewLeads(Guid TenantId)
+        {
+            try
+            {
+                var leads = _lead.getAllNewLeads();
+                return Ok(leads);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+
+        }
     }
 }

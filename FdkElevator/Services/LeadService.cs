@@ -27,6 +27,11 @@ namespace FdkElevator.Services
             return "Lead deleted successfully!";
         }
 
+        public List<Lead> getAllNewLeads()
+        {
+           return _context.Leads.Where(l => l.leadStatus == Status.New).ToList();
+        }
+
         public Lead GetLeadById(Guid id)
         {
             return _context.Leads.FirstOrDefault(l => l.Id == id);

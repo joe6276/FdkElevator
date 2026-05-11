@@ -1,4 +1,5 @@
 ﻿using FdkElevator.Models.Leads;
+using FdkElevator.Models.Surveyors;
 using FdkElevator.Models.Tenants;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -50,5 +51,7 @@ namespace FdkElevator.Models.Auth
 
 
         public ICollection<Lead> leads { get; set; }
+
+        public ICollection<Survey> surveyors { get; set; }
     }
 }

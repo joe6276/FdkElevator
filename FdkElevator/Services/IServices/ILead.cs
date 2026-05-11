@@ -16,5 +16,7 @@ namespace FdkElevator.Services.IServices
         public string DeleteLead(Lead lead);
 
         public string updateLeadStatus(Guid leadId, Status status);
+
+        List<Lead> getAllNewLeads();
     }
 }
