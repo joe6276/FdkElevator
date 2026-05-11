@@ -1,7 +1,7 @@
 ﻿using FdkElevator.AppDbContext;
 using FdkElevator.DTOS.TenantDTOS;
 using FdkElevator.Models.Organization;
-using FdkElevator.Models.Tenant;
+using FdkElevator.Models.Tenants;
 using FdkElevator.Services.IServices;
 using Microsoft.AspNetCore.SignalR;
 using Stripe;
@@ -72,8 +72,7 @@ namespace FdkElevator.Services
             };
         }
 
-
-
+     
 
         public bool ValidatePayment(string stripeSessionId)
         {

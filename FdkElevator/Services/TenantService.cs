@@ -1,5 +1,5 @@
 ﻿using FdkElevator.AppDbContext;
-using FdkElevator.Models.Tenant;
+using FdkElevator.Models.Tenants;
 using FdkElevator.Services.IServices;
 
 namespace FdkElevator.Services

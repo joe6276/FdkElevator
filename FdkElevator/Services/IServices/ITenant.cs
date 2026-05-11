@@ -1,4 +1,4 @@
-﻿using FdkElevator.Models.Tenant;
+﻿using FdkElevator.Models.Tenants;
 
 namespace FdkElevator.Services.IServices
 {

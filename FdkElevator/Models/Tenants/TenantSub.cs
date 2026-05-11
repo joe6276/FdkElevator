@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace FdkElevator.Models.Tenant
+namespace FdkElevator.Models.Tenants
 {
     public class TenantSub
     {
@@ -18,6 +18,5 @@ namespace FdkElevator.Models.Tenant
         [ForeignKey("TenantId")]
         public Tenant Tenant { get; set; }
         public Guid TenantId { get; set; }
-
     }
 }

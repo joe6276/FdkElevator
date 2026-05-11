@@ -1,4 +1,9 @@
-﻿namespace FdkElevator.Models.Auth
+﻿using FdkElevator.Models.Tenants;
+using System.ComponentModel.DataAnnotations.Schema;
+
+
+
+namespace FdkElevator.Models.Auth
 {
 
     public enum Role
@@ -35,5 +40,9 @@
         public Role Role { get; set; }
 
         public bool FirstTimeLogin { get; set; } = false;
-    }
+
+        [ForeignKey("TenantId")]
+        public Tenant tenants { get; set; }
+        public Guid  TenantId { get; set; }
+}
 }

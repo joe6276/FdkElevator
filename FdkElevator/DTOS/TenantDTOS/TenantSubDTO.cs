@@ -1,4 +1,4 @@
-﻿using FdkElevator.Models.Tenant;
+﻿using FdkElevator.Models.Tenants;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FdkElevator.DTOS.TenantDTOS

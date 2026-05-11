@@ -1,5 +1,5 @@
 ﻿using FdkElevator.DTOS.TenantDTOS;
-using FdkElevator.Models.Tenant;
+using FdkElevator.Models.Tenants;
 
 namespace FdkElevator.Services.IServices
 {

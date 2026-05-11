@@ -5,7 +5,7 @@ using FdkElevator.DTOS.TenantDTOS;
 using FdkElevator.Extensions;
 using FdkElevator.Models.Auth;
 using FdkElevator.Models.Organization;
-using FdkElevator.Models.Tenant;
+using FdkElevator.Models.Tenants;
 using FdkElevator.Services;
 using FdkElevator.Services.IServices;
 using FdkElevator.Utility;
@@ -53,6 +53,7 @@ builder.Services.AddScoped<IBlob, BlobService>();
 builder.Services.AddScoped<ITenantSub, TenantSubService>();
 builder.Services.AddScoped<IJwt, JwtService>();
 builder.Services.AddScoped<IUser, UserService>();
+builder.Services.AddScoped<IEmail, EmailService>();
 
 //custom
 

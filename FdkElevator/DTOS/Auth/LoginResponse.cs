@@ -6,6 +6,7 @@ namespace FdkElevator.DTOS.Auth
     {
         public string Token { get; set; } = string.Empty;
 
+        public Guid TenantId { get; set; }
         public Guid UserId { get; set; }
 
         public Role Role { get; set; }

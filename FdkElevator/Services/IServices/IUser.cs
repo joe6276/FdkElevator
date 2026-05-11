@@ -5,11 +5,11 @@ namespace FdkElevator.Services.IServices
 {
     public interface IUser
     {
-        string addUser(User user);
+        Task<string> addUser(User user);
 
         bool updatePassword(string password, Guid userId);
 
-        List<User> GetUsers();
+        List<User> GetUsers(Guid tenantId);
 
         User GetUserById(Guid id);
 

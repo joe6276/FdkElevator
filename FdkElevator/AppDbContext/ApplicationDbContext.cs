@@ -1,6 +1,6 @@
 ﻿using FdkElevator.Models.Auth;
 using FdkElevator.Models.Organization;
-using FdkElevator.Models.Tenant;
+using FdkElevator.Models.Tenants;
 using Microsoft.EntityFrameworkCore;
 
 namespace FdkElevator.AppDbContext

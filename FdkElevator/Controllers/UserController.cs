@@ -4,6 +4,7 @@ using FdkElevator.Models.Auth;
 using FdkElevator.Services.IServices;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Cryptography;
 
 namespace FdkElevator.Controllers
 {
@@ -20,14 +21,21 @@ namespace FdkElevator.Controllers
             _user = user;
         }
 
+
+
         [HttpPost("addUser")]
-        public ActionResult<string> addUser(UserDTO newUser)
+        public async Task<ActionResult<string>> addUser(UserDTO newUser)
         {
             try
             {
                 var user = _mapper.Map<User>(newUser);
 
-                var result = _user.addUser(user);
+                var existingUser = _user.GetUserByEmail(newUser.Email);
+                if (existingUser != null)
+                {
+                    return NotFound("Email Already Exists!");
+                }
+                var result = await _user.addUser(user);
                 return Ok(result);
             }
             catch (Exception ex)
@@ -57,6 +65,143 @@ namespace FdkElevator.Controllers
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
+
+        [HttpGet("users/tenant/{TenantId}")]
+        public ActionResult<List<UserDTO>> listUsers(Guid TenantId)
+        {
+            try
+            {
+                var users = _user.GetUsers(TenantId);
+                var userDTOs = _mapper.Map<List<ResponseUserDTO>>(users);
+                return Ok(userDTOs);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+
+        }
+
+
+        [HttpPut("updatepassword/{userId}")]
+        public ActionResult<bool> updatePassword(string password, Guid userId)
+        {
+            try
+            {
+                var result = _user.updatePassword(password, userId);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+
+        [HttpGet("user/{Id}")]
+        public ActionResult<User> getUsersById(Guid Id)
+        {
+            try
+            {
+                var user = _user.GetUserById(Id);
+                if (user == null)
+                {
+                    return NotFound("User not found");
+                }
+                return Ok(user);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+
+
+        [HttpPut("updateUser/{Id}")]
+        public ActionResult<string> updateUser(Guid Id, UserDTO updateUser)
+        {
+            try
+            {
+                var user = _user.GetUserById(Id);
+
+                if (user == null)
+                {
+                    return NotFound("User not found");
+                }
+
+                var updatedUser = _mapper.Map(updateUser, user);
+                var result = _user.updateUser(updatedUser);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+
+
+        [HttpDelete("deleteuser/{Id}")]
+        public ActionResult<string> deleteUser(Guid Id)
+        {
+            try
+            {
+                var user = _user.GetUserById(Id);
+
+                if (user == null)
+                {
+                    return NotFound("User not found");
+                }
+
+                var result = _user.deleteUser(user);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+
+        [HttpPost("forgotPassword/")]
+        public async Task<ActionResult<bool>> forgotPassword(ResetRequest rqst)
+        {
+            try
+            {
+                var res = await _user.forgotPassword(rqst.Email);
+                if (string.IsNullOrWhiteSpace(res))
+                {
+                    return NotFound("User Not found!");
+                }
+                else
+                {
+                    return Ok(res);
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost("user/resetPassword")]
+        public ActionResult<bool> resetPassword(ResetPassword resetPassword)
+        {
+            try
+            {
+                var response = _user.resetPassword(resetPassword);
+                if (string.IsNullOrWhiteSpace(response))
+                {
+                    return NotFound("User Not Found");
+                }
+                else
+                {
+                    return Ok(response);
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
 
     }
 }

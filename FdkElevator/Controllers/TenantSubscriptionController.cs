@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using FdkElevator.DTOS.TenantDTOS;
-using FdkElevator.Models.Tenant;
+using FdkElevator.Models.Tenants;
 using FdkElevator.Services.IServices;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

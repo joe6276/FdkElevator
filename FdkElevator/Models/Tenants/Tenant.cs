@@ -1,6 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using FdkElevator.Models.Auth;
+using FdkElevator.Models.Tenants;
 
-namespace FdkElevator.Models.Tenant
+namespace FdkElevator.Models.Tenants
 {
     public enum Subscription_Plan
     {
@@ -40,6 +41,8 @@ namespace FdkElevator.Models.Tenant
         public DateTime SubscriptionExpiresAt { get; set; }
 
         public TenantSub TenantSub { get; set; }
+
+        public ICollection<User> users { get; set; }
 
     }
 }
