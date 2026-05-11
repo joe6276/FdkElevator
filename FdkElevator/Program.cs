@@ -62,7 +62,7 @@ builder.Services.AddScoped<IJwt, JwtService>();
 builder.Services.AddScoped<IUser, UserService>();
 builder.Services.AddScoped<IEmail, EmailService>();
 builder.Services.AddScoped<ILead, LeadService>();
-
+builder.Services.AddScoped<ISurvey, SurveyService>();
 //custom
 
 builder.AddAppAuthentication();

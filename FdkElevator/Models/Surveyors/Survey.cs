@@ -1,5 +1,6 @@
 ﻿using FdkElevator.Models.Auth;
 using FdkElevator.Models.Leads;
+using FdkElevator.Models.Tenants;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FdkElevator.Models.Surveyors
@@ -18,6 +19,11 @@ namespace FdkElevator.Models.Surveyors
         public User User { get; set; }
 
         public Guid SurveyorId { get; set; }
+
+        [ForeignKey("TenantId")]
+        public Tenant tenant { get; set; }
+
+        public Guid TenantId { get; set; }
 
         public int PitDepth { get; set; }
 

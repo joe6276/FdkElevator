@@ -11,6 +11,8 @@ namespace FdkElevator.DTOS.SurveyDTOS
 
         public Guid SurveyorId { get; set; }
 
+        public Guid TenantId { get; set; }
+
         public int PitDepth { get; set; }
 
         public int numberofStops { get; set; }
