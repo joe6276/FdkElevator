@@ -29,9 +29,11 @@ namespace FdkElevator.Services
         }
         public async Task<string> addUser(User user)
         {
-            _context.Users.Add(user);
+           
             var mypass = GeneratePassword(8);
             user.Password = BCrypt.Net.BCrypt.HashPassword(mypass);
+            _context.Users.Add(user);
+
             _context.SaveChanges();
 
             await _email.welcomeEmail(user.Name, user.Email, mypass);
@@ -122,7 +124,7 @@ namespace FdkElevator.Services
             }
 
             user.Password = BCrypt.Net.BCrypt.HashPassword(resetPasswordRequest.Password);
-            user.PasswordResetToken = null;
+            user.PasswordResetToken = " ";
             user.PasswordResetExpires= DateTime.UtcNow;
 
             _context.Users.Update(user);

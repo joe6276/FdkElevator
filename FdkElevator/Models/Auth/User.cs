@@ -1,4 +1,5 @@
-﻿using FdkElevator.Models.Tenants;
+﻿using FdkElevator.Models.Leads;
+using FdkElevator.Models.Tenants;
 using System.ComponentModel.DataAnnotations.Schema;
 
 
@@ -44,7 +45,10 @@ namespace FdkElevator.Models.Auth
         public bool FirstTimeLogin { get; set; } = false;
 
         [ForeignKey("TenantId")]
-        public Tenant tenants { get; set; }
+        public Tenant ten { get; set; }
         public Guid  TenantId { get; set; }
-}
+
+
+        public ICollection<Lead> leads { get; set; }
+    }
 }

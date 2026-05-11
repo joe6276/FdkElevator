@@ -44,5 +44,7 @@ namespace FdkElevator.Models.Tenants
 
         public ICollection<User> users { get; set; }
 
+        public ICollection<Tenant> tenants { get; set; }
+
     }
 }
