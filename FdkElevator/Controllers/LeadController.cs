@@ -37,7 +37,7 @@ namespace FdkElevator.Controllers
         }
 
         [HttpGet("getleads/{tenantId}")]
-        public ActionResult<List<Lead>> getLeadsByTenantId(Guid tenantId)
+        public ActionResult<List<LeadResponseDTO>> getLeadsByTenantId(Guid tenantId)
         {
             try
             {
@@ -52,7 +52,7 @@ namespace FdkElevator.Controllers
 
 
         [HttpGet("getlead/{leadId}")]
-        public ActionResult<Lead> getLeadById(Guid leadId)
+        public ActionResult<LeadResponseDTO> getLeadById(Guid leadId)
         {
             try
             {
@@ -94,7 +94,7 @@ namespace FdkElevator.Controllers
         {
             try
             {
-                var lead = _lead.GetLeadById(leadId);
+                var lead = _lead.GetLeadById1(leadId);
                 if (lead == null)
                 {
                     return NotFound("Lead not found");
@@ -117,7 +117,7 @@ namespace FdkElevator.Controllers
         {
             try
             {
-                var lead = _lead.GetLeadById(leadId);
+                var lead = _lead.GetLeadById1(leadId);
                 if (lead == null)
                 {
                     return NotFound("Lead not found");
@@ -133,7 +133,7 @@ namespace FdkElevator.Controllers
         }
 
         [HttpGet("getnewleads/{TenantId}")]
-        public ActionResult<List<Lead>> getAllNewLeads(Guid TenantId)
+        public ActionResult<List<LeadResponseDTO>> getAllNewLeads(Guid TenantId)
         {
             try
             {

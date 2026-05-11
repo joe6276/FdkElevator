@@ -1,4 +1,5 @@
-﻿using FdkElevator.Models.Leads;
+﻿using FdkElevator.DTOS.LeadDTOS;
+using FdkElevator.Models.Leads;
 
 namespace FdkElevator.Services.IServices
 {
@@ -7,16 +8,17 @@ namespace FdkElevator.Services.IServices
 
         public string AddLead(Lead lead);
 
-        public List<Lead> GetLeads(Guid tenantId);
+        public List<LeadResponseDTO> GetLeads(Guid tenantId);
 
-        public Lead GetLeadById(Guid id);
+        public Lead GetLeadById1(Guid id);
 
+        public LeadResponseDTO GetLeadById(Guid id);
         public string UpdateLead(Lead lead);
 
         public string DeleteLead(Lead lead);
 
         public string updateLeadStatus(Guid leadId, Status status);
 
-        List<Lead> getAllNewLeads();
+        List<LeadResponseDTO> getAllNewLeads();
     }
 }

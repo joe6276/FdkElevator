@@ -1,5 +1,7 @@
 ﻿using FdkElevator.AppDbContext;
+using FdkElevator.DTOS.LeadDTOS;
 using FdkElevator.Models.Leads;
+using FdkElevator.Models.Tenants;
 using FdkElevator.Services.IServices;
 
 namespace FdkElevator.Services
@@ -27,19 +29,143 @@ namespace FdkElevator.Services
             return "Lead deleted successfully!";
         }
 
-        public List<Lead> getAllNewLeads()
+        public List<LeadResponseDTO> getAllNewLeads()
         {
-           return _context.Leads.Where(l => l.leadStatus == Status.New).ToList();
+    
+
+            return _context.Leads.Where(l => l.leadStatus == Status.New).Select(l => new LeadResponseDTO()
+            {
+                Id = l.Id,
+                TenantId = l.TenantId,
+                clientCategory = l.clientCategory,
+                CompanyName = l.CompanyName,
+                ContactPerson = l.ContactPerson,
+                Email = l.Email,
+                PhoneNumber = l.PhoneNumber,
+                Latitude = l.Latitude,
+                Longitude = l.Longitude,
+                Building_Address = l.Building_Address,
+                NumberofElevators = l.NumberofElevators,
+                NumberofFloors = l.NumberofFloors,
+                SalesPersonId = l.SalesPersonId,
+                survey = l.survey == null ? null : new SurveyResposeDTO()
+                {
+                    Id = l.survey.Id,
+                    LeadId = l.survey.LeadId,
+                    SurveyorId = l.survey.SurveyorId,
+                    numberofStops = l.survey.numberofStops,
+                    PitDepth = l.survey.PitDepth,
+                    ShaftDepth = l.survey.ShaftDepth,
+                    ShaftAvailable = l.survey.ShaftAvailable,
+                    ShaftWidth = l.survey.ShaftWidth,
+                    OverheadClearance = l.survey.OverheadClearance,
+                    PowerSupply = l.survey.PowerSupply,
+                    CivicReady = l.survey.CivicReady,
+                    MachineRoom = l.survey.MachineRoom,
+                    MLROption = l.survey.MLROption,
+                    CivicWorkRequired = l.survey.CivicWorkRequired,
+                    AccessRoute = l.survey.AccessRoute,
+                    SafetyRisk = l.survey.SafetyRisk,
+                    StorageArea = l.survey.StorageArea,
+                    EngineerNotes = l.survey.EngineerNotes,
+                    RecommendedLift = l.survey.RecommendedLift,
+                }
+            }).ToList();
+
         }
 
-        public Lead GetLeadById(Guid id)
+        public LeadResponseDTO GetLeadById(Guid id)
         {
-            return _context.Leads.FirstOrDefault(l => l.Id == id);
+         
+
+            return _context.Leads.Where(l => l.Id == id).Select(l => new LeadResponseDTO()
+            {
+                Id = l.Id,
+                TenantId = l.TenantId,
+                clientCategory = l.clientCategory,
+                CompanyName = l.CompanyName,
+                ContactPerson = l.ContactPerson,
+                Email = l.Email,
+                PhoneNumber = l.PhoneNumber,
+                Latitude = l.Latitude,
+                Longitude = l.Longitude,
+                Building_Address = l.Building_Address,
+                NumberofElevators = l.NumberofElevators,
+                NumberofFloors = l.NumberofFloors,
+                SalesPersonId = l.SalesPersonId,
+                survey = l.survey == null ? null :new SurveyResposeDTO()
+                {
+                    Id = l.survey.Id,
+                    LeadId = l.survey.LeadId,
+                    SurveyorId = l.survey.SurveyorId,
+                    numberofStops = l.survey.numberofStops,
+                    PitDepth = l.survey.PitDepth,
+                    ShaftDepth = l.survey.ShaftDepth,
+                    ShaftAvailable = l.survey.ShaftAvailable,
+                    ShaftWidth = l.survey.ShaftWidth,
+                    OverheadClearance = l.survey.OverheadClearance,
+                    PowerSupply = l.survey.PowerSupply,
+                    CivicReady = l.survey.CivicReady,
+                    MachineRoom = l.survey.MachineRoom,
+                    MLROption = l.survey.MLROption,
+                    CivicWorkRequired = l.survey.CivicWorkRequired,
+                    AccessRoute = l.survey.AccessRoute,
+                    SafetyRisk = l.survey.SafetyRisk,
+                    StorageArea = l.survey.StorageArea,
+                    EngineerNotes = l.survey.EngineerNotes,
+                    RecommendedLift = l.survey.RecommendedLift,
+                }
+            }).FirstOrDefault();
+
         }
 
-        public List<Lead> GetLeads(Guid tenantId)
+        public Lead GetLeadById1(Guid id)
         {
-          return  _context.Leads.Where(l => l.TenantId == tenantId).ToList();
+           return _context.Leads.FirstOrDefault(l => l.Id == id);
+        }
+
+        public List<LeadResponseDTO> GetLeads(Guid tenantId)
+        {
+            return _context.Leads.Where(l => l.TenantId == tenantId).Select(l => new LeadResponseDTO()
+            {
+                Id = l.Id,
+                TenantId = l.TenantId,
+                clientCategory = l.clientCategory,
+                CompanyName = l.CompanyName,
+                ContactPerson = l.ContactPerson,
+                Email = l.Email,
+                PhoneNumber = l.PhoneNumber,
+                Latitude = l.Latitude,
+                Longitude = l.Longitude,
+                Building_Address = l.Building_Address,
+                NumberofElevators = l.NumberofElevators,
+                NumberofFloors = l.NumberofFloors,
+                SalesPersonId = l.SalesPersonId,
+                survey =l.survey == null ? null : new SurveyResposeDTO()
+                {
+                    Id =l.survey.Id,
+                    LeadId = l.survey.LeadId,
+                    SurveyorId = l.survey.SurveyorId,
+                    numberofStops = l.survey.numberofStops,
+                    PitDepth = l.survey.PitDepth,
+                    ShaftDepth = l.survey.ShaftDepth,
+                    ShaftAvailable = l.survey.ShaftAvailable,
+                    ShaftWidth = l.survey.ShaftWidth,
+                    OverheadClearance = l.survey.OverheadClearance,
+                    PowerSupply = l.survey.PowerSupply,
+                    CivicReady = l.survey.CivicReady,
+                    MachineRoom = l.survey.MachineRoom,
+                    MLROption= l.survey.MLROption,
+                    CivicWorkRequired = l.survey.CivicWorkRequired,
+                    AccessRoute = l.survey.AccessRoute,
+                    SafetyRisk = l.survey.SafetyRisk,
+                    StorageArea = l.survey.StorageArea,
+                    EngineerNotes = l.survey.EngineerNotes,
+                    RecommendedLift = l.survey.RecommendedLift,
+                }
+            }).ToList();
+
+
         }
 
         public string UpdateLead(Lead lead)
