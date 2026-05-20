@@ -15,4 +15,19 @@ namespace FdkElevator.DTOS.QuotationDTOS
 
         public ICollection<QuotationItemDTO> Items { get; set; }
     }
+    public class QuotationResponseDTO
+    {
+
+        public Guid LeadId { get; set; }
+
+        public Guid ClientId { get; set; }
+        public float Amount { get; set; }
+
+        public float SubTotal { get; set; }
+
+        public float Discount { get; set; }
+
+        public ICollection<QuotationItemDTO> Items { get; set; }
+    }
+
 }

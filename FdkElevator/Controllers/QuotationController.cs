@@ -43,9 +43,23 @@ namespace FdkElevator.Controllers
             }
         }
 
+        [HttpGet("listQuotations/{tenantId}")]
+        public ActionResult<List<QuotationResponseDTO>> listQuotations(Guid tenantId)
+        {
+            try
+            {
+                var quatations = _quotation.getAllQuotations(tenantId);
+                return Ok(quatations);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
         [HttpGet("getLeadQuotations/{leadId}")]
 
-        public ActionResult<List<Quotation>> getLeadQuotations(Guid leadId)
+        public ActionResult<List<QuotationResponseDTO>> getLeadQuotations(Guid leadId)
         {
             try
             {
@@ -60,7 +74,7 @@ namespace FdkElevator.Controllers
         }
 
         [HttpGet("getClientQuotation/{clientId}")]
-        public ActionResult<List<Quotation>> getlQuotations(Guid clientId)
+        public ActionResult<List<QuotationResponseDTO>> getlQuotations(Guid clientId)
         {
             try
             {

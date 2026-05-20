@@ -1,4 +1,5 @@
-﻿using FdkElevator.Models.Quotations;
+﻿using FdkElevator.DTOS.QuotationDTOS;
+using FdkElevator.Models.Quotations;
 
 namespace FdkElevator.Services.IServices
 {
@@ -7,10 +8,12 @@ namespace FdkElevator.Services.IServices
 
         string addQuotation(Quotation quotation);
 
-        List<Quotation> getAllQuotations(Guid tenantId);
+        List<QuotationResponseDTO> getAllQuotations(Guid tenantId);
 
-        Quotation getQuotationByClientId(Guid id);
+        List<QuotationResponseDTO> getQuotationByClientId(Guid id);
 
-        Quotation getQuotationByLeadId(Guid LeadId);
+        QuotationResponseDTO getQuotationByLeadId(Guid LeadId);
+
+        QuotationResponseDTO getQuotationById(Guid id);
     }
 }
