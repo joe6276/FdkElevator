@@ -37,7 +37,7 @@ namespace FdkElevator.Controllers
         }
 
         [HttpGet("getleads/{tenantId}")]
-        public ActionResult<List<LeadResponseDTO>> getLeadsByTenantId(Guid tenantId)
+        public ActionResult<LeadGroupedDictionaryDto> getLeadsByTenantId(Guid tenantId)
         {
             try
             {

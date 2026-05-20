@@ -124,48 +124,35 @@ namespace FdkElevator.Services
            return _context.Leads.FirstOrDefault(l => l.Id == id);
         }
 
-        public List<LeadResponseDTO> GetLeads(Guid tenantId)
+        public LeadGroupedDictionaryDto GetLeads(Guid tenantId)
         {
-            return _context.Leads.Where(l => l.TenantId == tenantId).Select(l => new LeadResponseDTO()
+            var data = _context.Leads
+         .Where(l => l.TenantId == tenantId)
+         .GroupBy(l => l.clientCategory)
+         .ToDictionary(
+             g => ((int)g.Key).ToString(),
+             g => g.Select(l => new LeadResDTO
+             {
+                 Id = l.Id,
+                 TenantId = l.TenantId,
+                 clientCategory = l.clientCategory,
+                 CompanyName = l.CompanyName,
+                 ContactPerson = l.ContactPerson,
+                 Email = l.Email,
+                 PhoneNumber = l.PhoneNumber,
+                 Latitude = l.Latitude,
+                 Longitude = l.Longitude,
+                 Building_Address = l.Building_Address,
+                 NumberofFloors = l.NumberofFloors,
+                 NumberofElevators = l.NumberofElevators,
+                 SalesPersonId = l.SalesPersonId
+             }).ToList()
+         );
+
+            return (new LeadGroupedDictionaryDto
             {
-                Id = l.Id,
-                TenantId = l.TenantId,
-                clientCategory = l.clientCategory,
-                CompanyName = l.CompanyName,
-                ContactPerson = l.ContactPerson,
-                Email = l.Email,
-                PhoneNumber = l.PhoneNumber,
-                Latitude = l.Latitude,
-                Longitude = l.Longitude,
-                Building_Address = l.Building_Address,
-                NumberofElevators = l.NumberofElevators,
-                NumberofFloors = l.NumberofFloors,
-                SalesPersonId = l.SalesPersonId,
-                survey =l.survey == null ? null : new SurveyResposeDTO()
-                {
-                    Id =l.survey.Id,
-                    LeadId = l.survey.LeadId,
-                    SurveyorId = l.survey.SurveyorId,
-                    numberofStops = l.survey.numberofStops,
-                    PitDepth = l.survey.PitDepth,
-                    ShaftDepth = l.survey.ShaftDepth,
-                    ShaftAvailable = l.survey.ShaftAvailable,
-                    ShaftWidth = l.survey.ShaftWidth,
-                    OverheadClearance = l.survey.OverheadClearance,
-                    PowerSupply = l.survey.PowerSupply,
-                    CivicReady = l.survey.CivicReady,
-                    MachineRoom = l.survey.MachineRoom,
-                    MLROption= l.survey.MLROption,
-                    CivicWorkRequired = l.survey.CivicWorkRequired,
-                    AccessRoute = l.survey.AccessRoute,
-                    SafetyRisk = l.survey.SafetyRisk,
-                    StorageArea = l.survey.StorageArea,
-                    EngineerNotes = l.survey.EngineerNotes,
-                    RecommendedLift = l.survey.RecommendedLift,
-                }
-            }).ToList();
-
-
+                Data = data
+            });
         }
 
         public string UpdateLead(Lead lead)

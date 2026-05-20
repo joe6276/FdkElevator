@@ -34,6 +34,34 @@ namespace FdkElevator.DTOS.LeadDTOS
         public Guid SalesPersonId { get; set; }
 
     }
+
+    public class LeadResDTO
+    {
+        public Guid Id { get; set; }
+        public Guid TenantId { get; set; }
+        public ClientCategory clientCategory { get; set; }
+
+        public string CompanyName { get; set; } = string.Empty;
+
+        public string ContactPerson { get; set; } = string.Empty;
+
+        public string Email { get; set; } = string.Empty;
+
+        public string PhoneNumber { get; set; } = string.Empty;
+
+        public float Longitude { get; set; }
+
+        public float Latitude { get; set; }
+
+        public string Building_Address { get; set; } = string.Empty;
+
+        public int NumberofFloors { get; set; }
+
+        public int NumberofElevators { get; set; }
+
+        public Guid SalesPersonId { get; set; }
+    }
+
     public class LeadResponseDTO
     {
 
@@ -65,6 +93,11 @@ namespace FdkElevator.DTOS.LeadDTOS
 
     }
 
+
+    public class LeadGroupedDictionaryDto
+    {
+        public Dictionary<string, List<LeadResDTO>> Data { get; set; }
+    }
 
     public class SurveyResposeDTO
     {

@@ -8,7 +8,7 @@ namespace FdkElevator.Services.IServices
 
         public string AddLead(Lead lead);
 
-        public List<LeadResponseDTO> GetLeads(Guid tenantId);
+        public LeadGroupedDictionaryDto GetLeads(Guid tenantId);
 
         public Lead GetLeadById1(Guid id);
 
