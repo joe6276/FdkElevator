@@ -60,6 +60,8 @@ namespace FdkElevator.DTOS.LeadDTOS
         public int NumberofElevators { get; set; }
 
         public Guid SalesPersonId { get; set; }
+
+        public Status leadStatus { get; set; }
     }
 
     public class LeadResponseDTO
@@ -88,6 +90,8 @@ namespace FdkElevator.DTOS.LeadDTOS
         public int NumberofElevators { get; set; }
 
         public Guid SalesPersonId { get; set; }
+
+        public Status leadStatus { get; set; }
 
         public SurveyResposeDTO? survey { get; set; }
 

@@ -41,6 +41,7 @@ namespace FdkElevator.Services
                 CompanyName = l.CompanyName,
                 ContactPerson = l.ContactPerson,
                 Email = l.Email,
+                leadStatus = l.leadStatus,
                 PhoneNumber = l.PhoneNumber,
                 Latitude = l.Latitude,
                 Longitude = l.Longitude,
@@ -86,6 +87,7 @@ namespace FdkElevator.Services
                 CompanyName = l.CompanyName,
                 ContactPerson = l.ContactPerson,
                 Email = l.Email,
+                leadStatus= l.leadStatus,
                 PhoneNumber = l.PhoneNumber,
                 Latitude = l.Latitude,
                 Longitude = l.Longitude,
@@ -128,7 +130,7 @@ namespace FdkElevator.Services
         {
             var data = _context.Leads
          .Where(l => l.TenantId == tenantId)
-         .GroupBy(l => l.clientCategory)
+         .GroupBy(l => l.leadStatus)
          .ToDictionary(
              g => ((int)g.Key).ToString(),
              g => g.Select(l => new LeadResDTO
@@ -138,6 +140,7 @@ namespace FdkElevator.Services
                  clientCategory = l.clientCategory,
                  CompanyName = l.CompanyName,
                  ContactPerson = l.ContactPerson,
+                 leadStatus=l.leadStatus,
                  Email = l.Email,
                  PhoneNumber = l.PhoneNumber,
                  Latitude = l.Latitude,
