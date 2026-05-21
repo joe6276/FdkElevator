@@ -32,5 +32,8 @@ namespace FdkElevator.AppDbContext
 
         public DbSet<Activity> Activities { get; set; }
 
+
+        public DbSet<LiftConfiguration> liftConfigurations { get; set; }
+
     }
 }

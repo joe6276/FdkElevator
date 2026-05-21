@@ -56,6 +56,7 @@ builder.Services.AddAutoMapper(cfg =>
     cfg.CreateMap<QuotationItemDTO, QuoteItem>();
     cfg.CreateMap<AssignSurveyDTO, Survey>();
     cfg.CreateMap<AddActivityDTO, Activity>();
+    cfg.CreateMap<AddLiftConfiguration, LiftConfiguration>();
 });
 
 //Services

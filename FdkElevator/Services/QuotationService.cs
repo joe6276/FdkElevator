@@ -15,15 +15,21 @@ namespace FdkElevator.Services
         {
             _context = context;
         }
+
+        public string GenerateTrackingNumber()
+        {
+            return $"QTT-{Guid.NewGuid().ToString("N")[..8].ToUpper()}";
+        }
         public string addQuotation(Quotation quotation)
         {
-           _context.Quotations.Add(quotation);
+            quotation.QuotationNumber = GenerateTrackingNumber();
+            _context.Quotations.Add(quotation);
             _context.SaveChanges();
             return "Quotation added successfully!";
         }
 
- 
-public List<QuotationResponseDTO> getAllQuotations(Guid tenantId)
+
+        public List<QuotationResponseDTO> getAllQuotations(Guid tenantId)
         {   
             var leadIds = _context.Leads.Where(l => l.TenantId == tenantId).Select(l => l.Id).ToList();
            
@@ -34,6 +40,28 @@ public List<QuotationResponseDTO> getAllQuotations(Guid tenantId)
                 ClientId = q.ClientId,
                 Discount = q.Discount,
                 LeadId = q.LeadId,
+                Status=q.Status,
+                Revision=q.Revision,
+                InstallationCost=q.InstallationCost,
+                FreightCost= q.FreightCost,
+                CustomsCost=q.CustomsCost,
+                SubcontractorCost=q.SubcontractorCost,
+                Warranty=q.Warranty,
+                AmcOption=q.AmcOption,
+                PaymentTerms=q.PaymentTerms,
+                ValidityDays=q.ValidityDays,
+                QuotationNumber=q.QuotationNumber,
+                config= new AddLiftConfiguration
+                {
+                    LiftType=q.configuration.LiftType,
+                    DriveType = q.configuration.DriveType,
+                    Capacity = q.configuration.Capacity,
+                    Speed = q.configuration.Speed,
+                    Stops = q.configuration.Stops,
+                    DoorType = q.configuration.DoorType,
+                    ControllerType = q.configuration.ControllerType,
+                    CabinFinish = q.configuration.CabinFinish,
+                },
                 Items = q.Items.Select(i => new QuotationItemDTO
                 {
                     ItemName = i.ItemName,
@@ -55,6 +83,27 @@ public List<QuotationResponseDTO> getAllQuotations(Guid tenantId)
                 ClientId = q.ClientId,
                 Discount = q.Discount,
                 LeadId = q.LeadId,
+                Status = q.Status,
+                Revision = q.Revision,
+                InstallationCost = q.InstallationCost,
+                FreightCost = q.FreightCost,
+                CustomsCost = q.CustomsCost,
+                SubcontractorCost = q.SubcontractorCost,
+                Warranty = q.Warranty,
+                AmcOption = q.AmcOption,
+                PaymentTerms = q.PaymentTerms,
+                ValidityDays = q.ValidityDays,
+                config = new AddLiftConfiguration
+                {
+                    LiftType = q.configuration.LiftType,
+                    DriveType = q.configuration.DriveType,
+                    Capacity = q.configuration.Capacity,
+                    Speed = q.configuration.Speed,
+                    Stops = q.configuration.Stops,
+                    DoorType = q.configuration.DoorType,
+                    ControllerType = q.configuration.ControllerType,
+                    CabinFinish = q.configuration.CabinFinish,
+                },
                 Items = q.Items.Select(i => new QuotationItemDTO
                 {
                     ItemName = i.ItemName,
@@ -76,6 +125,27 @@ public List<QuotationResponseDTO> getAllQuotations(Guid tenantId)
                 ClientId = q.ClientId,
                 Discount = q.Discount,
                 LeadId = q.LeadId,
+                Status = q.Status,
+                Revision = q.Revision,
+                InstallationCost = q.InstallationCost,
+                FreightCost = q.FreightCost,
+                CustomsCost = q.CustomsCost,
+                SubcontractorCost = q.SubcontractorCost,
+                Warranty = q.Warranty,
+                AmcOption = q.AmcOption,
+                PaymentTerms = q.PaymentTerms,
+                ValidityDays = q.ValidityDays,
+                config = new AddLiftConfiguration
+                {
+                    LiftType = q.configuration.LiftType,
+                    DriveType = q.configuration.DriveType,
+                    Capacity = q.configuration.Capacity,
+                    Speed = q.configuration.Speed,
+                    Stops = q.configuration.Stops,
+                    DoorType = q.configuration.DoorType,
+                    ControllerType = q.configuration.ControllerType,
+                    CabinFinish = q.configuration.CabinFinish,
+                },
                 Items = q.Items.Select(i => new QuotationItemDTO
                 {
                     ItemName = i.ItemName,
@@ -97,6 +167,27 @@ public List<QuotationResponseDTO> getAllQuotations(Guid tenantId)
                 ClientId = q.ClientId,
                 Discount = q.Discount,
                 LeadId = q.LeadId,
+                Status = q.Status,
+                Revision = q.Revision,
+                InstallationCost = q.InstallationCost,
+                FreightCost = q.FreightCost,
+                CustomsCost = q.CustomsCost,
+                SubcontractorCost = q.SubcontractorCost,
+                Warranty = q.Warranty,
+                AmcOption = q.AmcOption,
+                PaymentTerms = q.PaymentTerms,
+                ValidityDays = q.ValidityDays,
+                config = new AddLiftConfiguration
+                {
+                    LiftType = q.configuration.LiftType,
+                    DriveType = q.configuration.DriveType,
+                    Capacity = q.configuration.Capacity,
+                    Speed = q.configuration.Speed,
+                    Stops = q.configuration.Stops,
+                    DoorType = q.configuration.DoorType,
+                    ControllerType = q.configuration.ControllerType,
+                    CabinFinish = q.configuration.CabinFinish,
+                },
                 Items = q.Items.Select(i => new QuotationItemDTO
                 {
                     ItemName = i.ItemName,
@@ -108,6 +199,18 @@ public List<QuotationResponseDTO> getAllQuotations(Guid tenantId)
             }).FirstOrDefault();
         }
 
-     
+        public string updateQuotation(Guid id, QuotationStatus status)
+        {
+            var quotation = _context.Quotations.FirstOrDefault(q => q.Id == id);
+            if (quotation == null)
+            {
+                throw new Exception("Quotation not found!");
+            }
+
+            quotation.Status = status;
+            _context.Quotations.Update(quotation);
+            _context.SaveChanges();
+            return "Quotation updated successfully!";
+        }
     }
 }

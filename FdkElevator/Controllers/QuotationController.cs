@@ -34,6 +34,9 @@ namespace FdkElevator.Controllers
                 quotation.SubTotal = quotation.Amount - discount;
                 quotation.Discount=discount;
 
+
+                var config= _mapper.Map<LiftConfiguration>(quotationDTO.AddLiftConfiguration);
+                quotation.configuration = config;
                 var result = _quotation.addQuotation(quotation);
                 return Ok(result);
             }
@@ -86,6 +89,19 @@ namespace FdkElevator.Controllers
                 return BadRequest(ex.Message);
             }
 
+        }
+        [HttpPut("updateQuotation/{Id}")]
+        public ActionResult<string> updateQuotations(Guid Id, QuotationStatus status)
+        {
+            try
+            {
+                var result = _quotation.updateQuotation(Id, status);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
     }
