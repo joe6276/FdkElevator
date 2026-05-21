@@ -30,6 +30,33 @@ namespace FdkElevator.Models.Leads
         Lost,
         Converted
     }
+
+    public enum LeadSource
+    {
+        Website,
+        Phone,
+        WhatsApp,
+        Referral,
+        Tender,
+        Walk_In,
+        Other
+    }
+
+    public enum LeadType
+    {
+        New_Installation,
+        Modernization,
+        AMC,
+        Repair,
+        Spare_Parts
+    }
+
+    public enum Urgency
+    {
+        Low,
+        Medium,
+        High
+    }
     public class Lead
     {
 
@@ -53,7 +80,18 @@ namespace FdkElevator.Models.Leads
         public float Longitude { get; set; }
 
         public float Latitude { get; set; }
+            
+        public LeadSource source { get; set; } 
 
+        public LeadType leadType { get; set; }
+
+        public Urgency urgency { get; set; }
+
+        public decimal?  budget { get; set; }
+
+        public string decisionMaker { get; set; } = string.Empty;
+
+        public string? ReasonForLoss { get; set; } = string.Empty;
         public string Building_Address { get; set; } = string.Empty;
 
         public int NumberofFloors { get; set; }
@@ -72,6 +110,10 @@ namespace FdkElevator.Models.Leads
         public Survey survey { get; set; }
       
         public Quotation quotation { get; set; }
+
+        public ICollection<Activity> activities { get; set; }
+
+     
 
     }
 }

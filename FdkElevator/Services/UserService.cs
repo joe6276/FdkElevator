@@ -32,6 +32,14 @@ namespace FdkElevator.Services
            
             var mypass = GeneratePassword(8);
             user.Password = BCrypt.Net.BCrypt.HashPassword(mypass);
+
+            var existingUser = _context.Users.Where(x=>x.Email == user.Email).FirstOrDefault();
+
+            if(existingUser != null)
+            {
+                throw new Exception("Email Already Exist");
+            }
+
             _context.Users.Add(user);
 
             _context.SaveChanges();

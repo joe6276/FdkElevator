@@ -1,4 +1,5 @@
 ﻿using FdkElevator.Models.Auth;
+using FdkElevator.Models.Leads;
 using FdkElevator.Models.Surveyors;
 using FdkElevator.Models.Tenants;
 
@@ -48,5 +49,8 @@ namespace FdkElevator.Models.Tenants
         public ICollection<Tenant> tenants { get; set; }
 
         public ICollection<Survey> surveys { get; set; }
+
+        public ICollection<Activity> activities { get; set; }
+
     }
 }

@@ -22,15 +22,38 @@ namespace FdkElevator.Controllers
         }
 
 
-        [HttpPost("addSurvey")]
-        public async  Task<ActionResult<string>> AddSurvey(SurveyDTO newSurvey)
+        [HttpPost("assignSurveyor")]
+        public ActionResult<string> AddSurvey(AssignSurveyDTO surveyDTO)
         {
             try
             {
+                var survey = _mapper.Map<Survey>(surveyDTO);
+                var result = _survey.addSurvey(survey);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
 
-                var survey = _mapper.Map<Survey>(newSurvey);
+        [HttpPut("updateSurvey/{surveyId}")]
+        public async  Task<ActionResult<string>> AddSurvey(Guid surveyId, SurveyDTO newSurvey)
+        {
+            try
+            {   
 
-                var result =  await _survey.addSurvey(survey);
+
+                var survey = _survey.GetSurveyById(surveyId);
+
+                if(survey == null)
+                {
+                    return NotFound("Survey not found");
+                }
+
+                var updatedSurvey = _mapper.Map(newSurvey, survey);
+
+                var result =  await _survey.update(updatedSurvey);
 
                 return Ok(result);
 

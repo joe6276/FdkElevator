@@ -31,8 +31,6 @@ namespace FdkElevator.Services
 
         public List<LeadResponseDTO> getAllNewLeads()
         {
-    
-
             return _context.Leads.Where(l => l.leadStatus == Status.New).Select(l => new LeadResponseDTO()
             {
                 Id = l.Id,
@@ -49,21 +47,26 @@ namespace FdkElevator.Services
                 NumberofElevators = l.NumberofElevators,
                 NumberofFloors = l.NumberofFloors,
                 SalesPersonId = l.SalesPersonId,
+                leadType = l.leadType,
+                source = l.source,
+                urgency = l.urgency,
+                budget = l.budget,
+                decisionMaker = l.decisionMaker,
                 survey = l.survey == null ? null : new SurveyResposeDTO()
                 {
                     Id = l.survey.Id,
                     LeadId = l.survey.LeadId,
                     SurveyorId = l.survey.SurveyorId,
-                    numberofStops = l.survey.numberofStops,
-                    PitDepth = l.survey.PitDepth,
-                    ShaftDepth = l.survey.ShaftDepth,
-                    ShaftAvailable = l.survey.ShaftAvailable,
-                    ShaftWidth = l.survey.ShaftWidth,
-                    OverheadClearance = l.survey.OverheadClearance,
-                    PowerSupply = l.survey.PowerSupply,
-                    CivicReady = l.survey.CivicReady,
-                    MachineRoom = l.survey.MachineRoom,
-                    MLROption = l.survey.MLROption,
+                    numberofStops = (int)l.survey.numberofStops,
+                    PitDepth =(int) l.survey.PitDepth,
+                    ShaftDepth = (int) l.survey.ShaftDepth,
+                    ShaftAvailable = (bool) l.survey.ShaftAvailable,
+                    ShaftWidth = (int) l.survey.ShaftWidth,
+                    OverheadClearance = (int) l.survey.OverheadClearance,
+                    PowerSupply = (string)l.survey.PowerSupply,
+                    CivicReady = (bool)l.survey.CivicReady,
+                    MachineRoom = (bool)l.survey.MachineRoom,
+                    MLROption = (bool)l.survey.MLROption,
                     CivicWorkRequired = l.survey.CivicWorkRequired,
                     AccessRoute = l.survey.AccessRoute,
                     SafetyRisk = l.survey.SafetyRisk,
@@ -95,21 +98,26 @@ namespace FdkElevator.Services
                 NumberofElevators = l.NumberofElevators,
                 NumberofFloors = l.NumberofFloors,
                 SalesPersonId = l.SalesPersonId,
+                leadType = l.leadType,
+                source = l.source,
+                urgency = l.urgency,
+                budget = l.budget,
+                decisionMaker = l.decisionMaker,
                 survey = l.survey == null ? null :new SurveyResposeDTO()
                 {
                     Id = l.survey.Id,
                     LeadId = l.survey.LeadId,
                     SurveyorId = l.survey.SurveyorId,
-                    numberofStops = l.survey.numberofStops,
-                    PitDepth = l.survey.PitDepth,
-                    ShaftDepth = l.survey.ShaftDepth,
-                    ShaftAvailable = l.survey.ShaftAvailable,
-                    ShaftWidth = l.survey.ShaftWidth,
-                    OverheadClearance = l.survey.OverheadClearance,
-                    PowerSupply = l.survey.PowerSupply,
-                    CivicReady = l.survey.CivicReady,
-                    MachineRoom = l.survey.MachineRoom,
-                    MLROption = l.survey.MLROption,
+                    numberofStops = (int)l.survey.numberofStops,
+                    PitDepth = (int)l.survey.PitDepth,
+                    ShaftDepth = (int)l.survey.ShaftDepth,
+                    ShaftAvailable = (bool)l.survey.ShaftAvailable,
+                    ShaftWidth = (int)l.survey.ShaftWidth,
+                    OverheadClearance = (int)l.survey.OverheadClearance,
+                    PowerSupply = (string)l.survey.PowerSupply,
+                    CivicReady = (bool)l.survey.CivicReady,
+                    MachineRoom = (bool)l.survey.MachineRoom,
+                    MLROption = (bool)l.survey.MLROption,
                     CivicWorkRequired = l.survey.CivicWorkRequired,
                     AccessRoute = l.survey.AccessRoute,
                     SafetyRisk = l.survey.SafetyRisk,
@@ -148,7 +156,12 @@ namespace FdkElevator.Services
                  Building_Address = l.Building_Address,
                  NumberofFloors = l.NumberofFloors,
                  NumberofElevators = l.NumberofElevators,
-                 SalesPersonId = l.SalesPersonId
+                 SalesPersonId = l.SalesPersonId,
+                 leadType = l.leadType,
+                 source = l.source,
+                 urgency = l.urgency,
+                 budget = l.budget,
+                 decisionMaker = l.decisionMaker,
              }).ToList()
          );
 

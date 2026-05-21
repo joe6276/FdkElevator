@@ -4,6 +4,7 @@ using FdkElevator.AppDbContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FdkElevator.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260521101050_surveyor_notes")]
+    partial class surveyor_notes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -67,46 +70,6 @@ namespace FdkElevator.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("FdkElevator.Models.Leads.Activity", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("LeadId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Notes")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("TenantId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("type")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("LeadId");
-
-                    b.HasIndex("TenantId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Activities");
-                });
-
             modelBuilder.Entity("FdkElevator.Models.Leads.Lead", b =>
                 {
                     b.Property<Guid>("Id")
@@ -148,35 +111,16 @@ namespace FdkElevator.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ReasonForLoss")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<Guid>("SalesPersonId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("TenantId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<decimal?>("budget")
-                        .HasColumnType("decimal(18,2)");
-
                     b.Property<int>("clientCategory")
                         .HasColumnType("int");
 
-                    b.Property<string>("decisionMaker")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("leadStatus")
-                        .HasColumnType("int");
-
-                    b.Property<int>("leadType")
-                        .HasColumnType("int");
-
-                    b.Property<int>("source")
-                        .HasColumnType("int");
-
-                    b.Property<int>("urgency")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -453,33 +397,6 @@ namespace FdkElevator.Migrations
                     b.Navigation("ten");
                 });
 
-            modelBuilder.Entity("FdkElevator.Models.Leads.Activity", b =>
-                {
-                    b.HasOne("FdkElevator.Models.Leads.Lead", "Lead")
-                        .WithMany("activities")
-                        .HasForeignKey("LeadId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("FdkElevator.Models.Tenants.Tenant", "Tenant")
-                        .WithMany("activities")
-                        .HasForeignKey("TenantId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("FdkElevator.Models.Auth.User", "user")
-                        .WithMany("activities")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Lead");
-
-                    b.Navigation("Tenant");
-
-                    b.Navigation("user");
-                });
-
             modelBuilder.Entity("FdkElevator.Models.Leads.Lead", b =>
                 {
                     b.HasOne("FdkElevator.Models.Auth.User", "User")
@@ -579,8 +496,6 @@ namespace FdkElevator.Migrations
                     b.Navigation("Quotation")
                         .IsRequired();
 
-                    b.Navigation("activities");
-
                     b.Navigation("leads");
 
                     b.Navigation("surveyors");
@@ -588,8 +503,6 @@ namespace FdkElevator.Migrations
 
             modelBuilder.Entity("FdkElevator.Models.Leads.Lead", b =>
                 {
-                    b.Navigation("activities");
-
                     b.Navigation("quotation")
                         .IsRequired();
 
@@ -606,8 +519,6 @@ namespace FdkElevator.Migrations
                 {
                     b.Navigation("TenantSub")
                         .IsRequired();
-
-                    b.Navigation("activities");
 
                     b.Navigation("surveys");
 

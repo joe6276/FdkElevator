@@ -57,5 +57,7 @@ namespace FdkElevator.Models.Auth
 
 
         public Quotation Quotation { get; set; }
+
+        public ICollection<Activity> activities { get; set; }
     }
 }

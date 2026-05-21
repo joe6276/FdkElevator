@@ -17,13 +17,35 @@ namespace FdkElevator.Services
             _user = user;
         }
 
-    
-        public async Task<string> addSurvey(Survey survey)
+        public string addSurvey(Survey survey)
         {
+            _context.Surveys.Add(survey);
+            _context.SaveChanges();
+            return " Survey Added Successfully!";
+        }
 
+        public Survey GetSurveyById(Guid id)
+        {
+            return _context.Surveys.Where(x => x.Id == id).FirstOrDefault();
+        }
+
+        public List<Survey> getSurveyList(Guid surveyorId)
+        {
+         return _context.Surveys.Where(x => x.SurveyorId == surveyorId).ToList();
+        }
+
+        public List<Survey> GetSurveys(Guid tenantId)
+        {
+            return _context.Surveys.Where(x => x.TenantId == tenantId).ToList();
+        }
+
+        public async Task<string> update(Survey survey)
+        {
             try
             {
                 var lead = _context.Leads.Where(x => x.Id == survey.LeadId).FirstOrDefault();
+
+                var existingUser = _context.Users.Where(x => x.Email == lead.Email).FirstOrDefault();
 
                 var client = new User()
                 {
@@ -32,27 +54,22 @@ namespace FdkElevator.Services
                     PhoneNumber = lead.PhoneNumber,
                     Role = Role.Client,
                     TenantId = survey.TenantId,
-                   
+
                 };
 
-                await _user.addUser(client);
-                _context.Surveys.Add(survey);
+                if (existingUser == null)
+                {
+                    await _user.addUser(client);
+                }
+
+                _context.Surveys.Update(survey);
                 _context.SaveChanges();
                 return " Survey Added Successfully!";
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 return ex.Message;
             }
-        }
-
-        public Survey GetSurveyById(Guid id)
-        {
-            return _context.Surveys.Where(x => x.Id == id).FirstOrDefault();
-        }
-
-        public List<Survey> GetSurveys(Guid tenantId)
-        {
-            return _context.Surveys.Where(x => x.TenantId == tenantId).ToList();
         }
 
         public string updateSurvey(Survey survey)

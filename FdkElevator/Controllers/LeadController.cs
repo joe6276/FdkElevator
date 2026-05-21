@@ -146,5 +146,31 @@ namespace FdkElevator.Controllers
             }
 
         }
+
+        [HttpPut("updatelostlead/{leadId}")]
+        public ActionResult<string> UpdateLostLead(Guid leadId, String reason)
+        {
+            try
+            {   
+
+                var lead = _lead.GetLeadById1(leadId);
+                if (lead == null)
+                {
+                    return NotFound("Lead not found");
+                }
+
+                lead.ReasonForLoss = reason;
+                lead.leadStatus = Status.Lost;
+
+                var result = _lead.UpdateLead(lead);
+                return Ok(result);
+
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+
     }
 }

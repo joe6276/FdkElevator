@@ -30,5 +30,7 @@ namespace FdkElevator.AppDbContext
         public DbSet<QuoteItem> QuoteItems { get; set; }
 
 
+        public DbSet<Activity> Activities { get; set; }
+
     }
 }

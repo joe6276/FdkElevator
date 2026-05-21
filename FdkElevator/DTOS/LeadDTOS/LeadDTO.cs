@@ -33,6 +33,16 @@ namespace FdkElevator.DTOS.LeadDTOS
 
         public Guid SalesPersonId { get; set; }
 
+        public LeadSource source { get; set; }
+
+        public LeadType leadType { get; set; }
+
+        public Urgency urgency { get; set; }
+
+        public decimal? budget { get; set; }
+
+        public string decisionMaker { get; set; } = string.Empty;
+
     }
 
     public class LeadResDTO
@@ -62,6 +72,17 @@ namespace FdkElevator.DTOS.LeadDTOS
         public Guid SalesPersonId { get; set; }
 
         public Status leadStatus { get; set; }
+
+        public LeadSource source { get; set; }
+
+        public LeadType leadType { get; set; }
+
+        public Urgency urgency { get; set; }
+
+        public decimal? budget { get; set; }
+
+        public string decisionMaker { get; set; } = string.Empty;
+
     }
 
     public class LeadResponseDTO
@@ -94,6 +115,17 @@ namespace FdkElevator.DTOS.LeadDTOS
         public Status leadStatus { get; set; }
 
         public SurveyResposeDTO? survey { get; set; }
+
+
+        public LeadSource source { get; set; }
+
+        public LeadType leadType { get; set; }
+
+        public Urgency urgency { get; set; }
+
+        public decimal? budget { get; set; }
+
+        public string decisionMaker { get; set; } = string.Empty;
 
     }
 
