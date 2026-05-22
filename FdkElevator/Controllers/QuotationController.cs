@@ -49,6 +49,7 @@ namespace FdkElevator.Controllers
                 }
                  var config= _mapper.Map<LiftConfiguration>(quotationDTO.AddLiftConfiguration);
                 quotation.configuration = config;
+                quotation.Payment = quotationPayments;
                 var result = _quotation.addQuotation(quotation);
                 return Ok(result);
             }

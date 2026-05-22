@@ -52,6 +52,7 @@ namespace FdkElevator.Services
                 PaymentTerms = new QuotationPaymentResponseDTO
                 {
                     Id = q.Payment.FirstOrDefault().Id,
+
                     Amount = q.Payment.FirstOrDefault().Amount,
                     Status = q.Payment.FirstOrDefault().Status,
                 },

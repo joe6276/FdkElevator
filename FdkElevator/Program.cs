@@ -77,8 +77,10 @@ builder.Services.AddScoped<IQuotation, QuotationService>();
 builder.Services.AddScoped<IClient, ClientService>();
 builder.Services.AddScoped<IActivity, ActivityService>();
 builder.Services.AddScoped<IRevision, RevisionService>();
-
+builder.Services.AddScoped<IQuotationPayment, QuotationPaymentService>();
 //custom
+Stripe.StripeConfiguration.ApiKey = builder.Configuration.GetSection("Stripe:Key").Get<string>();
+
 
 builder.AddAppAuthentication();
 builder.AddSwaggenGenExtension();

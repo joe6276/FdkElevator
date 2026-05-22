@@ -65,6 +65,7 @@ namespace FdkElevator.Controllers
 
                 var config = _mapper.Map<LiftConfigurationRevision>(revisionDTO.AddLiftConfiguration);
                 revision.configuration = config;
+                revision.Payment = quotationPayments;
                 var result = _revision.addRevision(revision);
                 _quotation.updateRevisedQuote(QuotationId);
 

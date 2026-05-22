@@ -1,0 +1,122 @@
+﻿using FdkElevator.AppDbContext;
+using FdkElevator.DTOS.TenantDTOS;
+using FdkElevator.Models.Quotations;
+using FdkElevator.Services.IServices;
+using Stripe;
+using Stripe.Checkout;
+
+namespace FdkElevator.Services
+{
+    public class QuotationPaymentService : IQuotationPayment
+    {
+        private readonly ApplicationDbContext _context;
+        public QuotationPaymentService(ApplicationDbContext context)
+        {
+            _context = context;
+        }
+        public List<QuotationPayment> GetQuotations(Guid clientId)
+        {
+            var payments = _context.quotationPayments.Where(x=>x.ClientId == clientId).ToList();
+            return payments;
+
+        }
+
+        public PaymentResponseDTO MakePayment(Guid Id)
+        {
+            var payment = _context.quotationPayments.FirstOrDefault(x => x.Id == Id);
+
+            if (payment == null)
+            {
+                throw new Exception("Payment not Found");
+            }
+
+            var options = new SessionCreateOptions()
+            {
+                SuccessUrl = "https://autopartafrica.com/success",
+                CancelUrl = "https://autopartafrica.com/orders/payment-cancelled",
+                Mode = "payment",
+                LineItems = new List<SessionLineItemOptions>()
+            };
+
+            var sessionLineItem = new SessionLineItemOptions()
+            {
+                PriceData = new SessionLineItemPriceDataOptions()
+                {
+                    Currency = "usd",
+                    UnitAmountDecimal = payment.Amount * 100,
+                    ProductData = new SessionLineItemPriceDataProductDataOptions()
+                    {
+                        Name = $"Payment for Quotation {payment.QuotationId}"
+                    }
+                },
+                Quantity = 1
+
+            };
+
+            options.LineItems.Add(sessionLineItem);
+
+
+            var service = new SessionService();
+            var session = service.Create(options);
+
+            payment.StripeSessionId = session.Id;
+
+            _context.quotationPayments.Update(payment);
+            _context.SaveChanges();
+
+            var response = new PaymentResponseDTO()
+            {
+                StripeSessionId = session.Id,
+                URL=session.Url
+            };
+
+            return response;
+        }
+
+        public string validatePayment(string stripeSessionId)
+        {
+            var payment = _context.quotationPayments.FirstOrDefault(p => p.StripeSessionId == stripeSessionId);
+
+            if (payment == null)
+            {
+                throw new Exception("Payment not Found");
+            }
+
+            var service = new SessionService();
+            var session = service.Get(stripeSessionId);
+
+            var paymentIntentService = new PaymentIntentService();
+
+            var id = session.PaymentIntentId;
+
+            if (id == null)
+            {
+                throw new Exception("Payment Intent Id is null");
+            }
+
+            PaymentIntent paymentIntent = paymentIntentService.Get(id);
+
+            if (paymentIntent.Status == "succeeded")
+            {
+                payment.Status = PaymentStatus.Completed;
+                payment.PaymentIntentId = paymentIntent.Id;
+                _context.quotationPayments.Update(payment);
+                _context.SaveChanges();
+                return "Payment Successful";
+            }
+            else if (paymentIntent.Status == "requires_payment_method" || paymentIntent.Status == "requires_action")
+            {
+                payment.Status = PaymentStatus.Failed;
+                payment.PaymentIntentId = paymentIntent.Id;
+                _context.quotationPayments.Update(payment);
+                _context.SaveChanges();
+                return "Payment Failed";
+            }
+            else
+            {
+                return "Payment is still pending";
+
+            }
+        }
+    }
+}
