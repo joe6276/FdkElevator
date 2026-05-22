@@ -4,6 +4,7 @@ using FdkElevator.AppDbContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FdkElevator.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260522084156_quote_payment1")]
+    partial class quote_payment1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -240,9 +243,6 @@ namespace FdkElevator.Migrations
                     b.Property<Guid>("QuotationId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("RevisionId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("Speed")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -256,58 +256,7 @@ namespace FdkElevator.Migrations
                     b.HasIndex("QuotationId")
                         .IsUnique();
 
-                    b.HasIndex("RevisionId");
-
                     b.ToTable("liftConfigurations");
-                });
-
-            modelBuilder.Entity("FdkElevator.Models.Quotations.LiftConfigurationRevision", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("CabinFinish")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Capacity")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ControllerType")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("DoorType")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("DriveType")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LiftType")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("RevisionId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Speed")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Stops")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RevisionId")
-                        .IsUnique();
-
-                    b.ToTable("liftConfigurationsRevision");
                 });
 
             modelBuilder.Entity("FdkElevator.Models.Quotations.Quotation", b =>
@@ -393,16 +342,10 @@ namespace FdkElevator.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("DueDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("PaymentIntentId")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("QuotationId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("RevisionId")
+                    b.Property<Guid>("QuotationId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Status")
@@ -416,8 +359,6 @@ namespace FdkElevator.Migrations
                     b.HasIndex("ClientId");
 
                     b.HasIndex("QuotationId");
-
-                    b.HasIndex("RevisionId");
 
                     b.ToTable("quotationPayments");
                 });
@@ -453,107 +394,6 @@ namespace FdkElevator.Migrations
                     b.HasIndex("QuotationId");
 
                     b.ToTable("QuoteItems");
-                });
-
-            modelBuilder.Entity("FdkElevator.Models.Quotations.QuoteItemRevision", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ImageURL")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ItemName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<float>("Price")
-                        .HasColumnType("real");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
-                    b.Property<Guid>("revisionId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("revisionId");
-
-                    b.ToTable("quoteItemRevisions");
-                });
-
-            modelBuilder.Entity("FdkElevator.Models.Quotations.Revision", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("AmcOption")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<float>("Amount")
-                        .HasColumnType("real");
-
-                    b.Property<Guid>("ClientId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<decimal>("CustomsCost")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<float>("Discount")
-                        .HasColumnType("real");
-
-                    b.Property<decimal>("FreightCost")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("InstallationCost")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<Guid>("LeadId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("QuotationId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("RevisionNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<float>("SubTotal")
-                        .HasColumnType("real");
-
-                    b.Property<decimal>("SubcontractorCost")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("ValidityDays")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Warranty")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ClientId");
-
-                    b.HasIndex("LeadId");
-
-                    b.HasIndex("QuotationId");
-
-                    b.ToTable("revisions");
                 });
 
             modelBuilder.Entity("FdkElevator.Models.Surveyors.Survey", b =>
@@ -784,24 +624,7 @@ namespace FdkElevator.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("FdkElevator.Models.Quotations.Revision", "revision")
-                        .WithMany()
-                        .HasForeignKey("RevisionId");
-
                     b.Navigation("quotation");
-
-                    b.Navigation("revision");
-                });
-
-            modelBuilder.Entity("FdkElevator.Models.Quotations.LiftConfigurationRevision", b =>
-                {
-                    b.HasOne("FdkElevator.Models.Quotations.Revision", "revision")
-                        .WithOne("configuration")
-                        .HasForeignKey("FdkElevator.Models.Quotations.LiftConfigurationRevision", "RevisionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("revision");
                 });
 
             modelBuilder.Entity("FdkElevator.Models.Quotations.Quotation", b =>
@@ -833,15 +656,11 @@ namespace FdkElevator.Migrations
 
                     b.HasOne("FdkElevator.Models.Quotations.Quotation", "quotation")
                         .WithMany("Payment")
-                        .HasForeignKey("QuotationId");
-
-                    b.HasOne("FdkElevator.Models.Quotations.Revision", "revision")
-                        .WithMany("Payment")
-                        .HasForeignKey("RevisionId");
+                        .HasForeignKey("QuotationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("quotation");
-
-                    b.Navigation("revision");
 
                     b.Navigation("user");
                 });
@@ -855,44 +674,6 @@ namespace FdkElevator.Migrations
                         .IsRequired();
 
                     b.Navigation("Quotation");
-                });
-
-            modelBuilder.Entity("FdkElevator.Models.Quotations.QuoteItemRevision", b =>
-                {
-                    b.HasOne("FdkElevator.Models.Quotations.Revision", "revision")
-                        .WithMany("Items")
-                        .HasForeignKey("revisionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("revision");
-                });
-
-            modelBuilder.Entity("FdkElevator.Models.Quotations.Revision", b =>
-                {
-                    b.HasOne("FdkElevator.Models.Auth.User", "User")
-                        .WithMany()
-                        .HasForeignKey("ClientId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("FdkElevator.Models.Leads.Lead", "Lead")
-                        .WithMany()
-                        .HasForeignKey("LeadId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("FdkElevator.Models.Quotations.Quotation", "Quotation")
-                        .WithMany("revisions")
-                        .HasForeignKey("QuotationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Lead");
-
-                    b.Navigation("Quotation");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("FdkElevator.Models.Surveyors.Survey", b =>
@@ -964,18 +745,6 @@ namespace FdkElevator.Migrations
                 });
 
             modelBuilder.Entity("FdkElevator.Models.Quotations.Quotation", b =>
-                {
-                    b.Navigation("Items");
-
-                    b.Navigation("Payment");
-
-                    b.Navigation("configuration")
-                        .IsRequired();
-
-                    b.Navigation("revisions");
-                });
-
-            modelBuilder.Entity("FdkElevator.Models.Quotations.Revision", b =>
                 {
                     b.Navigation("Items");
 

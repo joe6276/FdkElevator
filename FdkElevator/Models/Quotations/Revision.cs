@@ -3,20 +3,8 @@ using FdkElevator.Models.Leads;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FdkElevator.Models.Quotations
-{   
-
-    public enum QuotationStatus
-    {
-        Draft,
-        PendingApproval,
-        Approved,
-        Sent,
-        Revised,
-        Accepted,
-        Rejected,
-        Expired
-    }
-    public class Quotation
+{
+    public class Revision
     {
         public Guid Id { get; set; }
         [ForeignKey("LeadId")]
@@ -33,14 +21,12 @@ namespace FdkElevator.Models.Quotations
         public float SubTotal { get; set; }
 
         public float Discount { get; set; }
-        public ICollection<QuoteItem> Items { get; set; }
+        public ICollection<QuoteItemRevision> Items { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
         public QuotationStatus Status { get; set; }
 
-        public string QuotationNumber { get; set; }
-
-        public int Revision { get; set; } = 1;
+        public string RevisionNumber { get; set; }
 
         public decimal InstallationCost { get; set; }
 
@@ -53,12 +39,15 @@ namespace FdkElevator.Models.Quotations
         public string Warranty { get; set; }
         public string AmcOption { get; set; }
 
+
+        public Guid QuotationId { get; set; }
+        [ForeignKey("QuotationId")]
+        public Quotation Quotation { get; set; }
         public ICollection<QuotationPayment> Payment { get; set; }
 
         public int ValidityDays { get; set; }
 
-        public LiftConfiguration configuration { get; set; }
+        public LiftConfigurationRevision configuration { get; set; }
 
-        public ICollection<Revision> revisions { get; set; } 
     }
 }

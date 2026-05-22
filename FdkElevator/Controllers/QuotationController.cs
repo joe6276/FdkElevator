@@ -34,8 +34,20 @@ namespace FdkElevator.Controllers
                 quotation.SubTotal = quotation.Amount - discount;
                 quotation.Discount=discount;
 
+                var quotationPayments= new List<QuotationPayment>();
+                foreach (var item in quotationDTO.quotationPayments)
+                {
+                    var payment = new QuotationPayment
+                    {
+                        Amount = item.Amount,
+                        ClientId = quotationDTO.ClientId,
+                        DueDate= item.DueDate
+                    };
 
-                var config= _mapper.Map<LiftConfiguration>(quotationDTO.AddLiftConfiguration);
+                    quotationPayments.Add(payment);
+
+                }
+                 var config= _mapper.Map<LiftConfiguration>(quotationDTO.AddLiftConfiguration);
                 quotation.configuration = config;
                 var result = _quotation.addQuotation(quotation);
                 return Ok(result);

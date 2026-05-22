@@ -57,6 +57,9 @@ builder.Services.AddAutoMapper(cfg =>
     cfg.CreateMap<AssignSurveyDTO, Survey>();
     cfg.CreateMap<AddActivityDTO, Activity>();
     cfg.CreateMap<AddLiftConfiguration, LiftConfiguration>();
+    cfg.CreateMap<AddLiftConfiguration, LiftConfigurationRevision>();
+    cfg.CreateMap<RevisionDTO, Revision>();
+    cfg.CreateMap<QuotationItemDTO, QuoteItemRevision>();
 });
 
 //Services
@@ -73,6 +76,7 @@ builder.Services.AddScoped<ISurvey, SurveyService>();
 builder.Services.AddScoped<IQuotation, QuotationService>();
 builder.Services.AddScoped<IClient, ClientService>();
 builder.Services.AddScoped<IActivity, ActivityService>();
+builder.Services.AddScoped<IRevision, RevisionService>();
 
 //custom
 

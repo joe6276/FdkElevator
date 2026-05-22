@@ -1,6 +1,7 @@
 ﻿using FdkElevator.Models.Auth;
 using FdkElevator.Models.Leads;
 using FdkElevator.Models.Quotations;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FdkElevator.DTOS.QuotationDTOS
@@ -36,8 +37,52 @@ namespace FdkElevator.DTOS.QuotationDTOS
         public int ValidityDays { get; set; }
 
         public AddLiftConfiguration AddLiftConfiguration { get; set; } = new AddLiftConfiguration();
+
+        public ICollection<QuotationPaymentDTO> quotationPayments { get; set; } = new List<QuotationPaymentDTO>();
     }
-    public class QuotationResponseDTO
+
+    public class RevisionDTO
+    {
+
+        
+        public float Discount { get; set; }
+
+        public ICollection<QuotationItemDTO> Items { get; set; }
+
+        public QuotationStatus Status { get; set; }
+
+        public int Revision { get; set; } = 1;
+
+        public decimal InstallationCost { get; set; }
+
+        public decimal FreightCost { get; set; }
+
+        public decimal CustomsCost { get; set; }
+
+        public decimal SubcontractorCost { get; set; }
+
+        public string Warranty { get; set; }
+        public string AmcOption { get; set; }
+
+        public string PaymentTerms { get; set; }
+
+        public int ValidityDays { get; set; }
+
+        public AddLiftConfiguration AddLiftConfiguration { get; set; } = new AddLiftConfiguration();
+
+        public ICollection<QuotationPaymentDTO> quotationPayments { get; set; } = new List<QuotationPaymentDTO>();
+    }
+
+    public class QuotationRevision
+    {
+
+        public Guid Id { get; set; }
+
+        public Guid ClientId { get; set; }
+
+        public Guid LeadId { get; set; }
+    }
+        public class QuotationResponseDTO
     {
 
         public Guid LeadId { get; set; }
@@ -66,11 +111,56 @@ namespace FdkElevator.DTOS.QuotationDTOS
         public string Warranty { get; set; }
         public string AmcOption { get; set; }
 
-        public string PaymentTerms { get; set; }
+        public QuotationPaymentResponseDTO PaymentTerms { get; set; }
 
         public int ValidityDays { get; set; }
         public ICollection<QuotationItemDTO> Items { get; set; }
         public AddLiftConfiguration config { get; set; } 
+    }
+
+
+    public class RevisionResponseDTO
+    {
+
+        public Guid LeadId { get; set; }
+
+        public Guid ClientId { get; set; }
+        public float Amount { get; set; }
+
+        public float SubTotal { get; set; }
+
+        public float Discount { get; set; }
+
+        public QuotationStatus Status { get; set; }
+
+        public string QuotationNumber { get; set; }
+
+        public int Revision { get; set; } = 1;
+
+        public decimal InstallationCost { get; set; }
+
+        public decimal FreightCost { get; set; }
+
+        public decimal CustomsCost { get; set; }
+
+        public decimal SubcontractorCost { get; set; }
+
+        public string Warranty { get; set; }
+        public string AmcOption { get; set; }
+
+        public QuotationPaymentResponseDTO PaymentTerms { get; set; }
+
+        public int ValidityDays { get; set; }
+        public ICollection<QuotationItemDTO> Items { get; set; }
+        public AddLiftConfiguration config { get; set; }
+    }
+
+
+    public class QuotationPaymentResponseDTO
+    {   
+        public Guid Id { get; set; }
+        public PaymentStatus Status { get; set; }
+        public decimal Amount { get; set; }
     }
 
 }

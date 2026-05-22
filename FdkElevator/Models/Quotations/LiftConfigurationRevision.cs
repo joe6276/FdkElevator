@@ -2,9 +2,8 @@
 
 namespace FdkElevator.Models.Quotations
 {
-    public class LiftConfiguration
+    public class LiftConfigurationRevision
     {
-
         public Guid Id { get; set; }
 
         public string LiftType { get; set; }
@@ -20,13 +19,9 @@ namespace FdkElevator.Models.Quotations
         public string ControllerType { get; set; }
         public string CabinFinish { get; set; }
 
-        public Guid QuotationId { get; set; }
-        [ForeignKey("QuotationId")]
-        public Quotation quotation { get; set; }
-
         [ForeignKey("RevisionId")]
         public Revision revision { get; set; }
-        public Guid? RevisionId { get; set; }
+        public Guid RevisionId { get; set; }
 
     }
 }

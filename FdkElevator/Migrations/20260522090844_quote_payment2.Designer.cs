@@ -4,6 +4,7 @@ using FdkElevator.AppDbContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FdkElevator.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260522090844_quote_payment2")]
+    partial class quote_payment2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -522,10 +525,7 @@ namespace FdkElevator.Migrations
                     b.Property<Guid>("LeadId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("QuotationId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("RevisionNumber")
+                    b.Property<string>("QuotationNumber")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -550,8 +550,6 @@ namespace FdkElevator.Migrations
                     b.HasIndex("ClientId");
 
                     b.HasIndex("LeadId");
-
-                    b.HasIndex("QuotationId");
 
                     b.ToTable("revisions");
                 });
@@ -882,15 +880,7 @@ namespace FdkElevator.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("FdkElevator.Models.Quotations.Quotation", "Quotation")
-                        .WithMany("revisions")
-                        .HasForeignKey("QuotationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Lead");
-
-                    b.Navigation("Quotation");
 
                     b.Navigation("User");
                 });
@@ -971,8 +961,6 @@ namespace FdkElevator.Migrations
 
                     b.Navigation("configuration")
                         .IsRequired();
-
-                    b.Navigation("revisions");
                 });
 
             modelBuilder.Entity("FdkElevator.Models.Quotations.Revision", b =>

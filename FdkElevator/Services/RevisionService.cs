@@ -1,65 +1,68 @@
 ﻿using FdkElevator.AppDbContext;
 using FdkElevator.DTOS.QuotationDTOS;
-using FdkElevator.Models.Leads;
 using FdkElevator.Models.Quotations;
 using FdkElevator.Services.IServices;
-using Microsoft.EntityFrameworkCore;
 
 namespace FdkElevator.Services
 {
-    public class QuotationService : IQuotation
-    {   
+    public class RevisionService : IRevision
+    {
 
         private readonly ApplicationDbContext _context;
 
-        public QuotationService(ApplicationDbContext context)
+        public RevisionService(ApplicationDbContext context)
         {
             _context = context;
         }
-
         public string GenerateTrackingNumber()
         {
-            return $"QTT-{Guid.NewGuid().ToString("N")[..8].ToUpper()}";
+            return $"RVS-{Guid.NewGuid().ToString("N")[..8].ToUpper()}";
         }
-        public string addQuotation(Quotation quotation)
+
+        public string addRevision(Revision revision)
         {
-            quotation.QuotationNumber = GenerateTrackingNumber();
-            _context.Quotations.Add(quotation);
-            _context.SaveChanges();
-            return "Quotation added successfully!";
+            try
+            {
+                _context.revisions.Add(revision);
+                revision.RevisionNumber = GenerateTrackingNumber();
+                _context.SaveChanges();
+                return "Revision added successfully";
+            }
+            catch(Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
-
-        public List<QuotationResponseDTO> getAllQuotations(Guid tenantId)
-        {   
+        public List<RevisionResponseDTO> getAllRevisions(Guid tenantId)
+        {
             var leadIds = _context.Leads.Where(l => l.TenantId == tenantId).Select(l => l.Id).ToList();
-           
-            return _context.Quotations.Where(q => leadIds.Contains(q.LeadId)).Select(q => new QuotationResponseDTO
+
+            return _context.revisions.Where(q => leadIds.Contains(q.LeadId)).Select(q => new RevisionResponseDTO
             {
                 SubTotal = q.SubTotal,
                 Amount = q.Amount,
                 ClientId = q.ClientId,
                 Discount = q.Discount,
                 LeadId = q.LeadId,
-                Status=q.Status,
-                Revision=q.Revision,
-                InstallationCost=q.InstallationCost,
-                FreightCost= q.FreightCost,
-                CustomsCost=q.CustomsCost,
-                SubcontractorCost=q.SubcontractorCost,
-                Warranty=q.Warranty,
-                AmcOption=q.AmcOption,
+                Status = q.Status,
+                InstallationCost = q.InstallationCost,
+                FreightCost = q.FreightCost,
+                CustomsCost = q.CustomsCost,
+                SubcontractorCost = q.SubcontractorCost,
+                Warranty = q.Warranty,
+                AmcOption = q.AmcOption,
                 PaymentTerms = new QuotationPaymentResponseDTO
                 {
                     Id = q.Payment.FirstOrDefault().Id,
                     Amount = q.Payment.FirstOrDefault().Amount,
                     Status = q.Payment.FirstOrDefault().Status,
                 },
-                ValidityDays =q.ValidityDays,
-                QuotationNumber=q.QuotationNumber,
-                config= new AddLiftConfiguration
+                ValidityDays = q.ValidityDays,
+                QuotationNumber = q.RevisionNumber,
+                config = new AddLiftConfiguration
                 {
-                    LiftType=q.configuration.LiftType,
+                    LiftType = q.configuration.LiftType,
                     DriveType = q.configuration.DriveType,
                     Capacity = q.configuration.Capacity,
                     Speed = q.configuration.Speed,
@@ -77,12 +80,11 @@ namespace FdkElevator.Services
                     Quantity = i.Quantity
                 }).ToList()
             }).ToList();
-          
         }
 
-        public List<QuotationResponseDTO> getQuotationByClientId(Guid id)
+        public List<RevisionResponseDTO> getRevisionByClientId(Guid id)
         {
-            return _context.Quotations.Where(q => q.ClientId == id).Select(q => new QuotationResponseDTO
+            return _context.revisions.Where(q => q.ClientId == id).Select(q => new RevisionResponseDTO
             {
                 SubTotal = q.SubTotal,
                 Amount = q.Amount,
@@ -90,7 +92,6 @@ namespace FdkElevator.Services
                 Discount = q.Discount,
                 LeadId = q.LeadId,
                 Status = q.Status,
-                Revision = q.Revision,
                 InstallationCost = q.InstallationCost,
                 FreightCost = q.FreightCost,
                 CustomsCost = q.CustomsCost,
@@ -126,10 +127,10 @@ namespace FdkElevator.Services
             }).ToList();
         }
 
-        public QuotationResponseDTO getQuotationById(Guid id)
+        public RevisionResponseDTO getRevisionById(Guid id)
         {
-        
-            return _context.Quotations.Where(q => q.Id == id).Select(q => new QuotationResponseDTO
+
+            return _context.revisions.Where(q => q.Id == id).Select(q => new RevisionResponseDTO
             {
                 SubTotal = q.SubTotal,
                 Amount = q.Amount,
@@ -137,7 +138,6 @@ namespace FdkElevator.Services
                 Discount = q.Discount,
                 LeadId = q.LeadId,
                 Status = q.Status,
-                Revision = q.Revision,
                 InstallationCost = q.InstallationCost,
                 FreightCost = q.FreightCost,
                 CustomsCost = q.CustomsCost,
@@ -173,10 +173,9 @@ namespace FdkElevator.Services
             }).FirstOrDefault();
         }
 
-        public QuotationResponseDTO getQuotationByLeadId(Guid LeadId)
+        public RevisionResponseDTO getRevisionByLeadId(Guid LeadId)
         {
-          
-            return _context.Quotations.Where(q => q.LeadId == LeadId).Select(q => new QuotationResponseDTO
+            return _context.revisions.Where(q => q.LeadId == LeadId).Select(q => new RevisionResponseDTO
             {
                 SubTotal = q.SubTotal,
                 Amount = q.Amount,
@@ -184,7 +183,6 @@ namespace FdkElevator.Services
                 Discount = q.Discount,
                 LeadId = q.LeadId,
                 Status = q.Status,
-                Revision = q.Revision,
                 InstallationCost = q.InstallationCost,
                 FreightCost = q.FreightCost,
                 CustomsCost = q.CustomsCost,
@@ -220,47 +218,6 @@ namespace FdkElevator.Services
             }).FirstOrDefault();
         }
 
-        public string updateQuotation(Guid id, QuotationStatus status)
-        {
-            var quotation = _context.Quotations.FirstOrDefault(q => q.Id == id);
-            if (quotation == null)
-            {
-                throw new Exception("Quotation not found!");
-            }
-
-            quotation.Status = status;
-            _context.Quotations.Update(quotation);
-            _context.SaveChanges();
-            return "Quotation updated successfully!";
-        }
-
-        public QuotationRevision GetQuotationById(Guid id)
-        {
-            var quotation = _context.Quotations.Where(x => x.Id == id).Select(x=> new QuotationRevision
-            {
-                Id = x.Id,
-                LeadId = x.LeadId,
-                ClientId = x.ClientId,
-
-
-            }).FirstOrDefault();
-            return quotation;
-        }
-
-        public string updateRevisedQuote(Guid Id)
-        {
-            var quotation = _context.Quotations.Where(x => x.Id == Id).FirstOrDefault();
-
-            if(quotation == null)
-            {
-                throw new Exception("Quotation Not Found");
-            }
-
-            quotation.Status = QuotationStatus.Revised;
-            _context.Quotations.Update(quotation);
-            _context.SaveChanges();
-
-            return "Quotation Updated Successfully!";
-        }
+ 
     }
 }

@@ -35,5 +35,12 @@ namespace FdkElevator.AppDbContext
 
         public DbSet<LiftConfiguration> liftConfigurations { get; set; }
 
+        public DbSet<QuotationPayment> quotationPayments { get; set; }
+
+        public DbSet<LiftConfigurationRevision> liftConfigurationsRevision { get; set; }
+
+        public DbSet<Revision> revisions { get; set; }
+        public DbSet<QuoteItemRevision> quoteItemRevisions { get; set; }
+
     }
 }

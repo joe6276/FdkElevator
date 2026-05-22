@@ -17,5 +17,9 @@ namespace FdkElevator.Services.IServices
         QuotationResponseDTO getQuotationById(Guid id);
 
         string updateQuotation(Guid id, QuotationStatus status);
+
+        QuotationRevision GetQuotationById(Guid id);
+
+        string updateRevisedQuote(Guid Id);
     }
 }
