@@ -97,29 +97,6 @@ namespace FdkElevator.Controllers
 
         }
 
-
-        [HttpPut("updateSurvey/{Id}")]
-        public ActionResult<string> UpdateSurvey(Guid Id, SurveyDTO surveyDTO)
-        {
-            try
-            {
-
-                var existingSurvey = _survey.GetSurveyById(Id);
-
-                if (existingSurvey == null)
-                {
-                    return NotFound("Survey not found");
-                }
-                var survey = _mapper.Map(surveyDTO, existingSurvey);
-
-                var result = _survey.updateSurvey(survey);
-                return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Internal server error: {ex.Message}");
-            }
-
-        }
+        
     }
 }
