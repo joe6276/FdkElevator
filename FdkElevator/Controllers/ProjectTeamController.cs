@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using FdkElevator.DTOS.ProjectDTOS;
 using FdkElevator.Models.Projects;
-using FdkElevator.Services;
+using FdkElevator.Services.IServices;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -22,13 +22,13 @@ namespace FdkElevator.Controllers
         }
 
         [HttpPost("addProjectTeam")]
-        public ActionResult<string> addProjectTeam(List<AddProjectTeamDTO> newprojectTeam)
+        public async Task<ActionResult<string>> addProjectTeam(List<AddProjectTeamDTO> newprojectTeam)
         {
             try
             {
 
                 var projectTeam = _mapper.Map<List<ProjectTeam>>(newprojectTeam);
-                var result = _projectTeam.addProjectTeam(projectTeam);
+                var result = await _projectTeam.addProjectTeam(projectTeam);
                 return Ok(result);
             }
             catch (Exception ex)

@@ -25,6 +25,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="Templates\project.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Templates\resetPassword.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

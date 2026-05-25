@@ -91,5 +91,48 @@ namespace FdkElevator.Services
             }
 
         }
+
+
+        public async Task<bool> projectEmail(string clientName, string project_name, string clientEmail, string createdDate)
+        {
+
+            var myemail = _configuration.GetSection("EmailService:Email").Get<string>();
+            var password = _configuration.GetSection("EmailService:Password").Get<string>();
+            var frontend = _configuration.GetSection("EmailService:FrontendURL").Get<string>();
+
+            MimeMessage message1 = new MimeMessage();
+            message1.From.Add(new MailboxAddress("Project Created", myemail));
+
+            message1.To.Add(new MailboxAddress(clientName, clientEmail));
+
+            message1.Subject = "Project Created Successfully!";
+
+            var builder = new BodyBuilder();
+            string htmlTemplate = await File.ReadAllTextAsync("Templates/project.html");
+            builder.HtmlBody = htmlTemplate
+                .Replace("{name}", clientName)
+                .Replace("{project_name}", project_name)
+                .Replace("{created_date}", createdDate);
+
+            message1.Body = builder.ToMessageBody();
+
+            var client = new MailKit.Net.Smtp.SmtpClient();
+            try
+            {
+                client.Connect("smtp.gmail.com", 587, false);
+
+                client.Authenticate(myemail, password);
+
+                await client.SendAsync(message1);
+
+                await client.DisconnectAsync(true);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+
+        }
     }
 }
