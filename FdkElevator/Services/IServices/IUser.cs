@@ -26,5 +26,7 @@ namespace FdkElevator.Services.IServices
 
         LoginResponse loginUser(string email, string password);
 
+        List<ClientResDTO> getClients();
+
     }
 }

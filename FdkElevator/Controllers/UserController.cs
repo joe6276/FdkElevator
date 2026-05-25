@@ -202,6 +202,24 @@ namespace FdkElevator.Controllers
             }
         }
 
+        [HttpGet("clients")]
+        public ActionResult<List<ClientResDTO>> getClients()
+        {
+            try
+            {
+                var user = _user.getClients();
+                if (user == null)
+                {
+                    return NotFound("User not found");
+                }
+                return Ok(user);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+
 
     }
 }

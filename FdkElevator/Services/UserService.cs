@@ -162,5 +162,16 @@ namespace FdkElevator.Services
             _context.SaveChanges();
             return "User updated successfully!";
         }
+
+        public List<ClientResDTO> getClients()
+        {
+            var client = _context.Users.Where(x => x.Role == Role.Client).Select(x => new ClientResDTO
+            {
+                ClientId = x.Id,
+                ClientName = x.Name,
+            }).ToList();
+
+            return client;
+        }
     }
 }
