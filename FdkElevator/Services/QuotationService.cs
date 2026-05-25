@@ -176,50 +176,58 @@ namespace FdkElevator.Services
 
         public QuotationResponseDTO getQuotationByLeadId(Guid LeadId)
         {
-          
-            return _context.Quotations.Where(q => q.LeadId == LeadId).Select(q => new QuotationResponseDTO
+            try
             {
-                SubTotal = q.SubTotal,
-                Amount = q.Amount,
-                ClientId = q.ClientId,
-                Discount = q.Discount,
-                LeadId = q.LeadId,
-                Status = q.Status,
-                Revision = q.Revision,
-                InstallationCost = q.InstallationCost,
-                FreightCost = q.FreightCost,
-                CustomsCost = q.CustomsCost,
-                SubcontractorCost = q.SubcontractorCost,
-                Warranty = q.Warranty,
-                AmcOption = q.AmcOption,
-                PaymentTerms = new QuotationPaymentResponseDTO
+                var leadquote = _context.Quotations.Where(q => q.LeadId == LeadId).Select(q => new QuotationResponseDTO
                 {
-                    Id = q.Payment.FirstOrDefault().Id,
-                    Amount = q.Payment.FirstOrDefault().Amount,
-                    Status = q.Payment.FirstOrDefault().Status,
-                },
-                ValidityDays = q.ValidityDays,
-                config = new AddLiftConfiguration
-                {
-                    LiftType = q.configuration.LiftType,
-                    DriveType = q.configuration.DriveType,
-                    Capacity = q.configuration.Capacity,
-                    Speed = q.configuration.Speed,
-                    Stops = q.configuration.Stops,
-                    DoorType = q.configuration.DoorType,
-                    ControllerType = q.configuration.ControllerType,
-                    CabinFinish = q.configuration.CabinFinish,
-                },
-                Items = q.Items.Select(i => new QuotationItemDTO
-                {
-                    ItemName = i.ItemName,
-                    Description = i.Description,
-                    ImageURL = i.ImageURL,
-                    Price = i.Price,
-                    Quantity = i.Quantity
-                }).ToList()
-            }).FirstOrDefault();
-        }
+                    SubTotal = q.SubTotal,
+                    Amount = q.Amount,
+                    ClientId = q.ClientId,
+                    Discount = q.Discount,
+                    LeadId = q.LeadId,
+                    Status = q.Status,
+                    Revision = q.Revision,
+                    InstallationCost = q.InstallationCost,
+                    FreightCost = q.FreightCost,
+                    CustomsCost = q.CustomsCost,
+                    SubcontractorCost = q.SubcontractorCost,
+                    Warranty = q.Warranty,
+                    AmcOption = q.AmcOption,
+                    PaymentTerms = new QuotationPaymentResponseDTO
+                    {
+                        Id = q.Payment.FirstOrDefault().Id,
+                        Amount = q.Payment.FirstOrDefault().Amount,
+                        Status = q.Payment.FirstOrDefault().Status,
+                    },
+                    ValidityDays = q.ValidityDays,
+                    config = new AddLiftConfiguration
+                    {
+                        LiftType = q.configuration.LiftType,
+                        DriveType = q.configuration.DriveType,
+                        Capacity = q.configuration.Capacity,
+                        Speed = q.configuration.Speed,
+                        Stops = q.configuration.Stops,
+                        DoorType = q.configuration.DoorType,
+                        ControllerType = q.configuration.ControllerType,
+                        CabinFinish = q.configuration.CabinFinish,
+                    },
+                    Items = q.Items.Select(i => new QuotationItemDTO
+                    {
+                        ItemName = i.ItemName,
+                        Description = i.Description,
+                        ImageURL = i.ImageURL,
+                        Price = i.Price,
+                        Quantity = i.Quantity
+                    }).ToList()
+                }).FirstOrDefault();
+
+                return leadquote;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            }
 
         public string updateQuotation(Guid id, QuotationStatus status)
         {
