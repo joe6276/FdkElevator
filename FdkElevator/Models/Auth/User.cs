@@ -22,7 +22,8 @@ namespace FdkElevator.Models.Auth
         QA,
         Client,
         SubContractor,
-        SuPer_Admin
+        SuPer_Admin,
+        Supplier
 
         }
     public class User

@@ -3,6 +3,7 @@ using FdkElevator.Models.Leads;
 using FdkElevator.Models.Organization;
 using FdkElevator.Models.Projects;
 using FdkElevator.Models.Quotations;
+using FdkElevator.Models.Suppliers;
 using FdkElevator.Models.Surveyors;
 using FdkElevator.Models.Tenants;
 using Microsoft.EntityFrameworkCore;
@@ -47,6 +48,10 @@ namespace FdkElevator.AppDbContext
         public DbSet<ProjectTeam> projectTeams { get; set; }
 
         public DbSet<ProjectTask> projectTasks { get; set; }
+
+        public DbSet<Supplier> suppliers { get; set; }
+
+        public DbSet<SupplierItem> supplierItems { get; set; }
 
     }
 }

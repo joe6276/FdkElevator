@@ -4,6 +4,7 @@ using FdkElevator.DTOS.LeadDTOS;
 using FdkElevator.DTOS.OrganizationDTOS;
 using FdkElevator.DTOS.ProjectDTOS;
 using FdkElevator.DTOS.QuotationDTOS;
+using FdkElevator.DTOS.SupplierDTO;
 using FdkElevator.DTOS.SurveyDTOS;
 using FdkElevator.DTOS.TenantDTOS;
 using FdkElevator.Extensions;
@@ -12,6 +13,7 @@ using FdkElevator.Models.Leads;
 using FdkElevator.Models.Organization;
 using FdkElevator.Models.Projects;
 using FdkElevator.Models.Quotations;
+using FdkElevator.Models.Suppliers;
 using FdkElevator.Models.Surveyors;
 using FdkElevator.Models.Tenants;
 using FdkElevator.Services;
@@ -65,6 +67,8 @@ builder.Services.AddAutoMapper(cfg =>
     cfg.CreateMap<AddProjectDTO, Project>();
     cfg.CreateMap<AddTaskDTO, ProjectTask>();
     cfg.CreateMap<AddProjectTeamDTO, ProjectTeam>();
+    cfg.CreateMap<AddSupplierDTO, Supplier>();
+    cfg.CreateMap<AddSupplierItemDTO, SupplierItem>();
 
 
 });
@@ -88,6 +92,8 @@ builder.Services.AddScoped<IQuotationPayment, QuotationPaymentService>();
 builder.Services.AddScoped<IProject, ProjectService>();
 builder.Services.AddScoped<ITask, TaskService>();
 builder.Services.AddScoped<IProjectTeam, ProjectTeamService>();
+builder.Services.AddScoped<ISupplier, SupplierService>();
+builder.Services.AddScoped<ISupplierItem, SupplierItemService>();
 //custom
 Stripe.StripeConfiguration.ApiKey = builder.Configuration.GetSection("Stripe:Key").Get<string>();
 
