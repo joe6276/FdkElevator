@@ -2,6 +2,7 @@ using FdkElevator.AppDbContext;
 using FdkElevator.DTOS.Auth;
 using FdkElevator.DTOS.LeadDTOS;
 using FdkElevator.DTOS.OrganizationDTOS;
+using FdkElevator.DTOS.ProjectDTOS;
 using FdkElevator.DTOS.QuotationDTOS;
 using FdkElevator.DTOS.SurveyDTOS;
 using FdkElevator.DTOS.TenantDTOS;
@@ -9,6 +10,7 @@ using FdkElevator.Extensions;
 using FdkElevator.Models.Auth;
 using FdkElevator.Models.Leads;
 using FdkElevator.Models.Organization;
+using FdkElevator.Models.Projects;
 using FdkElevator.Models.Quotations;
 using FdkElevator.Models.Surveyors;
 using FdkElevator.Models.Tenants;
@@ -60,6 +62,11 @@ builder.Services.AddAutoMapper(cfg =>
     cfg.CreateMap<AddLiftConfiguration, LiftConfigurationRevision>();
     cfg.CreateMap<RevisionDTO, Revision>();
     cfg.CreateMap<QuotationItemDTO, QuoteItemRevision>();
+    cfg.CreateMap<AddProjectDTO, Project>();
+    cfg.CreateMap<AddTaskDTO, ProjectTask>();
+    cfg.CreateMap<AddProjectTeamDTO, ProjectTeam>();
+
+
 });
 
 //Services
@@ -78,6 +85,9 @@ builder.Services.AddScoped<IClient, ClientService>();
 builder.Services.AddScoped<IActivity, ActivityService>();
 builder.Services.AddScoped<IRevision, RevisionService>();
 builder.Services.AddScoped<IQuotationPayment, QuotationPaymentService>();
+builder.Services.AddScoped<IProject, ProjectService>();
+builder.Services.AddScoped<ITask, TaskService>();
+builder.Services.AddScoped<IProjectTeam, ProjectTeamService>();
 //custom
 Stripe.StripeConfiguration.ApiKey = builder.Configuration.GetSection("Stripe:Key").Get<string>();
 

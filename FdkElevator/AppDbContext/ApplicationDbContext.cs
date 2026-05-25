@@ -1,6 +1,7 @@
 ﻿using FdkElevator.Models.Auth;
 using FdkElevator.Models.Leads;
 using FdkElevator.Models.Organization;
+using FdkElevator.Models.Projects;
 using FdkElevator.Models.Quotations;
 using FdkElevator.Models.Surveyors;
 using FdkElevator.Models.Tenants;
@@ -41,6 +42,11 @@ namespace FdkElevator.AppDbContext
 
         public DbSet<Revision> revisions { get; set; }
         public DbSet<QuoteItemRevision> quoteItemRevisions { get; set; }
+        public DbSet<Project> projects { get; set; }
+
+        public DbSet<ProjectTeam> projectTeams { get; set; }
+
+        public DbSet<ProjectTask> projectTasks { get; set; }
 
     }
 }

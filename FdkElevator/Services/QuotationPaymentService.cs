@@ -1,7 +1,10 @@
 ﻿using FdkElevator.AppDbContext;
 using FdkElevator.DTOS.TenantDTOS;
+using FdkElevator.Models.Projects;
 using FdkElevator.Models.Quotations;
+using FdkElevator.Models.Tenants;
 using FdkElevator.Services.IServices;
+using Microsoft.EntityFrameworkCore;
 using Stripe;
 using Stripe.Checkout;
 
@@ -20,7 +23,10 @@ namespace FdkElevator.Services
             return payments;
 
         }
-
+        public string GenerateProjectCode()
+        {
+            return $"PRJ-{Guid.NewGuid().ToString("N")[..8].ToUpper()}";
+        }
         public PaymentResponseDTO MakePayment(Guid Id)
         {
             var payment = _context.quotationPayments.FirstOrDefault(x => x.Id == Id);
@@ -75,8 +81,12 @@ namespace FdkElevator.Services
 
         public string validatePayment(string stripeSessionId)
         {
-            var payment = _context.quotationPayments.FirstOrDefault(p => p.StripeSessionId == stripeSessionId);
-
+            var payment = _context.quotationPayments
+      .Include(p => p.revision)
+          .ThenInclude(r => r.Lead)
+      .Include(p => p.quotation)
+          .ThenInclude(q => q.Lead)
+      .FirstOrDefault(p => p.StripeSessionId == stripeSessionId);
             if (payment == null)
             {
                 throw new Exception("Payment not Found");
@@ -102,6 +112,18 @@ namespace FdkElevator.Services
                 payment.PaymentIntentId = paymentIntent.Id;
                 _context.quotationPayments.Update(payment);
                 _context.SaveChanges();
+
+               var TenantId = payment.QuotationId==null? payment.revision.Lead.TenantId : payment.quotation.Lead.TenantId;
+                var project = new Project()
+                {
+                    ClientId = payment.ClientId,
+                    TenantId = TenantId,
+                    ProjectCode = GenerateProjectCode(),
+                };
+
+                _context.projects.Add(project);
+                _context.SaveChanges();
+
                 return "Payment Successful";
             }
             else if (paymentIntent.Status == "requires_payment_method" || paymentIntent.Status == "requires_action")

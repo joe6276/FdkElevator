@@ -1,4 +1,5 @@
 ﻿using FdkElevator.Models.Leads;
+using FdkElevator.Models.Projects;
 using FdkElevator.Models.Quotations;
 using FdkElevator.Models.Surveyors;
 using FdkElevator.Models.Tenants;
@@ -59,5 +60,7 @@ namespace FdkElevator.Models.Auth
         public Quotation Quotation { get; set; }
 
         public ICollection<Activity> activities { get; set; }
+
+        public ICollection<ProjectTeam> users { get; set; }
     }
 }

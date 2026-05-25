@@ -4,6 +4,7 @@ using FdkElevator.AppDbContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FdkElevator.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260525045833_projects_reorder1")]
+    partial class projects_reorder1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -54,6 +57,9 @@ namespace FdkElevator.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid?>("ProjectTeamId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<int>("Role")
                         .HasColumnType("int");
 
@@ -61,6 +67,8 @@ namespace FdkElevator.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ProjectTeamId");
 
                     b.HasIndex("TenantId");
 
@@ -281,14 +289,9 @@ namespace FdkElevator.Migrations
                     b.Property<Guid>("ProjectId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("Id");
 
                     b.HasIndex("ProjectId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("projectTeams");
                 });
@@ -807,11 +810,17 @@ namespace FdkElevator.Migrations
 
             modelBuilder.Entity("FdkElevator.Models.Auth.User", b =>
                 {
+                    b.HasOne("FdkElevator.Models.Projects.ProjectTeam", "ProjectTeam")
+                        .WithMany("users")
+                        .HasForeignKey("ProjectTeamId");
+
                     b.HasOne("FdkElevator.Models.Tenants.Tenant", "ten")
                         .WithMany("users")
                         .HasForeignKey("TenantId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("ProjectTeam");
 
                     b.Navigation("ten");
                 });
@@ -892,15 +901,7 @@ namespace FdkElevator.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("FdkElevator.Models.Auth.User", "user")
-                        .WithMany("users")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Project");
-
-                    b.Navigation("user");
                 });
 
             modelBuilder.Entity("FdkElevator.Models.Quotations.LiftConfiguration", b =>
@@ -1077,8 +1078,6 @@ namespace FdkElevator.Migrations
                     b.Navigation("leads");
 
                     b.Navigation("surveyors");
-
-                    b.Navigation("users");
                 });
 
             modelBuilder.Entity("FdkElevator.Models.Leads.Lead", b =>
@@ -1097,6 +1096,11 @@ namespace FdkElevator.Migrations
                     b.Navigation("Tasks");
 
                     b.Navigation("Teams");
+                });
+
+            modelBuilder.Entity("FdkElevator.Models.Projects.ProjectTeam", b =>
+                {
+                    b.Navigation("users");
                 });
 
             modelBuilder.Entity("FdkElevator.Models.Quotations.Quotation", b =>
