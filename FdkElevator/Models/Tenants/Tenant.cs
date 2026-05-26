@@ -48,7 +48,7 @@ namespace FdkElevator.Models.Tenants
 
         public ICollection<Tenant> tenants { get; set; }
 
-        public ICollection<Survey> surveys { get; set; }
+        public ICollection<AllSurvey> surveys { get; set; }
 
         public ICollection<Activity> activities { get; set; }
 

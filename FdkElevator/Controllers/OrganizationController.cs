@@ -21,21 +21,22 @@ namespace FdkElevator.Controllers
         }
 
 
-        //[HttpPost("addorg")]
-        //public ActionResult<string> addOrganization(OrganizationDTO newOrg)
-        //{
-        //    try
-        //    {
+        [HttpPost("addorg")]
+        public ActionResult<string> addOrganization(OrganizationDTO newOrg)
+        {
+            try
+            {
 
-        //        var organization = _mapper.Map<Organization>(newOrg);
-        //        var result = _organization.addOrganization(organization);
-        //        return Ok(organization);
+                var organization = _mapper.Map<Organization>(newOrg);
+                var result = _organization.addOrganization(organization);
+                return Ok(organization);
 
-        //    }catch(Exception ex)
-        //    {
-        //        return StatusCode(500, $"Internal server Error {ex.Message}");
-        //    }
-        //}
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server Error {ex.Message}");
+            }
+        }
 
         [HttpPut("updateOrganization")]
         public ActionResult<string> updateOrganization(OrganizationDTO updatedOrganization)

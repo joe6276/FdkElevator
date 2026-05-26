@@ -107,7 +107,7 @@ namespace FdkElevator.Models.Leads
 
         public Status leadStatus { get; set; } = Status.New;
 
-        public Survey survey { get; set; }
+        public AllSurvey survey { get; set; }
       
         public Quotation quotation { get; set; }
 

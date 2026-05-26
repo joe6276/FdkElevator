@@ -55,7 +55,7 @@ namespace FdkElevator.Models.Auth
 
         public ICollection<Lead> leads { get; set; }
 
-        public ICollection<Survey> surveyors { get; set; }
+        public ICollection<AllSurvey> surveyors { get; set; }
 
 
         public Quotation Quotation { get; set; }

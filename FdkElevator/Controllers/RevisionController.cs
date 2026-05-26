@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using FdkElevator.DTOS.QuotationDTOS;
-using FdkElevator.Migrations;
 using FdkElevator.Models.Quotations;
 using FdkElevator.Services.IServices;
 using Microsoft.AspNetCore.Http;

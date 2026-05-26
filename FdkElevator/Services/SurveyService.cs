@@ -2,6 +2,7 @@
 using FdkElevator.Models.Auth;
 using FdkElevator.Models.Surveyors;
 using FdkElevator.Services.IServices;
+using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography;
 
 namespace FdkElevator.Services
@@ -17,66 +18,139 @@ namespace FdkElevator.Services
             _user = user;
         }
 
-        public string addSurvey(Survey survey)
+        public string addSurvey(AllSurvey survey)
         {
-            _context.Surveys.Add(survey);
+            _context.AllSurveys.Add(survey);
             _context.SaveChanges();
             return " Survey Added Successfully!";
         }
 
-        public Survey GetSurveyById(Guid id)
+        public async Task<AllSurvey?> GetSurveyByIdAsync(Guid id)
         {
-            return _context.Surveys.Where(x => x.Id == id).FirstOrDefault();
+            return await _context.AllSurveys
+                .Include(x => x.ProjectInfo)
+                .Include(x => x.ShaftStructuralInfo)
+                .Include(x => x.EntranceDoorDetails)
+                .Include(x => x.PowerElectricalInfo)
+                .Include(x => x.UsageTrafficInfo)
+                .Include(x => x.FinishingDesignPreferences)
+                .Include(x => x.SafetyComplianceInfo)
+                .Include(x => x.MaintenanceServiceInfo)
+                .Include(x => x.SiteMediaAttachments)
+                .Include(x => x.AdditionalNotes)
+                .FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public List<Survey> getSurveyList(Guid surveyorId)
+        public async Task<List<AllSurvey>> GetSurveyListAsync(Guid surveyorId)
         {
-         return _context.Surveys.Where(x => x.SurveyorId == surveyorId).ToList();
+            return await _context.AllSurveys
+                .Where(x => x.SurveyorId == surveyorId)
+                .Include(x => x.ProjectInfo)
+                .Include(x => x.ShaftStructuralInfo)
+                .Include(x => x.EntranceDoorDetails)
+                .Include(x => x.PowerElectricalInfo)
+                .Include(x => x.UsageTrafficInfo)
+                .Include(x => x.FinishingDesignPreferences)
+                .Include(x => x.SafetyComplianceInfo)
+                .Include(x => x.MaintenanceServiceInfo)
+                .Include(x => x.SiteMediaAttachments)
+                .Include(x => x.AdditionalNotes)
+                .ToListAsync();
         }
 
-        public List<Survey> GetSurveys(Guid tenantId)
+        public async Task<List<AllSurvey>> GetSurveysByTenantAsync(Guid tenantId)
         {
-            return _context.Surveys.Where(x => x.TenantId == tenantId).ToList();
+            return await _context.AllSurveys
+                .Where(x => x.TenantId == tenantId)
+                .Include(x => x.ProjectInfo)
+                .Include(x => x.ShaftStructuralInfo)
+                .Include(x => x.EntranceDoorDetails)
+                .Include(x => x.PowerElectricalInfo)
+                .Include(x => x.UsageTrafficInfo)
+                .Include(x => x.FinishingDesignPreferences)
+                .Include(x => x.SafetyComplianceInfo)
+                .Include(x => x.MaintenanceServiceInfo)
+                .Include(x => x.SiteMediaAttachments)
+                .Include(x => x.AdditionalNotes)
+                .ToListAsync();
         }
 
-        public async Task<string> update(Survey survey)
+      
+
+        public async Task<string> UpdateSurveyAsync(AllSurvey survey)
         {
             try
             {
-                var lead = _context.Leads.Where(x => x.Id == survey.LeadId).FirstOrDefault();
-
-                var existingUser = _context.Users.Where(x => x.Email == lead.Email).FirstOrDefault();
-
-                var client = new User()
-                {
-                    Name = lead.CompanyName,
-                    Email = lead.Email,
-                    PhoneNumber = lead.PhoneNumber,
-                    Role = Role.Client,
-                    TenantId = survey.TenantId,
-
-                };
-
-                if (existingUser == null)
-                {
-                    await _user.addUser(client);
-                }
-
-                _context.Surveys.Update(survey);
-                _context.SaveChanges();
-                return " Survey Added Successfully!";
+                _context.AllSurveys.Update(survey);
+                await _context.SaveChangesAsync();
+                return "Survey updated successfully";
             }
             catch (Exception ex)
             {
-                return ex.Message;
+                return $"Update failed: {ex.Message}";
             }
         }
 
-        public string updateSurvey(Survey survey)
-        {
-            _context.Surveys.Update(survey);
-            _context.SaveChanges();
-            return " Survey updated Successfully!";
-        }
+        //public string addSurvey(Survey survey)
+        //{
+        //    _context.Surveys.Add(survey);
+        //    _context.SaveChanges();
+        //    return " Survey Added Successfully!";
+        //}
+
+        //public Survey GetSurveyById(Guid id)
+        //{
+        //    return _context.Surveys.Where(x => x.Id == id).FirstOrDefault();
+        //}
+
+        //public List<Survey> getSurveyList(Guid surveyorId)
+        //{
+        // return _context.Surveys.Where(x => x.SurveyorId == surveyorId).ToList();
+        //}
+
+        //public List<Survey> GetSurveys(Guid tenantId)
+        //{
+        //    return _context.Surveys.Where(x => x.TenantId == tenantId).ToList();
+        //}
+
+        //public async Task<string> update(Survey survey)
+        //{
+        //    try
+        //    {
+        //        var lead = _context.Leads.Where(x => x.Id == survey.LeadId).FirstOrDefault();
+
+        //        var existingUser = _context.Users.Where(x => x.Email == lead.Email).FirstOrDefault();
+
+        //        var client = new User()
+        //        {
+        //            Name = lead.CompanyName,
+        //            Email = lead.Email,
+        //            PhoneNumber = lead.PhoneNumber,
+        //            Role = Role.Client,
+        //            TenantId = survey.TenantId,
+
+        //        };
+
+        //        if (existingUser == null)
+        //        {
+        //            await _user.addUser(client);
+        //        }
+
+        //        _context.Surveys.Update(survey);
+        //        _context.SaveChanges();
+        //        return " Survey Added Successfully!";
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return ex.Message;
+        //    }
+        //}
+
+        //public string updateSurvey(Survey survey)
+        //{
+        //    _context.Surveys.Update(survey);
+        //    _context.SaveChanges();
+        //    return " Survey updated Successfully!";
+        //}
     }
 }

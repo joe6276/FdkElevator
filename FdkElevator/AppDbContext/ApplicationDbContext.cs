@@ -25,7 +25,7 @@ namespace FdkElevator.AppDbContext
 
         public DbSet<Lead> Leads { get; set; }
 
-        public DbSet<Survey> Surveys { get; set; }
+        public DbSet<AllSurvey> AllSurveys { get; set; }
 
         public DbSet<Quotation> Quotations { get; set; }
 
@@ -53,5 +53,16 @@ namespace FdkElevator.AppDbContext
 
         public DbSet<SupplierItem> supplierItems { get; set; }
 
+        public DbSet<ProjectInfo> projectInfos { get; set; }
+        public DbSet<ShaftStructural> ShaftStructuralInfos { get; set; }
+        public DbSet<EntranceDoor> EntranceDoorDetails { get; set; }
+        public DbSet<PowerElectrical> PowerElectricalInfos { get; set; }
+        public DbSet<UsageTraffic> UsageTrafficInfos { get; set; }
+        public DbSet<FinishingDesign> FinishingDesignPreferences { get; set; }
+        public DbSet<SafetyCompliance> SafetyComplianceInfos { get; set; }
+        public DbSet<MaintenanceService> MaintenanceServiceInfos { get; set; }
+        public DbSet<SiteMediaAttachment> SiteMediaAttachments { get; set; }
+        public DbSet<AdditionalNote> AdditionalNotes { get; set; }
+ 
     }
 }

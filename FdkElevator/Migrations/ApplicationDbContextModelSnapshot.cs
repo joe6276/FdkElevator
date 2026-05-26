@@ -731,75 +731,49 @@ namespace FdkElevator.Migrations
                     b.ToTable("supplierItems");
                 });
 
-            modelBuilder.Entity("FdkElevator.Models.Surveyors.Survey", b =>
+            modelBuilder.Entity("FdkElevator.Models.Surveyors.AdditionalNote", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("AccessRoute")
+                    b.Property<string>("CustomerComments")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool?>("CivicReady")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("CivicWorkRequired")
+                    b.Property<string>("SiteChallenges")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("EngineerNotes")
+                    b.Property<string>("SpecialRequirements")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("SurveyId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("SurveyorRemarks")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SurveyId")
+                        .IsUnique();
+
+                    b.ToTable("AdditionalNotes");
+                });
+
+            modelBuilder.Entity("FdkElevator.Models.Surveyors.AllSurvey", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("LeadId")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<bool?>("MLROption")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("MachineRoom")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Notes")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("OverheadClearance")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("PitDepth")
-                        .HasColumnType("int");
-
-                    b.Property<string>("PowerSupply")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("RecommendedLift")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SafetyRisk")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool?>("ShaftAvailable")
-                        .HasColumnType("bit");
-
-                    b.Property<int?>("ShaftDepth")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ShaftWidth")
-                        .HasColumnType("int");
-
-                    b.Property<string>("StorageArea")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("SurveyorId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("TenantId")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<int?>("numberofStops")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -810,7 +784,313 @@ namespace FdkElevator.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("Surveys");
+                    b.ToTable("AllSurveys");
+                });
+
+            modelBuilder.Entity("FdkElevator.Models.Surveyors.EntranceDoor", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("DoorOpeningType")
+                        .HasColumnType("int");
+
+                    b.Property<string>("DoorSize")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LandingDoorFinishPreference")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("NumberOfEntrances")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("SurveyId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SurveyId")
+                        .IsUnique();
+
+                    b.ToTable("EntranceDoorDetails");
+                });
+
+            modelBuilder.Entity("FdkElevator.Models.Surveyors.FinishingDesign", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CabinFinishPreference")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CeilingType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DisplayTypePreference")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FlooringPreference")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("HandrailsRequired")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("MirrorRequired")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid>("SurveyId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SurveyId")
+                        .IsUnique();
+
+                    b.ToTable("FinishingDesignPreferences");
+                });
+
+            modelBuilder.Entity("FdkElevator.Models.Surveyors.MaintenanceService", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CurrentLiftCondition")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("ExistingLiftOnSite")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("MaintenanceContractRequired")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ServiceFrequencyPreference")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("SurveyId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SurveyId")
+                        .IsUnique();
+
+                    b.ToTable("MaintenanceServiceInfos");
+                });
+
+            modelBuilder.Entity("FdkElevator.Models.Surveyors.PowerElectrical", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("BackupGeneratorAvailable")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("DedicatedLiftPowerLineAvailable")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("PowerSupplyAvailable")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("SurveyId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("VoltageAvailable")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SurveyId")
+                        .IsUnique();
+
+                    b.ToTable("PowerElectricalInfos");
+                });
+
+            modelBuilder.Entity("FdkElevator.Models.Surveyors.ProjectInfo", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("EstimatedCompletionTimeline")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ExpectedCapacity")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("LiftTypeRequired")
+                        .HasColumnType("int");
+
+                    b.Property<int>("NumberOfLiftsRequired")
+                        .HasColumnType("int");
+
+                    b.Property<int>("NumberOfStopsFloors")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProjectType")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("SurveyId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<double>("TravelHeightMeters")
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SurveyId")
+                        .IsUnique();
+
+                    b.ToTable("projectInfos");
+                });
+
+            modelBuilder.Entity("FdkElevator.Models.Surveyors.SafetyCompliance", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("AccessControlRequired")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("CctvRequired")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ComplianceStandardRequired")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("EmergencyRescueSystemRequired")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("FiremanOperationRequired")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid>("SurveyId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SurveyId")
+                        .IsUnique();
+
+                    b.ToTable("SafetyComplianceInfos");
+                });
+
+            modelBuilder.Entity("FdkElevator.Models.Surveyors.ShaftStructural", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("CivilWorksRequired")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("CoreCuttingRequired")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("MachineRoomAvailability")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("MachineRoomLocation")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("OverheadHeightHeadroom")
+                        .HasColumnType("float");
+
+                    b.Property<double>("PitDepth")
+                        .HasColumnType("float");
+
+                    b.Property<double>("ShaftHeight")
+                        .HasColumnType("float");
+
+                    b.Property<int>("ShaftLocation")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ShaftSize")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ShaftType")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("StructuralDrawingsAvailable")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid>("SurveyId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SurveyId")
+                        .IsUnique();
+
+                    b.ToTable("ShaftStructuralInfos");
+                });
+
+            modelBuilder.Entity("FdkElevator.Models.Surveyors.SiteMediaAttachment", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.PrimitiveCollection<string>("SiteAttachments")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("SurveyId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SurveyId")
+                        .IsUnique();
+
+                    b.ToTable("SiteMediaAttachments");
+                });
+
+            modelBuilder.Entity("FdkElevator.Models.Surveyors.UsageTraffic", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("AccessibilityRequirements")
+                        .HasColumnType("int");
+
+                    b.Property<int>("BuildingUsage")
+                        .HasColumnType("int");
+
+                    b.Property<string>("EstimatedDailyTraffic")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PeakUsageHours")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("SurveyId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SurveyId")
+                        .IsUnique();
+
+                    b.ToTable("UsageTrafficInfos");
                 });
 
             modelBuilder.Entity("FdkElevator.Models.Tenants.Tenant", b =>
@@ -1122,11 +1402,22 @@ namespace FdkElevator.Migrations
                     b.Navigation("Supplier");
                 });
 
-            modelBuilder.Entity("FdkElevator.Models.Surveyors.Survey", b =>
+            modelBuilder.Entity("FdkElevator.Models.Surveyors.AdditionalNote", b =>
+                {
+                    b.HasOne("FdkElevator.Models.Surveyors.AllSurvey", "Survey")
+                        .WithOne("AdditionalNotes")
+                        .HasForeignKey("FdkElevator.Models.Surveyors.AdditionalNote", "SurveyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Survey");
+                });
+
+            modelBuilder.Entity("FdkElevator.Models.Surveyors.AllSurvey", b =>
                 {
                     b.HasOne("FdkElevator.Models.Leads.Lead", "Lead")
                         .WithOne("survey")
-                        .HasForeignKey("FdkElevator.Models.Surveyors.Survey", "LeadId")
+                        .HasForeignKey("FdkElevator.Models.Surveyors.AllSurvey", "LeadId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -1147,6 +1438,105 @@ namespace FdkElevator.Migrations
                     b.Navigation("User");
 
                     b.Navigation("tenant");
+                });
+
+            modelBuilder.Entity("FdkElevator.Models.Surveyors.EntranceDoor", b =>
+                {
+                    b.HasOne("FdkElevator.Models.Surveyors.AllSurvey", "Survey")
+                        .WithOne("EntranceDoorDetails")
+                        .HasForeignKey("FdkElevator.Models.Surveyors.EntranceDoor", "SurveyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Survey");
+                });
+
+            modelBuilder.Entity("FdkElevator.Models.Surveyors.FinishingDesign", b =>
+                {
+                    b.HasOne("FdkElevator.Models.Surveyors.AllSurvey", "Survey")
+                        .WithOne("FinishingDesignPreferences")
+                        .HasForeignKey("FdkElevator.Models.Surveyors.FinishingDesign", "SurveyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Survey");
+                });
+
+            modelBuilder.Entity("FdkElevator.Models.Surveyors.MaintenanceService", b =>
+                {
+                    b.HasOne("FdkElevator.Models.Surveyors.AllSurvey", "Survey")
+                        .WithOne("MaintenanceServiceInfo")
+                        .HasForeignKey("FdkElevator.Models.Surveyors.MaintenanceService", "SurveyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Survey");
+                });
+
+            modelBuilder.Entity("FdkElevator.Models.Surveyors.PowerElectrical", b =>
+                {
+                    b.HasOne("FdkElevator.Models.Surveyors.AllSurvey", "Survey")
+                        .WithOne("PowerElectricalInfo")
+                        .HasForeignKey("FdkElevator.Models.Surveyors.PowerElectrical", "SurveyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Survey");
+                });
+
+            modelBuilder.Entity("FdkElevator.Models.Surveyors.ProjectInfo", b =>
+                {
+                    b.HasOne("FdkElevator.Models.Surveyors.AllSurvey", "Survey")
+                        .WithOne("ProjectInfo")
+                        .HasForeignKey("FdkElevator.Models.Surveyors.ProjectInfo", "SurveyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Survey");
+                });
+
+            modelBuilder.Entity("FdkElevator.Models.Surveyors.SafetyCompliance", b =>
+                {
+                    b.HasOne("FdkElevator.Models.Surveyors.AllSurvey", "Survey")
+                        .WithOne("SafetyComplianceInfo")
+                        .HasForeignKey("FdkElevator.Models.Surveyors.SafetyCompliance", "SurveyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Survey");
+                });
+
+            modelBuilder.Entity("FdkElevator.Models.Surveyors.ShaftStructural", b =>
+                {
+                    b.HasOne("FdkElevator.Models.Surveyors.AllSurvey", "Survey")
+                        .WithOne("ShaftStructuralInfo")
+                        .HasForeignKey("FdkElevator.Models.Surveyors.ShaftStructural", "SurveyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Survey");
+                });
+
+            modelBuilder.Entity("FdkElevator.Models.Surveyors.SiteMediaAttachment", b =>
+                {
+                    b.HasOne("FdkElevator.Models.Surveyors.AllSurvey", "Survey")
+                        .WithOne("SiteMediaAttachments")
+                        .HasForeignKey("FdkElevator.Models.Surveyors.SiteMediaAttachment", "SurveyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Survey");
+                });
+
+            modelBuilder.Entity("FdkElevator.Models.Surveyors.UsageTraffic", b =>
+                {
+                    b.HasOne("FdkElevator.Models.Surveyors.AllSurvey", "Survey")
+                        .WithOne("UsageTrafficInfo")
+                        .HasForeignKey("FdkElevator.Models.Surveyors.UsageTraffic", "SurveyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Survey");
                 });
 
             modelBuilder.Entity("FdkElevator.Models.Tenants.Tenant", b =>
@@ -1224,6 +1614,39 @@ namespace FdkElevator.Migrations
             modelBuilder.Entity("FdkElevator.Models.Suppliers.Supplier", b =>
                 {
                     b.Navigation("Suppliers");
+                });
+
+            modelBuilder.Entity("FdkElevator.Models.Surveyors.AllSurvey", b =>
+                {
+                    b.Navigation("AdditionalNotes")
+                        .IsRequired();
+
+                    b.Navigation("EntranceDoorDetails")
+                        .IsRequired();
+
+                    b.Navigation("FinishingDesignPreferences")
+                        .IsRequired();
+
+                    b.Navigation("MaintenanceServiceInfo")
+                        .IsRequired();
+
+                    b.Navigation("PowerElectricalInfo")
+                        .IsRequired();
+
+                    b.Navigation("ProjectInfo")
+                        .IsRequired();
+
+                    b.Navigation("SafetyComplianceInfo")
+                        .IsRequired();
+
+                    b.Navigation("ShaftStructuralInfo")
+                        .IsRequired();
+
+                    b.Navigation("SiteMediaAttachments")
+                        .IsRequired();
+
+                    b.Navigation("UsageTrafficInfo")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("FdkElevator.Models.Tenants.Tenant", b =>

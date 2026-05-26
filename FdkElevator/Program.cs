@@ -21,12 +21,16 @@ using FdkElevator.Services.IServices;
 using FdkElevator.Utility;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+});
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 // Add Database
@@ -55,10 +59,10 @@ builder.Services.AddAutoMapper(cfg =>
     cfg.CreateMap<UserDTO, User>();
     cfg.CreateMap<ResponseUserDTO, User>().ReverseMap();
     cfg.CreateMap<LeadDTO, Lead>();
-    cfg.CreateMap<SurveyDTO, Survey>();
+    cfg.CreateMap<SurveyDTO, AllSurvey>();
     cfg.CreateMap<QuotationDTO, Quotation>();
     cfg.CreateMap<QuotationItemDTO, QuoteItem>();
-    cfg.CreateMap<AssignSurveyDTO, Survey>();
+    cfg.CreateMap<AssignSurveyDTO, AllSurvey>();
     cfg.CreateMap<AddActivityDTO, Activity>();
     cfg.CreateMap<AddLiftConfiguration, LiftConfiguration>();
     cfg.CreateMap<AddLiftConfiguration, LiftConfigurationRevision>();
@@ -69,6 +73,18 @@ builder.Services.AddAutoMapper(cfg =>
     cfg.CreateMap<AddProjectTeamDTO, ProjectTeam>();
     cfg.CreateMap<AddSupplierDTO, Supplier>();
     cfg.CreateMap<AddSupplierItemDTO, SupplierItem>();
+
+    cfg.CreateMap<ProjectInfoRequest, ProjectInfo>();
+    cfg.CreateMap<ShaftStructuralRequest, ShaftStructural>();
+    cfg.CreateMap<EntranceDoorRequest, EntranceDoor>();
+    cfg.CreateMap<PowerElectricalRequest, PowerElectrical>();
+    cfg.CreateMap<UsageTrafficRequest, UsageTraffic>();
+    cfg.CreateMap<FinishingDesignRequest, FinishingDesign>();
+    cfg.CreateMap<SafetyComplianceRequest, SafetyCompliance>();
+    cfg.CreateMap<MaintenanceServiceRequest, MaintenanceService>();
+    cfg.CreateMap<SiteMediaAttachmentRequest, SiteMediaAttachment>();
+    cfg.CreateMap<AdditionalNoteRequest, AdditionalNote>();
+
 
 
 });
