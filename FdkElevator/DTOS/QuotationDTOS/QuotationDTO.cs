@@ -68,9 +68,9 @@ namespace FdkElevator.DTOS.QuotationDTOS
 
         public int ValidityDays { get; set; }
 
-        public AddLiftConfiguration AddLiftConfiguration { get; set; } = new AddLiftConfiguration();
+        public AddLiftConfiguration? AddLiftConfiguration { get; set; } = new AddLiftConfiguration();
 
-        public ICollection<QuotationPaymentDTO> quotationPayments { get; set; } = new List<QuotationPaymentDTO>();
+        public ICollection<QuotationPaymentDTO>? quotationPayments { get; set; } = new List<QuotationPaymentDTO>();
     }
 
     public class QuotationRevision
@@ -111,11 +111,11 @@ namespace FdkElevator.DTOS.QuotationDTOS
         public string Warranty { get; set; }
         public string AmcOption { get; set; }
 
-        public QuotationPaymentResponseDTO PaymentTerms { get; set; }
+        public QuotationPaymentResponseDTO? PaymentTerms { get; set; }
 
         public int ValidityDays { get; set; }
-        public ICollection<QuotationItemDTO> Items { get; set; }
-        public AddLiftConfiguration config { get; set; } 
+        public ICollection<QuotationItemDTO>? Items { get; set; }
+        public AddLiftConfiguration? config { get; set; } 
     }
 
 
