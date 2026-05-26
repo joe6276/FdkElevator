@@ -41,7 +41,25 @@ namespace FdkElevator.Services
                 .FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public async Task<List<AllSurvey>> GetSurveyListAsync(Guid surveyorId)
+        public async Task<AllSurvey?> GetSurveyByLeadIdAsync(Guid leadId)
+        {
+            return await _context.AllSurveys
+                .Where(x=>x.LeadId == leadId)
+                .Include(x => x.ProjectInfo)
+                .Include(x => x.ShaftStructuralInfo)
+                .Include(x => x.EntranceDoorDetails)
+                .Include(x => x.PowerElectricalInfo)
+                .Include(x => x.UsageTrafficInfo)
+                .Include(x => x.FinishingDesignPreferences)
+                .Include(x => x.SafetyComplianceInfo)
+                .Include(x => x.MaintenanceServiceInfo)
+                .Include(x => x.SiteMediaAttachments)
+                .Include(x => x.AdditionalNotes)
+                .FirstOrDefaultAsync();
+        }
+
+
+        public async Task<List<AllSurvey>> GetSurveyorsListAsync(Guid surveyorId)
         {
             return await _context.AllSurveys
                 .Where(x => x.SurveyorId == surveyorId)

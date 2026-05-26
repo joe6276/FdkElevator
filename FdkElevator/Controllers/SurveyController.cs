@@ -80,6 +80,20 @@ namespace FdkElevator.Controllers
             }
         }
 
+        [HttpGet("surveys/surveyor/{surveyorId}")]
+        public async Task<ActionResult<List<AllSurvey>>> GetSurveyorSurveys(Guid surveyorId)
+        {
+            try
+            {
+                var surveys = await _survey.GetSurveyorsListAsync(surveyorId);
+                return Ok(surveys);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+
         [HttpGet("survey/{Id}")]
         public async Task<ActionResult<AllSurvey>> getSurvey(Guid Id)
         {
@@ -99,6 +113,26 @@ namespace FdkElevator.Controllers
 
         }
 
-        
+
+        [HttpGet("survey/lead/{leadId}")]
+        public async Task<ActionResult<AllSurvey>> getSurveyByLead(Guid leadId)
+        {
+            try
+            {
+                var survey = await _survey.GetSurveyByLeadIdAsync(leadId);
+                if (survey == null)
+                {
+                    return NotFound("Survey not found");
+                }
+                return Ok(survey);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+
+        }
+
+
     }
 }

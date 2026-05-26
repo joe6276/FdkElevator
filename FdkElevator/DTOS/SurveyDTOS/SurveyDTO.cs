@@ -16,9 +16,6 @@ namespace FdkElevator.DTOS.SurveyDTOS
         public Guid SurveyorId { get; set; }
         [Required]
         public Guid TenantId { get; set; }
-        [Required]
-        public string Notes { get; set; } = string.Empty;
-
     }
     public class SurveyDTO
     {
