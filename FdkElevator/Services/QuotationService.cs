@@ -38,6 +38,7 @@ namespace FdkElevator.Services
        .Where(q => leadIds.Contains(q.LeadId))
        .Select(q => new QuotationResponseDTO
        {
+           Id = q.Id,
            SubTotal = q.SubTotal,
            Amount = q.Amount,
            ClientId = q.ClientId,
@@ -98,6 +99,7 @@ namespace FdkElevator.Services
              .Where(q => q.ClientId == id)
              .Select(q => new QuotationResponseDTO
              {
+                 Id = q.Id,
                  SubTotal = q.SubTotal,
                  Amount = q.Amount,
                  ClientId = q.ClientId,
@@ -157,6 +159,7 @@ namespace FdkElevator.Services
           .Where(q => q.Id == id)
           .Select(q => new QuotationResponseDTO
           {
+              Id = q.Id,
               SubTotal = q.SubTotal,
               Amount = q.Amount,
               ClientId = q.ClientId,
@@ -217,6 +220,7 @@ namespace FdkElevator.Services
                     .Where(q => q.LeadId == LeadId)
                     .Select(q => new QuotationResponseDTO
                     {
+                        Id = q.Id,
                         SubTotal = q.SubTotal,
                         Amount = q.Amount,
                         ClientId = q.ClientId,

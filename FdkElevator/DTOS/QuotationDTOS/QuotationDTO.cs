@@ -84,7 +84,7 @@ namespace FdkElevator.DTOS.QuotationDTOS
     }
         public class QuotationResponseDTO
     {
-
+        public Guid Id { get; set; }
         public Guid LeadId { get; set; }
 
         public Guid ClientId { get; set; }
