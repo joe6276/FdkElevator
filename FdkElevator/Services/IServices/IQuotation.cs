@@ -1,4 +1,5 @@
-﻿using FdkElevator.DTOS.QuotationDTOS;
+﻿using FdkElevator.DTOS.PDFDTO;
+using FdkElevator.DTOS.QuotationDTOS;
 using FdkElevator.Models.Quotations;
 
 namespace FdkElevator.Services.IServices
@@ -21,5 +22,7 @@ namespace FdkElevator.Services.IServices
         QuotationRevision GetQuotationById(Guid id);
 
         string updateRevisedQuote(Guid Id);
+
+        Task<QuotationRequest?> GetQuotationDocument(Guid quotationId);
     }
 }

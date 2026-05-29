@@ -122,6 +122,8 @@ builder.Services.AddScoped<ISupplier, SupplierService>();
 builder.Services.AddScoped<ISupplierItem, SupplierItemService>();
 builder.Services.AddScoped<ISupplierSelection, SupplierSelectionService>();
 builder.Services.AddScoped<IOrder, OrderService>();
+builder.Services.AddScoped<IPdf, PdfService>();
+
 
 //custom
 Stripe.StripeConfiguration.ApiKey = builder.Configuration.GetSection("Stripe:Key").Get<string>();

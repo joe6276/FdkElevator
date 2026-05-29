@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using FdkElevator.DTOS.PDFDTO;
 using FdkElevator.DTOS.QuotationDTOS;
 using FdkElevator.Models.Quotations;
 using FdkElevator.Services.IServices;
@@ -112,6 +113,20 @@ namespace FdkElevator.Controllers
                 return Ok(result);
             }
             catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet("QuotationDoc/{QuotationID}")]
+        public async Task<ActionResult<QuotationRequest>> getQuotationObject(Guid QuotationID)
+        {
+            try
+            {
+                var response = await _quotation.GetQuotationDocument(QuotationID);
+                return Ok(response);
+
+            }catch(Exception ex)
             {
                 return BadRequest(ex.Message);
             }

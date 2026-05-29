@@ -35,6 +35,13 @@ namespace FdkElevator.Models.Tenants
         public string Email { get; set; } = string.Empty;
         public bool isActive { get; set; } = false;
 
+
+        public string? Warranty { get; set; }
+
+        public string? TermsOfPayments { get; set; }
+
+        public string? SpecialNotes { get; set; }
+
         public DateTime CreatedAt { get; set; } = DateTime.Now;
 
         public Subscription_Plan? Subscription_Plan { get; set; }
