@@ -35,5 +35,22 @@ namespace FdkElevator.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+
+        [HttpPost("items")]
+        public ActionResult<string> addSupplierItem(List<AddSupplierItemDTO> itemsss)
+        {
+            try
+            {
+                var supplierItem = _mapper.Map<List<SupplierItem>>(itemsss);
+
+                var result = _supplierItem.addSuppliersItems(supplierItem);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

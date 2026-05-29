@@ -4,6 +4,7 @@ using FdkElevator.AppDbContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FdkElevator.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260528092653_made_it_optional")]
+    partial class made_it_optional
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -182,94 +185,6 @@ namespace FdkElevator.Migrations
                     b.HasIndex("TenantId");
 
                     b.ToTable("Leads");
-                });
-
-            modelBuilder.Entity("FdkElevator.Models.Orders.Order", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("OrderDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<Guid>("TenantId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<float>("Total")
-                        .HasColumnType("real");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("TenantId");
-
-                    b.ToTable("Orders");
-                });
-
-            modelBuilder.Entity("FdkElevator.Models.Orders.OrderItem", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("OrderId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("PaymentImageURL")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("SupplierId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("SupplierItemId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<bool>("isPaid")
-                        .HasColumnType("bit");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("OrderId");
-
-                    b.HasIndex("SupplierItemId");
-
-                    b.ToTable("OrderItems");
-                });
-
-            modelBuilder.Entity("FdkElevator.Models.Orders.ShippingAddress", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("City")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("County")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("OrderId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("PostalCode")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Street")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("OrderId")
-                        .IsUnique();
-
-                    b.ToTable("ShippingAddresses");
                 });
 
             modelBuilder.Entity("FdkElevator.Models.Organization.Organization", b =>
@@ -774,21 +689,18 @@ namespace FdkElevator.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("ProjectId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<Guid?>("approvedBy")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("isApproved")
                         .HasColumnType("bit");
 
+                    b.Property<Guid>("userId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("ProjectId")
-                        .IsUnique();
-
-                    b.HasIndex("approvedBy");
+                    b.HasIndex("userId");
 
                     b.ToTable("SelectedProducts");
                 });
@@ -1382,47 +1294,6 @@ namespace FdkElevator.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("FdkElevator.Models.Orders.Order", b =>
-                {
-                    b.HasOne("FdkElevator.Models.Tenants.Tenant", "Tenant")
-                        .WithMany("orders")
-                        .HasForeignKey("TenantId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Tenant");
-                });
-
-            modelBuilder.Entity("FdkElevator.Models.Orders.OrderItem", b =>
-                {
-                    b.HasOne("FdkElevator.Models.Orders.Order", "Order")
-                        .WithMany("OrderItems")
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("FdkElevator.Models.Suppliers.SupplierItem", "SupplierItem")
-                        .WithMany()
-                        .HasForeignKey("SupplierItemId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Order");
-
-                    b.Navigation("SupplierItem");
-                });
-
-            modelBuilder.Entity("FdkElevator.Models.Orders.ShippingAddress", b =>
-                {
-                    b.HasOne("FdkElevator.Models.Orders.Order", "Order")
-                        .WithOne("ShippingAddress")
-                        .HasForeignKey("FdkElevator.Models.Orders.ShippingAddress", "OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Order");
-                });
-
             modelBuilder.Entity("FdkElevator.Models.Projects.Material", b =>
                 {
                     b.HasOne("FdkElevator.Models.Projects.Project", "Project")
@@ -1603,17 +1474,11 @@ namespace FdkElevator.Migrations
 
             modelBuilder.Entity("FdkElevator.Models.Selection.SelectedProduct", b =>
                 {
-                    b.HasOne("FdkElevator.Models.Projects.Project", "Project")
-                        .WithOne("SelectedProduct")
-                        .HasForeignKey("FdkElevator.Models.Selection.SelectedProduct", "ProjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("FdkElevator.Models.Auth.User", "user")
                         .WithMany("selectedProducts")
-                        .HasForeignKey("approvedBy");
-
-                    b.Navigation("Project");
+                        .HasForeignKey("userId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("user");
                 });
@@ -1810,20 +1675,9 @@ namespace FdkElevator.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("FdkElevator.Models.Orders.Order", b =>
-                {
-                    b.Navigation("OrderItems");
-
-                    b.Navigation("ShippingAddress")
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("FdkElevator.Models.Projects.Project", b =>
                 {
                     b.Navigation("Materials");
-
-                    b.Navigation("SelectedProduct")
-                        .IsRequired();
 
                     b.Navigation("Tasks");
 
@@ -1901,8 +1755,6 @@ namespace FdkElevator.Migrations
                         .IsRequired();
 
                     b.Navigation("activities");
-
-                    b.Navigation("orders");
 
                     b.Navigation("surveys");
 

@@ -1,6 +1,7 @@
 ﻿using FdkElevator.Models.Leads;
 using FdkElevator.Models.Projects;
 using FdkElevator.Models.Quotations;
+using FdkElevator.Models.Selection;
 using FdkElevator.Models.Surveyors;
 using FdkElevator.Models.Tenants;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -58,10 +59,13 @@ namespace FdkElevator.Models.Auth
         public ICollection<AllSurvey> surveyors { get; set; }
 
 
-        public Quotation Quotation { get; set; }
+        public List<Quotation> quotations { get; set; }
 
         public ICollection<Activity> activities { get; set; }
 
         public ICollection<ProjectTeam> users { get; set; }
+
+
+        public ICollection<SelectedProduct> selectedProducts { get; set; }
     }
 }

@@ -10,5 +10,7 @@ namespace FdkElevator.Services.IServices
         List<SupplierItem> getSuppliers( Guid Id);
 
 
+        string addSuppliersItems(List<SupplierItem> items);
+
     }
 }

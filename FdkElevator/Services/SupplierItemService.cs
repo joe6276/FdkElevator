@@ -19,6 +19,13 @@ namespace FdkElevator.Services
             return "Supplier Item added successfully!";
         }
 
+        public string addSuppliersItems(List<SupplierItem> items)
+        {
+            _context.supplierItems.AddRange(items);
+            _context.SaveChanges();
+            return "Items added";
+        }
+
         public List<SupplierItem> getSuppliers(Guid Id)
         {
            return _context.supplierItems.Where(x => x.SupplierId == Id).ToList();

@@ -1,5 +1,6 @@
 ﻿using FdkElevator.Models.Auth;
 using FdkElevator.Models.Leads;
+using FdkElevator.Models.Orders;
 using FdkElevator.Models.Surveyors;
 using FdkElevator.Models.Tenants;
 
@@ -51,6 +52,8 @@ namespace FdkElevator.Models.Tenants
         public ICollection<AllSurvey> surveys { get; set; }
 
         public ICollection<Activity> activities { get; set; }
+
+        public ICollection<Order> orders { get; set; }
 
     }
 }

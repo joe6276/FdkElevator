@@ -1,18 +1,22 @@
 using FdkElevator.AppDbContext;
 using FdkElevator.DTOS.Auth;
 using FdkElevator.DTOS.LeadDTOS;
+using FdkElevator.DTOS.OrderDTO;
 using FdkElevator.DTOS.OrganizationDTOS;
 using FdkElevator.DTOS.ProjectDTOS;
 using FdkElevator.DTOS.QuotationDTOS;
+using FdkElevator.DTOS.SelectionDTO;
 using FdkElevator.DTOS.SupplierDTO;
 using FdkElevator.DTOS.SurveyDTOS;
 using FdkElevator.DTOS.TenantDTOS;
 using FdkElevator.Extensions;
 using FdkElevator.Models.Auth;
 using FdkElevator.Models.Leads;
+using FdkElevator.Models.Orders;
 using FdkElevator.Models.Organization;
 using FdkElevator.Models.Projects;
 using FdkElevator.Models.Quotations;
+using FdkElevator.Models.Selection;
 using FdkElevator.Models.Suppliers;
 using FdkElevator.Models.Surveyors;
 using FdkElevator.Models.Tenants;
@@ -84,6 +88,12 @@ builder.Services.AddAutoMapper(cfg =>
     cfg.CreateMap<MaintenanceServiceRequest, MaintenanceService>();
     cfg.CreateMap<SiteMediaAttachmentRequest, SiteMediaAttachment>();
     cfg.CreateMap<AdditionalNoteRequest, AdditionalNote>();
+    cfg.CreateMap <SelectedProductDTO,SelectedProduct>();
+    cfg.CreateMap<ProductDTO, Product>();
+    cfg.CreateMap<CreateOrderDTO, Order>();
+    cfg.CreateMap<CreateOrderItemDTO, OrderItem>();
+    cfg.CreateMap<CreateShippingAddressDTO, ShippingAddress>();
+
 
 
 
@@ -110,6 +120,9 @@ builder.Services.AddScoped<ITask, TaskService>();
 builder.Services.AddScoped<IProjectTeam, ProjectTeamService>();
 builder.Services.AddScoped<ISupplier, SupplierService>();
 builder.Services.AddScoped<ISupplierItem, SupplierItemService>();
+builder.Services.AddScoped<ISupplierSelection, SupplierSelectionService>();
+builder.Services.AddScoped<IOrder, OrderService>();
+
 //custom
 Stripe.StripeConfiguration.ApiKey = builder.Configuration.GetSection("Stripe:Key").Get<string>();
 

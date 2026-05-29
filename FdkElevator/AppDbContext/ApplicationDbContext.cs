@@ -1,8 +1,10 @@
 ﻿using FdkElevator.Models.Auth;
 using FdkElevator.Models.Leads;
+using FdkElevator.Models.Orders;
 using FdkElevator.Models.Organization;
 using FdkElevator.Models.Projects;
 using FdkElevator.Models.Quotations;
+using FdkElevator.Models.Selection;
 using FdkElevator.Models.Suppliers;
 using FdkElevator.Models.Surveyors;
 using FdkElevator.Models.Tenants;
@@ -63,6 +65,19 @@ namespace FdkElevator.AppDbContext
         public DbSet<MaintenanceService> MaintenanceServiceInfos { get; set; }
         public DbSet<SiteMediaAttachment> SiteMediaAttachments { get; set; }
         public DbSet<AdditionalNote> AdditionalNotes { get; set; }
- 
+
+        public DbSet<Material> materials { get; set; }
+
+
+        public DbSet<SelectedProduct> SelectedProducts { get; set; }
+
+        public DbSet<Product> Products { get; set; }
+
+        public DbSet<Order> Orders { get; set; }
+
+        public DbSet<OrderItem> OrderItems { get; set; }
+
+        public DbSet<ShippingAddress> ShippingAddresses { get; set; }
+
     }
 }

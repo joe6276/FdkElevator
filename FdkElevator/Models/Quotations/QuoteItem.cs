@@ -1,4 +1,6 @@
-﻿namespace FdkElevator.Models.Quotations
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace FdkElevator.Models.Quotations
 {
     public class QuoteItem
     {
@@ -15,8 +17,11 @@
 
         public float Price { get; set; }
 
+        [ForeignKey("QuotationId")]
         public Quotation Quotation { get; set; }
 
+
+        public Guid QuotationId { get; set; }
 
     }
     public class QuoteItemRevision

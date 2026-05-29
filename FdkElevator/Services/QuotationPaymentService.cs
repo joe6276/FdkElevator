@@ -120,9 +120,27 @@ namespace FdkElevator.Services
                     TenantId = TenantId,
                     ProjectCode = GenerateProjectCode(),
                 };
-
                 _context.projects.Add(project);
                 _context.SaveChanges();
+
+
+                var items = _context.QuoteItems.Where(x => x.QuotationId == payment.QuotationId).ToList();
+
+                var materials = new List<Material> ();
+                foreach (var item in items)
+                {
+                    var material = new Material()
+                    {
+                        MaterialName = item.ItemName,
+                        ProjectId = project.Id,
+                    };
+
+                    materials.Add(material);
+
+                }
+                _context.materials.AddRange(materials);
+                _context.SaveChanges();
+
 
                 return "Payment Successful";
             }

@@ -4,6 +4,7 @@ using FdkElevator.AppDbContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FdkElevator.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260528174638_added_order")]
+    partial class added_order
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -184,7 +187,7 @@ namespace FdkElevator.Migrations
                     b.ToTable("Leads");
                 });
 
-            modelBuilder.Entity("FdkElevator.Models.Orders.Order", b =>
+            modelBuilder.Entity("FdkElevator.Models.Order.Order", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -196,24 +199,33 @@ namespace FdkElevator.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("TenantId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<float>("Total")
                         .HasColumnType("real");
 
-                    b.HasKey("Id");
+                    b.Property<bool>("isPaid")
+                        .HasColumnType("bit");
 
-                    b.HasIndex("TenantId");
+                    b.HasKey("Id");
 
                     b.ToTable("Orders");
                 });
 
-            modelBuilder.Entity("FdkElevator.Models.Orders.OrderItem", b =>
+            modelBuilder.Entity("FdkElevator.Models.Order.OrderItem", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageURL")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ItemName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("OrderId")
                         .HasColumnType("uniqueidentifier");
@@ -221,25 +233,23 @@ namespace FdkElevator.Migrations
                     b.Property<string>("PaymentImageURL")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<float>("Price")
+                        .HasColumnType("real");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
                     b.Property<Guid>("SupplierId")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("SupplierItemId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<bool>("isPaid")
-                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 
                     b.HasIndex("OrderId");
 
-                    b.HasIndex("SupplierItemId");
-
                     b.ToTable("OrderItems");
                 });
 
-            modelBuilder.Entity("FdkElevator.Models.Orders.ShippingAddress", b =>
+            modelBuilder.Entity("FdkElevator.Models.Order.ShippingAddress", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -1382,41 +1392,22 @@ namespace FdkElevator.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("FdkElevator.Models.Orders.Order", b =>
+            modelBuilder.Entity("FdkElevator.Models.Order.OrderItem", b =>
                 {
-                    b.HasOne("FdkElevator.Models.Tenants.Tenant", "Tenant")
-                        .WithMany("orders")
-                        .HasForeignKey("TenantId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Tenant");
-                });
-
-            modelBuilder.Entity("FdkElevator.Models.Orders.OrderItem", b =>
-                {
-                    b.HasOne("FdkElevator.Models.Orders.Order", "Order")
+                    b.HasOne("FdkElevator.Models.Order.Order", "Order")
                         .WithMany("OrderItems")
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("FdkElevator.Models.Suppliers.SupplierItem", "SupplierItem")
-                        .WithMany()
-                        .HasForeignKey("SupplierItemId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Order");
-
-                    b.Navigation("SupplierItem");
                 });
 
-            modelBuilder.Entity("FdkElevator.Models.Orders.ShippingAddress", b =>
+            modelBuilder.Entity("FdkElevator.Models.Order.ShippingAddress", b =>
                 {
-                    b.HasOne("FdkElevator.Models.Orders.Order", "Order")
+                    b.HasOne("FdkElevator.Models.Order.Order", "Order")
                         .WithOne("ShippingAddress")
-                        .HasForeignKey("FdkElevator.Models.Orders.ShippingAddress", "OrderId")
+                        .HasForeignKey("FdkElevator.Models.Order.ShippingAddress", "OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -1810,7 +1801,7 @@ namespace FdkElevator.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("FdkElevator.Models.Orders.Order", b =>
+            modelBuilder.Entity("FdkElevator.Models.Order.Order", b =>
                 {
                     b.Navigation("OrderItems");
 
@@ -1901,8 +1892,6 @@ namespace FdkElevator.Migrations
                         .IsRequired();
 
                     b.Navigation("activities");
-
-                    b.Navigation("orders");
 
                     b.Navigation("surveys");
 
