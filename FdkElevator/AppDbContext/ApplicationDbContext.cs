@@ -11,6 +11,7 @@ using FdkElevator.Models.Suppliers;
 using FdkElevator.Models.Surveyors;
 using FdkElevator.Models.Tenants;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics.Contracts;
 
 namespace FdkElevator.AppDbContext
 {
@@ -84,6 +85,8 @@ namespace FdkElevator.AppDbContext
         public DbSet<CivilReadiness> CivilReadinesses { get; set; }
 
         public DbSet<Installation> Installations { get; set; }
+
+        public DbSet<MyContract> Contracts { get; set; }
 
     }
 }

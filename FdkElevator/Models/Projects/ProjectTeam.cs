@@ -14,5 +14,9 @@ namespace FdkElevator.Models.Projects
         public Guid  UserId { get; set; }
         public Guid ProjectId { get; set; }
         public Project Project { get; set; }
+
+        public string? ContractLink { get; set; }
+
+        public bool IsContractSigned { get; set; } = false;
     }
 }
