@@ -1,4 +1,6 @@
 ﻿using FdkElevator.Models.Auth;
+using FdkElevator.Models.Civil;
+using FdkElevator.Models.Installations;
 using FdkElevator.Models.Selection;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -39,6 +41,12 @@ public class Project
         public SelectedProduct SelectedProduct { get; set; }
 
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+
+        public CivilReadiness CivilReadiness { get; set; }
+
+        public ICollection<Installation> Installations { get; set; }
+
+        public bool IsCivicReady { get; set; } = false;
 
     }
 }

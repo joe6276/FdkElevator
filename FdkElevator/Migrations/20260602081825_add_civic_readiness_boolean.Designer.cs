@@ -4,6 +4,7 @@ using FdkElevator.AppDbContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FdkElevator.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260602081825_add_civic_readiness_boolean")]
+    partial class add_civic_readiness_boolean
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -122,38 +125,6 @@ namespace FdkElevator.Migrations
                         .IsUnique();
 
                     b.ToTable("CivilReadinesses");
-                });
-
-            modelBuilder.Entity("FdkElevator.Models.Installations.Installation", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<bool>("IsCompleted")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Notes")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("PlannedEnd")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("PlannedStart")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("ProjectId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("TaskName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProjectId");
-
-                    b.ToTable("Installations");
                 });
 
             modelBuilder.Entity("FdkElevator.Models.Leads.Activity", b =>
@@ -1448,17 +1419,6 @@ namespace FdkElevator.Migrations
                     b.Navigation("Project");
                 });
 
-            modelBuilder.Entity("FdkElevator.Models.Installations.Installation", b =>
-                {
-                    b.HasOne("FdkElevator.Models.Projects.Project", "Project")
-                        .WithMany("Installations")
-                        .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Project");
-                });
-
             modelBuilder.Entity("FdkElevator.Models.Leads.Activity", b =>
                 {
                     b.HasOne("FdkElevator.Models.Leads.Lead", "Lead")
@@ -1945,8 +1905,6 @@ namespace FdkElevator.Migrations
                 {
                     b.Navigation("CivilReadiness")
                         .IsRequired();
-
-                    b.Navigation("Installations");
 
                     b.Navigation("Materials");
 

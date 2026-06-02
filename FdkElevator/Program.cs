@@ -1,5 +1,7 @@
 using FdkElevator.AppDbContext;
 using FdkElevator.DTOS.Auth;
+using FdkElevator.DTOS.CivilDTO;
+using FdkElevator.DTOS.InstallationsDTO;
 using FdkElevator.DTOS.LeadDTOS;
 using FdkElevator.DTOS.OrderDTO;
 using FdkElevator.DTOS.OrganizationDTOS;
@@ -11,6 +13,8 @@ using FdkElevator.DTOS.SurveyDTOS;
 using FdkElevator.DTOS.TenantDTOS;
 using FdkElevator.Extensions;
 using FdkElevator.Models.Auth;
+using FdkElevator.Models.Civil;
+using FdkElevator.Models.Installations;
 using FdkElevator.Models.Leads;
 using FdkElevator.Models.Orders;
 using FdkElevator.Models.Organization;
@@ -93,7 +97,8 @@ builder.Services.AddAutoMapper(cfg =>
     cfg.CreateMap<CreateOrderDTO, Order>();
     cfg.CreateMap<CreateOrderItemDTO, OrderItem>();
     cfg.CreateMap<CreateShippingAddressDTO, ShippingAddress>();
-
+    cfg.CreateMap<CivilReadinessDTO, CivilReadiness>();
+    cfg.CreateMap<InstallationDTO, Installation>();
 
 
 
@@ -123,6 +128,9 @@ builder.Services.AddScoped<ISupplierItem, SupplierItemService>();
 builder.Services.AddScoped<ISupplierSelection, SupplierSelectionService>();
 builder.Services.AddScoped<IOrder, OrderService>();
 builder.Services.AddScoped<IPdf, PdfService>();
+builder.Services.AddScoped<ICivilReadiness, CivilReadinessServices>();
+builder.Services.AddScoped<IInstallation, InstallationService>();
+
 
 
 //custom

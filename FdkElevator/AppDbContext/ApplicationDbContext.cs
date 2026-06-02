@@ -1,4 +1,6 @@
 ﻿using FdkElevator.Models.Auth;
+using FdkElevator.Models.Civil;
+using FdkElevator.Models.Installations;
 using FdkElevator.Models.Leads;
 using FdkElevator.Models.Orders;
 using FdkElevator.Models.Organization;
@@ -78,6 +80,10 @@ namespace FdkElevator.AppDbContext
         public DbSet<OrderItem> OrderItems { get; set; }
 
         public DbSet<ShippingAddress> ShippingAddresses { get; set; }
+
+        public DbSet<CivilReadiness> CivilReadinesses { get; set; }
+
+        public DbSet<Installation> Installations { get; set; }
 
     }
 }

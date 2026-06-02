@@ -1,5 +1,6 @@
 ﻿using FdkElevator.AppDbContext;
 using FdkElevator.Models.Auth;
+using FdkElevator.Models.Leads;
 using FdkElevator.Models.Surveyors;
 using FdkElevator.Services.IServices;
 using Microsoft.EntityFrameworkCore;
@@ -18,10 +19,28 @@ namespace FdkElevator.Services
             _user = user;
         }
 
-        public string addSurvey(AllSurvey survey)
+        public async Task<string> addSurvey(AllSurvey survey)
         {
             _context.AllSurveys.Add(survey);
             _context.SaveChanges();
+
+            var lead = _context.Leads.Where(x => x.Id == survey.LeadId).FirstOrDefault();
+            var existingUser = _context.Users.Where(x => x.Email == lead.Email).FirstOrDefault();
+
+            var client = new User()
+            {
+                Name = lead.CompanyName,
+                Email = lead.Email,
+                PhoneNumber = lead.PhoneNumber,
+                Role = Role.Client,
+                TenantId = survey.TenantId,
+
+            };
+
+            if (existingUser == null)
+            {
+                await _user.addUser(client);
+            }
             return " Survey Added Successfully!";
         }
 
@@ -137,38 +156,22 @@ namespace FdkElevator.Services
         //    {
         //        var lead = _context.Leads.Where(x => x.Id == survey.LeadId).FirstOrDefault();
 
-        //        var existingUser = _context.Users.Where(x => x.Email == lead.Email).FirstOrDefault();
 
-        //        var client = new User()
-        //        {
-        //            Name = lead.CompanyName,
-        //            Email = lead.Email,
-        //            PhoneNumber = lead.PhoneNumber,
-        //            Role = Role.Client,
-        //            TenantId = survey.TenantId,
+    //        _context.Surveys.Update(survey);
+    //        _context.SaveChanges();
+    //        return " Survey Added Successfully!";
+    //    }
+    //    catch (Exception ex)
+    //    {
+    //        return ex.Message;
+    //    }
+    //}
 
-        //        };
-
-        //        if (existingUser == null)
-        //        {
-        //            await _user.addUser(client);
-        //        }
-
-        //        _context.Surveys.Update(survey);
-        //        _context.SaveChanges();
-        //        return " Survey Added Successfully!";
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return ex.Message;
-        //    }
-        //}
-
-        //public string updateSurvey(Survey survey)
-        //{
-        //    _context.Surveys.Update(survey);
-        //    _context.SaveChanges();
-        //    return " Survey updated Successfully!";
-        //}
-    }
+    //public string updateSurvey(Survey survey)
+    //{
+    //    _context.Surveys.Update(survey);
+    //    _context.SaveChanges();
+    //    return " Survey updated Successfully!";
+    //}
+}
 }

@@ -23,12 +23,12 @@ namespace FdkElevator.Controllers
 
 
         [HttpPost("assignSurveyor")]
-        public ActionResult<string> AddSurvey(AssignSurveyDTO surveyDTO)
+        public async Task<ActionResult<string>> AddSurvey(AssignSurveyDTO surveyDTO)
         {
             try
             {
                 var survey = _mapper.Map<AllSurvey>(surveyDTO);
-                var result = _survey.addSurvey(survey);
+                var result = await _survey.addSurvey(survey);
                 return Ok(result);
             }
             catch (Exception ex)
