@@ -31,9 +31,6 @@ public class Project
 
         public ProjectStatus ProjectStatus { get; set; } = ProjectStatus.NotStarted;
 
-
-        public ICollection<ProjectTask> Tasks { get; set; }
-
         public ICollection<ProjectTeam> Teams { get; set; }
 
         public ICollection<Material> Materials { get; set; }
@@ -46,6 +43,8 @@ public class Project
 
         public ICollection<Installation> Installations { get; set; }
 
+
+        public ICollection<ProjectPhase> ProjectPhases { get; set; }
         public bool IsCivicReady { get; set; } = false;
 
     }

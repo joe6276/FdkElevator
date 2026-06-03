@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using FdkElevator.DTOS.Auth;
 using FdkElevator.DTOS.SupplierDTO;
+using FdkElevator.Models.Auth;
 using FdkElevator.Models.Suppliers;
 using FdkElevator.Services.IServices;
 using Microsoft.AspNetCore.Http;
@@ -21,17 +23,40 @@ namespace FdkElevator.Controllers
         }
 
         [HttpPost("addSupplier")]
-        public ActionResult<string> addSupplier(AddSupplierDTO newSupplier)
+        public async Task<ActionResult<string>> addSupplier(AddSupplierDTO newSupplier)
         {
             try
             {
                 var supplier = _mapper.Map<Supplier>(newSupplier);
-                var result = _supplier.addSupplier(supplier);
+                var result = await _supplier.addSupplier(supplier);
                 return Ok(result);
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
+            }
+        }
+
+
+        [HttpPost("login")]
+        public ActionResult<LoginResponse> Login(LoginUser loginUser)
+        {
+            try
+            {
+
+                var result = _supplier.loginUser(loginUser.Email, loginUser.Password);
+
+                if (result == null)
+                {
+                    return Unauthorized("Invalid email or password");
+                }
+
+                return Ok(result);
+
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
 

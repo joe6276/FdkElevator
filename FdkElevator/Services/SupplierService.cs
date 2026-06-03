@@ -13,11 +13,13 @@ namespace FdkElevator.Services
         private readonly ApplicationDbContext _context;
         private readonly IUser _user;
         private readonly IJwt _jwt;
-        public SupplierService(ApplicationDbContext context, IUser user, IJwt jwt)
+        private readonly IEmail _email;
+        public SupplierService(ApplicationDbContext context, IUser user, IJwt jwt, IEmail email)
         {
             _context = context;
             _user = user;
             _jwt = jwt;
+            _email = email;
         }
 
         public string GeneratePassword(int length = 8)
@@ -28,13 +30,23 @@ namespace FdkElevator.Services
                 .Select(_ => { var b = new byte[1]; rng.GetBytes(b); return chars[b[0] % chars.Length]; })
                 .ToArray());
         }
-        public string addSupplier(Supplier supplier)
-        {   
-            supplier.Password= BCrypt.Net.BCrypt.HashPassword(GeneratePassword());
+        public async  Task<string> addSupplier(Supplier supplier)
+        {
+            var exists = _context.suppliers.Where(x => x.ContactEmail == supplier.ContactEmail).FirstOrDefault();
+            if(exists != null)
+            {
+                throw new Exception("Supplier Email exists!");
+            }
+            var password= GeneratePassword();
+            supplier.Password = BCrypt.Net.BCrypt.HashPassword(password); 
             _context.suppliers.Add(supplier);
             _context.SaveChanges();
+
+            await _email.welcomeEmail(supplier.Name, supplier.ContactEmail, password);
             return "Supplier added successfully!";
         }
+
+
 
         public LoginResponse loginUser(string email, string password)
         {

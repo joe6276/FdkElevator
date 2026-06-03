@@ -4,6 +4,7 @@ using FdkElevator.AppDbContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FdkElevator.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260603102457_added_project_phases1")]
+    partial class added_project_phases1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -471,9 +474,6 @@ namespace FdkElevator.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.Property<string>("notes")
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
 
                     b.HasIndex("ProjectId");
@@ -487,15 +487,12 @@ namespace FdkElevator.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("Criticality")
-                        .HasColumnType("int");
-
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DueDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("ImageURL")
                         .HasColumnType("nvarchar(max)");
@@ -503,13 +500,7 @@ namespace FdkElevator.Migrations
                     b.Property<string>("Notes")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("PlannedEnd")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("PlannedStart")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("ProjectPhaseId")
+                    b.Property<Guid>("ProjectId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Status")
@@ -519,14 +510,9 @@ namespace FdkElevator.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("ProjectPhaseId");
-
-                    b.HasIndex("UserId");
+                    b.HasIndex("ProjectId");
 
                     b.ToTable("projectTasks");
                 });
@@ -1673,21 +1659,13 @@ namespace FdkElevator.Migrations
 
             modelBuilder.Entity("FdkElevator.Models.Projects.ProjectTask", b =>
                 {
-                    b.HasOne("FdkElevator.Models.Projects.ProjectPhase", "Project")
+                    b.HasOne("FdkElevator.Models.Projects.Project", "Project")
                         .WithMany("Tasks")
-                        .HasForeignKey("ProjectPhaseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("FdkElevator.Models.Auth.User", "user")
-                        .WithMany()
-                        .HasForeignKey("UserId")
+                        .HasForeignKey("ProjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Project");
-
-                    b.Navigation("user");
                 });
 
             modelBuilder.Entity("FdkElevator.Models.Projects.ProjectTeam", b =>
@@ -2077,12 +2055,9 @@ namespace FdkElevator.Migrations
                     b.Navigation("SelectedProduct")
                         .IsRequired();
 
-                    b.Navigation("Teams");
-                });
-
-            modelBuilder.Entity("FdkElevator.Models.Projects.ProjectPhase", b =>
-                {
                     b.Navigation("Tasks");
+
+                    b.Navigation("Teams");
                 });
 
             modelBuilder.Entity("FdkElevator.Models.Quotations.Quotation", b =>

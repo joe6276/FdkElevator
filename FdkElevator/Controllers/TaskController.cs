@@ -104,5 +104,19 @@ namespace FdkElevator.Controllers
         }
 
 
+        [HttpGet("tasks/{userId}")]
+
+        public ActionResult<List<ProjectTask>> getUserTasks(Guid userId)
+        {
+            try
+            {
+                var tasks = _task.getUserTasks(userId);
+                return Ok(tasks);
+            }catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
         }
 }

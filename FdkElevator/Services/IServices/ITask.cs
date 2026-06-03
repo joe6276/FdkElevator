@@ -11,6 +11,8 @@ namespace FdkElevator.Services.IServices
 
         ProjectTask getProjectTaskById(Guid guid);
 
+        List<ProjectTask> getUserTasks(Guid userId);
+
         bool updateTaskStatus(Guid guid, AllTaskStatus newStatus);
         string removeTask(ProjectTask task);
 

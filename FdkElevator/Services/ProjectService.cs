@@ -33,7 +33,7 @@ namespace FdkElevator.Services
            ProjectCode = x.ProjectCode,
            ClientId = x.ClientId,
            CreatedAt = x.CreatedAt,
-
+           ProjectId= x.Id,
            ClientDetails = new ClientDetailsDTO
            {
                Name = x.user.Name,
@@ -41,14 +41,13 @@ namespace FdkElevator.Services
                PhoneNumber = x.user.PhoneNumber
            },
 
-           Tasks = x.Tasks.Select(t => new ProjectResponseTasksDTO
+           Phases = x.ProjectPhases.Select(t => new ProjectResponseTasksDTO
            {
-               Title = t.Title,
-               Description = t.Description,
+             PhaseCode = t.PhaseCode,
+               PhaseName = t.PhaseName,
                Status = t.Status,
-               Notes = t.Notes,
-               ImageURL = t.ImageURL,
-               DueDate = t.DueDate
+               PlannedEndDate = t.PlannedEndDate,
+               PlannedStartedDate = t.PlannedStartedDate
            }).ToList(),
 
            Team = x.Teams.Select(t => new ProjectResponseTeamDTO
@@ -73,7 +72,7 @@ namespace FdkElevator.Services
           ProjectCode = x.ProjectCode,
           ClientId = x.ClientId,
           CreatedAt = x.CreatedAt,
-
+          ProjectId=x.Id,
           ClientDetails = new ClientDetailsDTO
           {
               Name = x.user.Name,
@@ -81,14 +80,13 @@ namespace FdkElevator.Services
               PhoneNumber = x.user.PhoneNumber
           },
 
-          Tasks = x.Tasks.Select(t => new ProjectResponseTasksDTO
+          Phases = x.ProjectPhases.Select(t => new ProjectResponseTasksDTO
           {
-              Title = t.Title,
-              Description = t.Description,
+              PhaseCode = t.PhaseCode,
+              PhaseName = t.PhaseName,
               Status = t.Status,
-              Notes = t.Notes,
-              ImageURL = t.ImageURL,
-              DueDate = t.DueDate
+              PlannedEndDate = t.PlannedEndDate,
+              PlannedStartedDate = t.PlannedStartedDate
           }).ToList(),
 
           Team = x.Teams.Select(t => new ProjectResponseTeamDTO

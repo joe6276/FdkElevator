@@ -26,6 +26,11 @@ namespace FdkElevator.Services
             return _context.projectTasks.Find(guid);
         }
 
+        public List<ProjectTask> getUserTasks(Guid userId)
+        {
+            return _context.projectTasks.Where(x => x.UserId == userId).ToList();
+        }
+
         public string removeTask(ProjectTask task)
         {
            _context.projectTasks.Remove(task);

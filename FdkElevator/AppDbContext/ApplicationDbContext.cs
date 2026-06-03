@@ -88,5 +88,7 @@ namespace FdkElevator.AppDbContext
 
         public DbSet<MyContract> Contracts { get; set; }
 
+        public DbSet<ProjectPhase> ProjectPhases { get; set; }
+
     }
 }

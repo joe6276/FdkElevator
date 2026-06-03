@@ -7,12 +7,13 @@ namespace FdkElevator.DTOS.ProjectDTOS
     {
         public string ProjectCode { get; set; } = string.Empty;
 
+        public Guid ProjectId { get; set; }
         public Guid ClientId { get; set; }
 
         public ClientDetailsDTO ClientDetails { get; set; }
         public List<ProjectResponseTeamDTO> Team { get; set; } = new List<ProjectResponseTeamDTO>();
 
-        public List<ProjectResponseTasksDTO> Tasks { get; set; } = new List<ProjectResponseTasksDTO>();
+        public List<ProjectResponseTasksDTO> Phases { get; set; } = new List<ProjectResponseTasksDTO>();
         public DateTime CreatedAt { get; set; }
     }
 
@@ -33,12 +34,13 @@ namespace FdkElevator.DTOS.ProjectDTOS
 
     public class ProjectResponseTasksDTO 
     {
-        public string Title { get; set; }
-        public string Description { get; set; }
-        public DateTime DueDate { get; set; }
-        public AllTaskStatus Status { get; set; } 
-        public string Notes { get; set; }
+        public string PhaseCode { get; set; } = string.Empty;
 
-        public string? ImageURL { get; set; }
+        public string PhaseName { get; set; } = string.Empty;
+
+        public PhaseStatus Status { get; set; } = PhaseStatus.NotStarted;
+
+        public DateTime PlannedStartedDate { get; set; }
+        public DateTime PlannedEndDate { get; set; }
     }
 }
