@@ -24,6 +24,8 @@
     public class SupItemResponseDTO
 
     {
+
+        public Guid supplierItemId { get; set; }
         public string ItemName { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
         public int Quantity { get; set; }

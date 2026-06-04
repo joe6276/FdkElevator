@@ -100,6 +100,7 @@ namespace FdkElevator.Services
                 City = s.City,
                 Items = s.Suppliers.Select(i => new SupItemResponseDTO
                 {
+                    supplierItemId= i.Id,
                     ItemName = i.ItemName,
                     Description = i.Description,
                     Price = i.Price,
