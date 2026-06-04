@@ -35,6 +35,6 @@ namespace FdkElevator.Models.Projects
 
         public string? notes { get; set; } = string.Empty;
 
-        public ICollection<ProjectTask> Tasks { get; set; }
+        public ICollection<ProjectStage> Stages { get; set; }
     }
 }

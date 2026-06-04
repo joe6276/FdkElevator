@@ -28,6 +28,7 @@ namespace FdkElevator.Controllers
             {
 
                 var task = _mapper.Map<ProjectTask>(newtask);
+                task.ProjectStageId = newtask.ProjectStageId;
                 var result = _task.addTask(task);
                 return Ok(result);
             }
@@ -118,5 +119,21 @@ namespace FdkElevator.Controllers
             }
         }
 
+
+        [HttpGet("stage/tasks/{stageId}")]
+
+        public ActionResult<List<ProjectTask>> getPhasetasks(Guid stageId)
+        {
+            try
+            {
+                var tasks = _task.getTasksByStage(stageId);
+                return Ok(tasks);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
+
+    }
 }

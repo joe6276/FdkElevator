@@ -64,11 +64,12 @@ namespace FdkElevator.Services
                 throw new Exception("User not Found!");
             }
 
+            var token = _jwt.generateTokenSupplier(supplier.Id, supplier.Name, supplier.ContactEmail);
             var response = new LoginResponse
             {
                 UserId = supplier.Id,
-             
-                Role = supplier.Role,
+                Token= token,
+                Role=Role.Supplier,
              
             };
 

@@ -1,4 +1,5 @@
 ﻿using FdkElevator.AppDbContext;
+using FdkElevator.Models.Auth;
 using FdkElevator.Models.Projects;
 using FdkElevator.Services.IServices;
 
@@ -24,6 +25,11 @@ namespace FdkElevator.Services
         public ProjectTask getProjectTaskById(Guid guid)
         {
             return _context.projectTasks.Find(guid);
+        }
+
+        public List<ProjectTask> getTasksByStage(Guid StageId)
+        {
+            return _context.projectTasks.Where(x => x.ProjectStageId == StageId).ToList();
         }
 
         public List<ProjectTask> getUserTasks(Guid userId)

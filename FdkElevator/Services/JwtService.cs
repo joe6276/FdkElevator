@@ -46,5 +46,29 @@ namespace FdkElevator.Services
             return new JwtSecurityTokenHandler().WriteToken(token); throw new NotImplementedException();
         }
 
+        public string generateTokenSupplier(Guid Id, string name, string email)
+        {
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtoptions.SecretKey));
+
+            var cred = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+            List<Claim> claims = new List<Claim>();
+            claims.Add(new Claim(ClaimTypes.NameIdentifier, Id.ToString()));
+            claims.Add(new Claim(ClaimTypes.Email, email));
+            claims.Add(new Claim(ClaimTypes.Name, name));
+
+
+            var tokenDescriptor = new SecurityTokenDescriptor()
+            {
+                Issuer = _jwtoptions.Issuer,
+                Audience = _jwtoptions.Audience,
+                Expires = DateTime.UtcNow.AddHours(4),
+                Subject = new ClaimsIdentity(claims),
+                SigningCredentials = cred
+            };
+            var token = new JwtSecurityTokenHandler().CreateToken(tokenDescriptor);
+            return new JwtSecurityTokenHandler().WriteToken(token); throw new NotImplementedException();
         }
+
+    }
 }

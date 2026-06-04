@@ -26,6 +26,7 @@ namespace FdkElevator.Models.Projects
         public Guid Id { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
+
         public AllTaskStatus Status { get; set; } = AllTaskStatus.NotStarted;
 
         public Criticality Criticality { get; set; } 
@@ -39,10 +40,9 @@ namespace FdkElevator.Models.Projects
 
         [ForeignKey("UserId")]
         public User user { get; set; }
-
         public Guid  UserId { get; set; }
-        public Guid ProjectPhaseId { get; set; }
-        [ForeignKey("ProjectPhaseId")]
-        public ProjectPhase Project { get; set; }
+        public Guid ProjectStageId { get; set; }
+        [ForeignKey("ProjectStageId")]
+        public ProjectStage stages { get; set; }
     }
 }

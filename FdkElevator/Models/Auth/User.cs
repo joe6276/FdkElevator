@@ -67,5 +67,7 @@ namespace FdkElevator.Models.Auth
 
 
         public ICollection<SelectedProduct> selectedProducts { get; set; }
+
+        public ICollection<ProjectStage> Stages { get; set; }
     }
 }

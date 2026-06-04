@@ -15,6 +15,7 @@ namespace FdkElevator.DTOS.ProjectDTOS
         public DateTime PlannedStart { get; set; }
         public DateTime PlannedEnd { get; set; }
         public Guid UserId { get; set; }
-        public Guid ProjectPhaseId { get; set; }
+        public Guid ProjectStageId { get; set; }
+   
     }
 }
