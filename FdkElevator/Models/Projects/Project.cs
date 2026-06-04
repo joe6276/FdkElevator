@@ -47,5 +47,7 @@ public class Project
         public ICollection<ProjectPhase> ProjectPhases { get; set; }
         public bool IsCivicReady { get; set; } = false;
 
+        public ICollection<ProjectSignedDoc> projectSignedDocs { get; set; }
+
     }
 }

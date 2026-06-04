@@ -90,5 +90,9 @@ namespace FdkElevator.AppDbContext
 
         public DbSet<ProjectPhase> ProjectPhases { get; set; }
 
+        public DbSet<ProjectDoc> projectDocs { get; set; }
+
+        public DbSet<ProjectSignedDoc> projectSignedDocs { get; set; }
+
     }
 }

@@ -4,6 +4,7 @@ using FdkElevator.AppDbContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FdkElevator.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260604120117_projectSignedDocs")]
+    partial class projectSignedDocs
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -542,7 +545,7 @@ namespace FdkElevator.Migrations
 
                     b.HasIndex("SignedBy");
 
-                    b.ToTable("projectSignedDocs");
+                    b.ToTable("ProjectSignedDoc");
                 });
 
             modelBuilder.Entity("FdkElevator.Models.Projects.ProjectTask", b =>

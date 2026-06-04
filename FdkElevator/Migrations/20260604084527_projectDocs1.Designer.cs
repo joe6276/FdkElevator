@@ -4,6 +4,7 @@ using FdkElevator.AppDbContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FdkElevator.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260604084527_projectDocs1")]
+    partial class projectDocs1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -505,44 +508,6 @@ namespace FdkElevator.Migrations
                     b.HasIndex("ProjectId");
 
                     b.ToTable("ProjectPhases");
-                });
-
-            modelBuilder.Entity("FdkElevator.Models.Projects.ProjectSignedDoc", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("DocumentName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("DocumentUrl")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("ProjectId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Remarks")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("SignedBy")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("SignedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("UploadedAt")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProjectId");
-
-                    b.HasIndex("SignedBy");
-
-                    b.ToTable("projectSignedDocs");
                 });
 
             modelBuilder.Entity("FdkElevator.Models.Projects.ProjectTask", b =>
@@ -1735,25 +1700,6 @@ namespace FdkElevator.Migrations
                     b.Navigation("project");
                 });
 
-            modelBuilder.Entity("FdkElevator.Models.Projects.ProjectSignedDoc", b =>
-                {
-                    b.HasOne("FdkElevator.Models.Projects.Project", "Project")
-                        .WithMany("projectSignedDocs")
-                        .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("FdkElevator.Models.Auth.User", "user")
-                        .WithMany()
-                        .HasForeignKey("SignedBy")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Project");
-
-                    b.Navigation("user");
-                });
-
             modelBuilder.Entity("FdkElevator.Models.Projects.ProjectTask", b =>
                 {
                     b.HasOne("FdkElevator.Models.Projects.ProjectPhase", "Project")
@@ -2161,8 +2107,6 @@ namespace FdkElevator.Migrations
                         .IsRequired();
 
                     b.Navigation("Teams");
-
-                    b.Navigation("projectSignedDocs");
                 });
 
             modelBuilder.Entity("FdkElevator.Models.Projects.ProjectPhase", b =>

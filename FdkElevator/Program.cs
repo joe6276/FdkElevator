@@ -101,6 +101,8 @@ builder.Services.AddAutoMapper(cfg =>
     cfg.CreateMap<InstallationDTO, Installation>();
     cfg.CreateMap<ContractDTO, MyContract>();
     cfg.CreateMap<ProjectPhaseDTO, ProjectPhase>();
+    cfg.CreateMap<AddProjectDocs, ProjectDoc>();
+    cfg.CreateMap<ProjectSignedDocDTO, ProjectSignedDoc>();
 });
 
 //Services
@@ -131,6 +133,8 @@ builder.Services.AddScoped<ICivilReadiness, CivilReadinessServices>();
 builder.Services.AddScoped<IInstallation, InstallationService>();
 builder.Services.AddScoped<IContract, ContractService>();
 builder.Services.AddScoped<IProjectPhase, ProjectPhraseService>();
+builder.Services.AddScoped<IProjectDocs, ProjectDocService>();
+builder.Services.AddScoped<IProjectSignedDoc, ProjectSignedDocService>();
 
 //custom
 Stripe.StripeConfiguration.ApiKey = builder.Configuration.GetSection("Stripe:Key").Get<string>();
