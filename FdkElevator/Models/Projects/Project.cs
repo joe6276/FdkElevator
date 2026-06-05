@@ -1,7 +1,9 @@
 ﻿using FdkElevator.Models.Auth;
 using FdkElevator.Models.Civil;
+using FdkElevator.Models.Commissions;
 using FdkElevator.Models.Installations;
 using FdkElevator.Models.Selection;
+using FdkElevator.Models.Warranty;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FdkElevator.Models.Projects
@@ -48,6 +50,9 @@ public class Project
         public bool IsCivicReady { get; set; } = false;
 
         public ICollection<ProjectSignedDoc> projectSignedDocs { get; set; }
+
+        public HandoverWarranty warranty { get; set; }
+        public Commission Commission { get; set; }
 
     }
 }

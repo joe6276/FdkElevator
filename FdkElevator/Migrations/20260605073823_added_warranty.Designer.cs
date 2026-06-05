@@ -4,6 +4,7 @@ using FdkElevator.AppDbContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FdkElevator.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260605073823_added_warranty")]
+    partial class added_warranty
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -122,335 +125,6 @@ namespace FdkElevator.Migrations
                         .IsUnique();
 
                     b.ToTable("CivilReadinesses");
-                });
-
-            modelBuilder.Entity("FdkElevator.Models.Commissions.Certificate", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("CertificateName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CertificateURL")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("GeneratedDocumentsCertificateId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("IssuedBy")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("GeneratedDocumentsCertificateId");
-
-                    b.HasIndex("IssuedBy");
-
-                    b.ToTable("certificates");
-                });
-
-            modelBuilder.Entity("FdkElevator.Models.Commissions.ClientTraining", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Attendees")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("CommissionId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("DocumentReceived")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("EmergencyRescueBasics")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("MaintenanceSchedule")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("OperatingPrecautions")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TrainingTopics")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("WarrantyTerms")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CommissionId")
-                        .IsUnique();
-
-                    b.ToTable("ClientTrainings");
-                });
-
-            modelBuilder.Entity("FdkElevator.Models.Commissions.Commission", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("CommissionedBy")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("ProjectId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CommissionedBy")
-                        .IsUnique();
-
-                    b.HasIndex("ProjectId")
-                        .IsUnique();
-
-                    b.ToTable("Commissions");
-                });
-
-            modelBuilder.Entity("FdkElevator.Models.Commissions.FunctionalTest", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("ARDBehaviour")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Acceleration")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CabinOperatingPanel")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CallButtons")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("CommissionId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Deceleration")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("DoorClosing")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("DoorOpening")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FiremanOperation")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FloorLevelling")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LandingIndicators")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PowerFailureResponse")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("RescueOperation")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("RideQuality")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Speed")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UPSBehaviour")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CommissionId")
-                        .IsUnique();
-
-                    b.ToTable("functionalTests");
-                });
-
-            modelBuilder.Entity("FdkElevator.Models.Commissions.GeneratedDocumentsCertificate", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("CommissionId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CommissionId")
-                        .IsUnique();
-
-                    b.ToTable("generatedDocumentsCertificates");
-                });
-
-            modelBuilder.Entity("FdkElevator.Models.Commissions.Punch", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<bool>("Closed")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("CorrectionRequired")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("DueDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Photo")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PunchDescription")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("PunchListId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("ResponsibleParty")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Severity")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PunchListId");
-
-                    b.ToTable("Punch");
-                });
-
-            modelBuilder.Entity("FdkElevator.Models.Commissions.PunchList", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("CommissionId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CommissionId")
-                        .IsUnique();
-
-                    b.ToTable("punchLists");
-                });
-
-            modelBuilder.Entity("FdkElevator.Models.Commissions.SafetyCheck", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Alarm")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("BrakeFunction")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Buffers")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("CommissionId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("ControllerFaultHistory")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("DoorLocks")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("EmergencyStop")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Grounding")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Intercom")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LevellingAccuracy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LimitSwitches")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("OverloadProtection")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("OverspeedGovernor")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Phaseprotection")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SafetyGear")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CommissionId")
-                        .IsUnique();
-
-                    b.ToTable("SafetyChecks");
                 });
 
             modelBuilder.Entity("FdkElevator.Models.Installations.Installation", b =>
@@ -1982,9 +1656,6 @@ namespace FdkElevator.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProjectId")
-                        .IsUnique();
-
                     b.ToTable("Warranties");
                 });
 
@@ -2008,110 +1679,6 @@ namespace FdkElevator.Migrations
                         .IsRequired();
 
                     b.Navigation("Project");
-                });
-
-            modelBuilder.Entity("FdkElevator.Models.Commissions.Certificate", b =>
-                {
-                    b.HasOne("FdkElevator.Models.Commissions.GeneratedDocumentsCertificate", "GetGeneratedDocumentsCertificate")
-                        .WithMany("Certificates")
-                        .HasForeignKey("GeneratedDocumentsCertificateId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("FdkElevator.Models.Auth.User", "user")
-                        .WithMany("Certificates")
-                        .HasForeignKey("IssuedBy")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("GetGeneratedDocumentsCertificate");
-
-                    b.Navigation("user");
-                });
-
-            modelBuilder.Entity("FdkElevator.Models.Commissions.ClientTraining", b =>
-                {
-                    b.HasOne("FdkElevator.Models.Commissions.Commission", "Commission")
-                        .WithOne("clientTraining")
-                        .HasForeignKey("FdkElevator.Models.Commissions.ClientTraining", "CommissionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Commission");
-                });
-
-            modelBuilder.Entity("FdkElevator.Models.Commissions.Commission", b =>
-                {
-                    b.HasOne("FdkElevator.Models.Auth.User", "user")
-                        .WithOne("Commission")
-                        .HasForeignKey("FdkElevator.Models.Commissions.Commission", "CommissionedBy")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("FdkElevator.Models.Projects.Project", "project")
-                        .WithOne("Commission")
-                        .HasForeignKey("FdkElevator.Models.Commissions.Commission", "ProjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("project");
-
-                    b.Navigation("user");
-                });
-
-            modelBuilder.Entity("FdkElevator.Models.Commissions.FunctionalTest", b =>
-                {
-                    b.HasOne("FdkElevator.Models.Commissions.Commission", "Commission")
-                        .WithOne("functionalTest")
-                        .HasForeignKey("FdkElevator.Models.Commissions.FunctionalTest", "CommissionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Commission");
-                });
-
-            modelBuilder.Entity("FdkElevator.Models.Commissions.GeneratedDocumentsCertificate", b =>
-                {
-                    b.HasOne("FdkElevator.Models.Commissions.Commission", "Commission")
-                        .WithOne("generatedDocumentsCertificate")
-                        .HasForeignKey("FdkElevator.Models.Commissions.GeneratedDocumentsCertificate", "CommissionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Commission");
-                });
-
-            modelBuilder.Entity("FdkElevator.Models.Commissions.Punch", b =>
-                {
-                    b.HasOne("FdkElevator.Models.Commissions.PunchList", "PunchList")
-                        .WithMany("Punches")
-                        .HasForeignKey("PunchListId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("PunchList");
-                });
-
-            modelBuilder.Entity("FdkElevator.Models.Commissions.PunchList", b =>
-                {
-                    b.HasOne("FdkElevator.Models.Commissions.Commission", "Commission")
-                        .WithOne("punchList")
-                        .HasForeignKey("FdkElevator.Models.Commissions.PunchList", "CommissionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Commission");
-                });
-
-            modelBuilder.Entity("FdkElevator.Models.Commissions.SafetyCheck", b =>
-                {
-                    b.HasOne("FdkElevator.Models.Commissions.Commission", "Commission")
-                        .WithOne("safetyCheck")
-                        .HasForeignKey("FdkElevator.Models.Commissions.SafetyCheck", "CommissionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Commission");
                 });
 
             modelBuilder.Entity("FdkElevator.Models.Installations.Installation", b =>
@@ -2641,24 +2208,8 @@ namespace FdkElevator.Migrations
                     b.Navigation("Tenant");
                 });
 
-            modelBuilder.Entity("FdkElevator.Models.Warranty.HandoverWarranty", b =>
-                {
-                    b.HasOne("FdkElevator.Models.Projects.Project", "Project")
-                        .WithOne("warranty")
-                        .HasForeignKey("FdkElevator.Models.Warranty.HandoverWarranty", "ProjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Project");
-                });
-
             modelBuilder.Entity("FdkElevator.Models.Auth.User", b =>
                 {
-                    b.Navigation("Certificates");
-
-                    b.Navigation("Commission")
-                        .IsRequired();
-
                     b.Navigation("Stages");
 
                     b.Navigation("activities");
@@ -2672,34 +2223,6 @@ namespace FdkElevator.Migrations
                     b.Navigation("surveyors");
 
                     b.Navigation("users");
-                });
-
-            modelBuilder.Entity("FdkElevator.Models.Commissions.Commission", b =>
-                {
-                    b.Navigation("clientTraining")
-                        .IsRequired();
-
-                    b.Navigation("functionalTest")
-                        .IsRequired();
-
-                    b.Navigation("generatedDocumentsCertificate")
-                        .IsRequired();
-
-                    b.Navigation("punchList")
-                        .IsRequired();
-
-                    b.Navigation("safetyCheck")
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("FdkElevator.Models.Commissions.GeneratedDocumentsCertificate", b =>
-                {
-                    b.Navigation("Certificates");
-                });
-
-            modelBuilder.Entity("FdkElevator.Models.Commissions.PunchList", b =>
-                {
-                    b.Navigation("Punches");
                 });
 
             modelBuilder.Entity("FdkElevator.Models.Leads.Lead", b =>
@@ -2726,9 +2249,6 @@ namespace FdkElevator.Migrations
                     b.Navigation("CivilReadiness")
                         .IsRequired();
 
-                    b.Navigation("Commission")
-                        .IsRequired();
-
                     b.Navigation("Installations");
 
                     b.Navigation("Materials");
@@ -2741,9 +2261,6 @@ namespace FdkElevator.Migrations
                     b.Navigation("Teams");
 
                     b.Navigation("projectSignedDocs");
-
-                    b.Navigation("warranty")
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("FdkElevator.Models.Projects.ProjectPhase", b =>

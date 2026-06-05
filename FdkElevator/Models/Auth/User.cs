@@ -1,4 +1,5 @@
-﻿using FdkElevator.Models.Leads;
+﻿using FdkElevator.Models.Commissions;
+using FdkElevator.Models.Leads;
 using FdkElevator.Models.Projects;
 using FdkElevator.Models.Quotations;
 using FdkElevator.Models.Selection;
@@ -69,5 +70,9 @@ namespace FdkElevator.Models.Auth
         public ICollection<SelectedProduct> selectedProducts { get; set; }
 
         public ICollection<ProjectStage> Stages { get; set; }
+
+        public Commission Commission { get; set; }
+
+        public ICollection<Certificate> Certificates { get; set; }
     }
 }

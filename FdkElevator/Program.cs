@@ -1,6 +1,7 @@
 using FdkElevator.AppDbContext;
 using FdkElevator.DTOS.Auth;
 using FdkElevator.DTOS.CivilDTO;
+using FdkElevator.DTOS.CommissionDTO;
 using FdkElevator.DTOS.InstallationsDTO;
 using FdkElevator.DTOS.LeadDTOS;
 using FdkElevator.DTOS.OrderDTO;
@@ -11,9 +12,11 @@ using FdkElevator.DTOS.SelectionDTO;
 using FdkElevator.DTOS.SupplierDTO;
 using FdkElevator.DTOS.SurveyDTOS;
 using FdkElevator.DTOS.TenantDTOS;
+using FdkElevator.DTOS.WarrantyDTO;
 using FdkElevator.Extensions;
 using FdkElevator.Models.Auth;
 using FdkElevator.Models.Civil;
+using FdkElevator.Models.Commissions;
 using FdkElevator.Models.Installations;
 using FdkElevator.Models.Leads;
 using FdkElevator.Models.Orders;
@@ -24,6 +27,7 @@ using FdkElevator.Models.Selection;
 using FdkElevator.Models.Suppliers;
 using FdkElevator.Models.Surveyors;
 using FdkElevator.Models.Tenants;
+using FdkElevator.Models.Warranty;
 using FdkElevator.Services;
 using FdkElevator.Services.IServices;
 using FdkElevator.Utility;
@@ -103,7 +107,29 @@ builder.Services.AddAutoMapper(cfg =>
     cfg.CreateMap<ProjectPhaseDTO, ProjectPhase>();
     cfg.CreateMap<AddProjectDocs, ProjectDoc>();
     cfg.CreateMap<ProjectSignedDocDTO, ProjectSignedDoc>();
-    cfg.CreateMap<ProjectStageDTO, ProjectStage>(); 
+    cfg.CreateMap<ProjectStageDTO, ProjectStage>();
+    cfg.CreateMap<AddWarrantyDTO, HandoverWarranty>();
+
+    cfg.CreateMap<CreateCommissionRequest, Commission>();
+    cfg.CreateMap<SafetyCheckRequest, SafetyCheck>();
+    cfg.CreateMap<FunctionalTestRequest, FunctionalTest>();
+    cfg.CreateMap<PunchListRequest, PunchList>();
+    cfg.CreateMap<PunchRequest, Punch>();
+    cfg.CreateMap<ClientTrainingRequest, ClientTraining>();
+    cfg.CreateMap<GeneratedDocumentsCertificateRequest, GeneratedDocumentsCertificate>();
+    cfg.CreateMap<CertificateRequest, Certificate>();
+
+
+    cfg.CreateMap<Commission, CommissionResponse>();
+    cfg.CreateMap<SafetyCheck, SafetyCheckResponse>();
+    cfg.CreateMap<FunctionalTest, FunctionalTestResponse>();
+    cfg.CreateMap<PunchList,PunchListResponse>();
+    cfg.CreateMap<Punch, PunchResponse>();
+    cfg.CreateMap<ClientTraining, ClientTrainingResponse>();
+    cfg.CreateMap<GeneratedDocumentsCertificate, GeneratedDocumentsCertificateResponse>();
+    cfg.CreateMap<Certificate, CertificateResponse>();
+
+
 });
 
 //Services
@@ -137,6 +163,8 @@ builder.Services.AddScoped<IProjectPhase, ProjectPhraseService>();
 builder.Services.AddScoped<IProjectDocs, ProjectDocService>();
 builder.Services.AddScoped<IProjectSignedDoc, ProjectSignedDocService>();
 builder.Services.AddScoped<IProjectStage, ProjectStageService>();
+builder.Services.AddScoped<IWarranty, WarrantyService>();
+builder.Services.AddScoped<ICommission, CommissionService>();
 
 //custom
 Stripe.StripeConfiguration.ApiKey = builder.Configuration.GetSection("Stripe:Key").Get<string>();

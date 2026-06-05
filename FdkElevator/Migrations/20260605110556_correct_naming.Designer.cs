@@ -4,6 +4,7 @@ using FdkElevator.AppDbContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FdkElevator.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260605110556_correct_naming")]
+    partial class correct_naming
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -151,7 +154,8 @@ namespace FdkElevator.Migrations
 
                     b.HasIndex("GeneratedDocumentsCertificateId");
 
-                    b.HasIndex("IssuedBy");
+                    b.HasIndex("IssuedBy")
+                        .IsUnique();
 
                     b.ToTable("certificates");
                 });
@@ -2019,8 +2023,8 @@ namespace FdkElevator.Migrations
                         .IsRequired();
 
                     b.HasOne("FdkElevator.Models.Auth.User", "user")
-                        .WithMany("Certificates")
-                        .HasForeignKey("IssuedBy")
+                        .WithOne("Certificate")
+                        .HasForeignKey("FdkElevator.Models.Commissions.Certificate", "IssuedBy")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -2654,7 +2658,8 @@ namespace FdkElevator.Migrations
 
             modelBuilder.Entity("FdkElevator.Models.Auth.User", b =>
                 {
-                    b.Navigation("Certificates");
+                    b.Navigation("Certificate")
+                        .IsRequired();
 
                     b.Navigation("Commission")
                         .IsRequired();

@@ -1,5 +1,6 @@
 ﻿using FdkElevator.Models.Auth;
 using FdkElevator.Models.Civil;
+using FdkElevator.Models.Commissions;
 using FdkElevator.Models.Installations;
 using FdkElevator.Models.Leads;
 using FdkElevator.Models.Orders;
@@ -10,6 +11,7 @@ using FdkElevator.Models.Selection;
 using FdkElevator.Models.Suppliers;
 using FdkElevator.Models.Surveyors;
 using FdkElevator.Models.Tenants;
+using FdkElevator.Models.Warranty;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics.Contracts;
 
@@ -96,5 +98,20 @@ namespace FdkElevator.AppDbContext
 
         public DbSet<ProjectStage> projectStages { get; set; }
 
+
+        public DbSet<HandoverWarranty> Warranties { get; set; }
+
+        public DbSet<Commission> Commissions { get; set; }
+
+        public DbSet<SafetyCheck> SafetyChecks { get; set; }
+
+        public DbSet<FunctionalTest> functionalTests { get; set; }
+
+        public DbSet<PunchList> punchLists { get; set; }
+        public DbSet<ClientTraining> ClientTrainings { get; set; }
+
+        public DbSet<GeneratedDocumentsCertificate> generatedDocumentsCertificates { get; set; }
+
+        public DbSet<Certificate> certificates { get; set; }
     }
 }
