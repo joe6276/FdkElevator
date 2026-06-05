@@ -4,6 +4,7 @@ using FdkElevator.AppDbContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FdkElevator.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260605141937_project_maintenance")]
+    partial class project_maintenance
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -910,9 +913,6 @@ namespace FdkElevator.Migrations
 
                     b.Property<Guid>("ProjectMaintenanceId")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<bool?>("isPaid")
-                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 

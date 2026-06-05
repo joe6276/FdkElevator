@@ -75,5 +75,13 @@ namespace FdkElevator.Models.Auth
         public Commission Commission { get; set; }
 
         public ICollection<Certificate> Certificates { get; set; }
+
+
+        public AMCContract AMCContract { get; set; }
+
+        public ICollection<MaintenanceSchedule> maintenanceSchedules { get; set; }
+
+        public ICollection<TechnicianReport> technicianReports { get; set; }
+
     }
 }

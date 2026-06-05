@@ -113,5 +113,18 @@ namespace FdkElevator.AppDbContext
         public DbSet<GeneratedDocumentsCertificate> generatedDocumentsCertificates { get; set; }
 
         public DbSet<Certificate> certificates { get; set; }
+
+
+        public DbSet<ProjectMaintenances> projectMaintenances { get; set; }
+
+        public DbSet<AMCContract> AMCContracts { get; set; }
+
+        public DbSet<ProjectMaintenancePayment> projectMaintenancePayments { get; set; }
+
+        public DbSet<MaintenanceSchedule> maintenanceSchedules { get; set; }
+
+        public DbSet<TechnicianReport> technicianReports { get; set; }
+
+        public DbSet<ReportAttachments> reportAttachments { get; set; }
     }
 }

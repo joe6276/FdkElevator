@@ -34,6 +34,7 @@ using FdkElevator.Utility;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using System.Text.Json.Serialization;
+using static FdkElevator.DTOS.ProjectDTOS.ProjectMaintenanceDTO;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -130,6 +131,14 @@ builder.Services.AddAutoMapper(cfg =>
     cfg.CreateMap<Certificate, CertificateResponse>();
 
 
+    cfg.CreateMap<ProjectMaintenanceRequest, ProjectMaintenances>();
+    cfg.CreateMap<AMCContractRequest, AMCContract>();
+    cfg.CreateMap<ProjectMaintenancePaymentRequest, ProjectMaintenancePayment>();
+    cfg.CreateMap<ProjectMaintenancePaymentRequest, ProjectMaintenancePayment>();
+    cfg.CreateMap<MaintenanceScheduleRequest, MaintenanceSchedule>();
+    cfg.CreateMap<TechnicianReportRequest, TechnicianReport>();
+    cfg.CreateMap<ReportAttachmentsRequest, ReportAttachments>();
+
 });
 
 //Services
@@ -165,6 +174,7 @@ builder.Services.AddScoped<IProjectSignedDoc, ProjectSignedDocService>();
 builder.Services.AddScoped<IProjectStage, ProjectStageService>();
 builder.Services.AddScoped<IWarranty, WarrantyService>();
 builder.Services.AddScoped<ICommission, CommissionService>();
+builder.Services.AddScoped<IProjectMaintenance, ProjectMaintenanceService>();
 
 //custom
 Stripe.StripeConfiguration.ApiKey = builder.Configuration.GetSection("Stripe:Key").Get<string>();
