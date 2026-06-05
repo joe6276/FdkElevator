@@ -55,6 +55,7 @@ namespace FdkElevator.Models.Auth
         public Guid  TenantId { get; set; }
 
 
+        public ICollection<Project> projects { get; set; }
         public ICollection<Lead> leads { get; set; }
 
         public ICollection<AllSurvey> surveyors { get; set; }

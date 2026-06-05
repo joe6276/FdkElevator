@@ -221,5 +221,36 @@ namespace FdkElevator.Controllers
         }
 
 
+        [HttpGet("users/clients")]
+        public async Task<ActionResult<List<ClientSummaryResponse>>> LiastAllClients()
+        {
+            try
+            {
+                var users =  await _user.GetAllClientsAsync();
+                return Ok(users);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+
+        }
+
+        [HttpGet("users/clients/{clientId}")]
+        public async Task<ActionResult<ClientSummaryResponse>> getClientDetails(Guid clientId)
+        {
+            try
+            {
+                var user = await _user.GetClientByIdAsync(clientId);
+               
+                return Ok(user);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+
+        }
+
     }
 }

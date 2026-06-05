@@ -2,6 +2,7 @@
 using FdkElevator.DTOS.Auth;
 using FdkElevator.Models.Auth;
 using FdkElevator.Services.IServices;
+using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography;
 
 namespace FdkElevator.Services
@@ -173,5 +174,103 @@ namespace FdkElevator.Services
 
             return client;
         }
-    }
+        public async Task<List<ClientSummaryResponse>> GetAllClientsAsync()
+        {
+            var clients = await _context.Users
+                .Where(u => u.Role == Role.Client)
+                .Include(u => u.ten)
+                .Include(u => u.leads)
+                    .ThenInclude(l => l.quotation)   // ✅ only include quotation
+                .Include(u => u.projects)
+                    .ThenInclude(p => p.Commission)  // for HasCommission check
+                .Include(u => u.projects)
+                    .ThenInclude(p => p.warranty)    // for HasWarranty check
+                .AsNoTracking()
+                .ToListAsync();
+
+            return clients.Select(MapToSummary).ToList();
+        }
+
+        public async Task<ClientSummaryResponse> GetClientByIdAsync(Guid clientId)
+        {
+            var client = await _context.Users
+                .Where(u => u.Id == clientId && u.Role == Role.Client)
+                .Include(u => u.ten)
+                .Include(u => u.leads)
+                    .ThenInclude(l => l.quotation)
+                .Include(u => u.projects)
+                    .ThenInclude(p => p.Commission)
+                .Include(u => u.projects)
+                    .ThenInclude(p => p.warranty)
+                .AsNoTracking()
+                .FirstOrDefaultAsync()
+                    ?? throw new KeyNotFoundException($"Client {clientId} not found.");
+
+            return MapToSummary(client);
+        }
+
+        private static ClientSummaryResponse MapToSummary(User u) => new()
+        {
+            Id = u.Id,
+            Name = u.Name,
+            Email = u.Email,
+            PhoneNumber = u.PhoneNumber,
+            TenantName = u.ten?.Name,
+            TotalLeads = u.leads?.Count ?? 0,
+            TotalProjects = u.projects?.Count ?? 0,
+
+            Leads = u.leads?.Select(l => new ClientLeadResponse
+            {
+                Id = l.Id,
+                CompanyName = l.CompanyName,
+                ContactPerson = l.ContactPerson,
+                Email = l.Email,
+                PhoneNumber = l.PhoneNumber,
+                BuildingAddress = l.Building_Address,
+                NumberOfFloors = l.NumberofFloors,
+                NumberOfElevators = l.NumberofElevators,
+                LeadStatus = l.leadStatus.ToString(),
+                LeadSource = l.source.ToString(),
+                LeadType = l.leadType.ToString(),
+                Urgency = l.urgency.ToString(),
+                Budget = l.budget,
+                DecisionMaker = l.decisionMaker,
+                ReasonForLoss = l.ReasonForLoss,
+                // Lead.User is auto-populated by EF Core fix-up — no ThenInclude needed
+                AssignedSalesPerson = l.User?.Name,
+                CreatedAt = l.CreatedAt,
+
+                Quotation = l.quotation is null ? null : new ClientQuotationResponse
+                {
+                    Id = l.quotation.Id,
+                    QuotationNumber = l.quotation.QuotationNumber,
+                    Revision = l.quotation.Revision,
+                    Amount = l.quotation.Amount,
+                    SubTotal = l.quotation.SubTotal,
+                    Discount = l.quotation.Discount,
+                    InstallationCost = l.quotation.InstallationCost,
+                    FreightCost = l.quotation.FreightCost,
+                    CustomsCost = l.quotation.CustomsCost,
+                    SubcontractorCost = l.quotation.SubcontractorCost,
+                    Warranty = l.quotation.Warranty,
+                    AmcOption = l.quotation.AmcOption,
+                    ValidityDays = l.quotation.ValidityDays,
+                    Status = l.quotation.Status.ToString(),
+                    CreatedAt = l.quotation.CreatedAt,
+                }
+            }).ToList() ?? new(),
+
+            Projects = u.projects?.Select(p => new ClientProjectResponse
+            {
+                Id = p.Id,
+                ProjectCode = p.ProjectCode,
+                ProjectStatus = p.ProjectStatus.ToString(),
+                IsCivicReady = p.IsCivicReady,
+                CreatedAt = p.CreatedAt,
+                HasCommission = p.Commission is not null,
+                HasWarranty = p.warranty is not null,
+            }).ToList() ?? new(),
+        };
+    
+}
 }
