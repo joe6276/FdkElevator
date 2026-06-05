@@ -221,7 +221,7 @@ namespace FdkElevator.Controllers
         }
 
 
-        [HttpGet("users/clients")]
+        [HttpGet("client/summary")]
         public async Task<ActionResult<List<ClientSummaryResponse>>> LiastAllClients()
         {
             try
@@ -236,7 +236,7 @@ namespace FdkElevator.Controllers
 
         }
 
-        [HttpGet("users/clients/{clientId}")]
+        [HttpGet("client/summary/{clientId}")]
         public async Task<ActionResult<ClientSummaryResponse>> getClientDetails(Guid clientId)
         {
             try
