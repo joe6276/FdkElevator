@@ -1,7 +1,8 @@
-using FdkElevator.AppDbContext;
+﻿using FdkElevator.AppDbContext;
 using FdkElevator.DTOS.Auth;
 using FdkElevator.DTOS.CivilDTO;
 using FdkElevator.DTOS.CommissionDTO;
+using FdkElevator.DTOS.ComplaintDTOS;
 using FdkElevator.DTOS.InstallationsDTO;
 using FdkElevator.DTOS.LeadDTOS;
 using FdkElevator.DTOS.OrderDTO;
@@ -17,6 +18,7 @@ using FdkElevator.Extensions;
 using FdkElevator.Models.Auth;
 using FdkElevator.Models.Civil;
 using FdkElevator.Models.Commissions;
+using FdkElevator.Models.Complaints;
 using FdkElevator.Models.Installations;
 using FdkElevator.Models.Leads;
 using FdkElevator.Models.Orders;
@@ -139,6 +141,68 @@ builder.Services.AddAutoMapper(cfg =>
     cfg.CreateMap<TechnicianReportRequest, TechnicianReport>();
     cfg.CreateMap<ReportAttachmentsRequest, ReportAttachments>();
 
+    cfg.CreateMap<CreateComplaintDto, BreakdownComplaint>();
+    cfg.CreateMap<DispatchTechnicianDto, BreakdownDispatch>();
+    cfg.CreateMap<SubmitDiagnosisDto, TechnicianDiagnosis>();
+    cfg.CreateMap<SparePartDto, SparePartRequest>();
+    cfg.CreateMap<CreateQuotationDto, RepairQuotation>()
+        .ForMember(dest => dest.TotalAmount,
+                   opt => opt.MapFrom(src => src.LaborCost + src.PartsCost));
+    cfg.CreateMap<QuotationLineItemDto, QuotationLineItem>()
+        .ForMember(dest => dest.TotalPrice,
+                   opt => opt.MapFrom(src => src.Quantity * src.UnitPrice));
+    cfg.CreateMap<CloseJobDto, JobClosure>();
+    cfg.CreateMap<SubmitRCADto, RootCauseAnalysis>();
+
+    // ── Entity → Summary DTO ──────────────────────────
+    cfg.CreateMap<BreakdownComplaint, BreakdownComplaintSummaryDto>()
+        .ForMember(dest => dest.ProjectName,
+                   opt => opt.MapFrom(src => src.Project != null
+                                          ? src.Project.ProjectCode
+                                          : string.Empty))
+        .ForMember(dest => dest.FaultType,
+                   opt => opt.MapFrom(src => src.FaultType.ToString()))
+        .ForMember(dest => dest.Source,
+                   opt => opt.MapFrom(src => src.Source.ToString()))
+        .ForMember(dest => dest.Priority,
+                   opt => opt.MapFrom(src => src.Priority.ToString()))
+        .ForMember(dest => dest.Status,
+                   opt => opt.MapFrom(src => src.Status.ToString()))
+        .ForMember(dest => dest.SLAStatus,
+                   opt => opt.MapFrom(src => src.SLAStatus.ToString()));
+
+    cfg.CreateMap<BreakdownDispatch, DispatchSummaryDto>()
+        .ForMember(dest => dest.TechnicianName,
+                   opt => opt.MapFrom(src => src.Technician != null
+                                          ? src.Technician.Name
+                                          : string.Empty));
+
+    cfg.CreateMap<TechnicianDiagnosis, DiagnosisSummaryDto>()
+        .ForMember(dest => dest.SafetyStatus,
+                   opt => opt.MapFrom(src => src.SafetyStatus.ToString()))
+        .ForMember(dest => dest.MediaUrls,
+                   opt => opt.MapFrom(src => src.Media != null
+                                          ? src.Media.Select(m => m.MediaURL).ToList()
+                                          : new List<string>()))
+        .ForMember(dest => dest.SpareParts,
+                   opt => opt.MapFrom(src => src.SparePartsNeeded != null
+                                          ? src.SparePartsNeeded.Select(s => s.PartName).ToList()
+                                          : new List<string>()));
+
+    cfg.CreateMap<RepairQuotation, QuotationSummaryDto>()
+        .ForMember(dest => dest.Reason,
+                   opt => opt.MapFrom(src => src.Reason.ToString()))
+        .ForMember(dest => dest.Status,
+                   opt => opt.MapFrom(src => src.Status.ToString()));
+
+    cfg.CreateMap<JobClosure, ClosureSummaryDto>()
+        .ForMember(dest => dest.LiftRunningStatus,
+                   opt => opt.MapFrom(src => src.LiftRunningStatus.ToString()));
+
+    cfg.CreateMap<RootCauseAnalysis, RCASummaryDto>()
+        .ForMember(dest => dest.Outcome,
+                   opt => opt.MapFrom(src => src.Outcome.ToString()));
+
 });
 
 //Services
@@ -175,6 +239,7 @@ builder.Services.AddScoped<IProjectStage, ProjectStageService>();
 builder.Services.AddScoped<IWarranty, WarrantyService>();
 builder.Services.AddScoped<ICommission, CommissionService>();
 builder.Services.AddScoped<IProjectMaintenance, ProjectMaintenanceService>();
+builder.Services.AddScoped<IBreakdownService, BreakdownService>();
 
 //custom
 Stripe.StripeConfiguration.ApiKey = builder.Configuration.GetSection("Stripe:Key").Get<string>();

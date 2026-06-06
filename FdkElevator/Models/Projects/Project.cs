@@ -1,6 +1,7 @@
 ﻿using FdkElevator.Models.Auth;
 using FdkElevator.Models.Civil;
 using FdkElevator.Models.Commissions;
+using FdkElevator.Models.Complaints;
 using FdkElevator.Models.Installations;
 using FdkElevator.Models.Selection;
 using FdkElevator.Models.Warranty;
@@ -57,6 +58,11 @@ public class Project
         public ICollection<TechnicianReport> reports { get; set; }
 
         public ICollection<ProjectMaintenances> maintenances { get; set; }
+
+        public ICollection<BreakdownComplaint> breakdownComplaints { get; set; }
+
+        public ICollection<RootCauseAnalysis> rootCauseAnalyses { get; set; }
+     
 
     }
 }

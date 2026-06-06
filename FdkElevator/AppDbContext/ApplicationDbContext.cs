@@ -1,6 +1,7 @@
 ﻿using FdkElevator.Models.Auth;
 using FdkElevator.Models.Civil;
 using FdkElevator.Models.Commissions;
+using FdkElevator.Models.Complaints;
 using FdkElevator.Models.Installations;
 using FdkElevator.Models.Leads;
 using FdkElevator.Models.Orders;
@@ -126,5 +127,27 @@ namespace FdkElevator.AppDbContext
         public DbSet<TechnicianReport> technicianReports { get; set; }
 
         public DbSet<ReportAttachments> reportAttachments { get; set; }
+
+        //BreakDown
+
+        public DbSet<BreakdownComplaint> breakdownComplaints { get; set; }
+
+        public DbSet<BreakdownDispatch> breakdownDispatches { get; set; }
+
+        public DbSet<SLAConfiguration> SLAConfigurations { get; set; }
+
+        public DbSet<TechnicianDiagnosis> technicianDiagnoses { get; set; }
+
+        public DbSet<DiagnosisMedia> diagnosisMedias { get; set; }
+
+        public DbSet<SparePartRequest> SparePartRequests { get; set; }
+
+        public DbSet<JobClosure> JobClosures { get; set; }
+
+        public DbSet<RepairQuotation> RepairQuotations { get; set; }
+
+        public DbSet<QuotationLineItem> QuotationLineItems { get; set; }
+
+        public DbSet<RootCauseAnalysis> RootCauseAnalyses { get; set; }
     }
 }
