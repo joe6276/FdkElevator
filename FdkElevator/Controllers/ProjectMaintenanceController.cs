@@ -4,6 +4,7 @@ using FdkElevator.Services.IServices;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using static FdkElevator.DTOS.ProjectDTOS.ProjectMaintenanceDTO;
+using static FdkElevator.DTOS.ProjectDTOS.ProjectMaintenanceResponses;
 
 namespace FdkElevator.Controllers
 {
@@ -11,23 +12,21 @@ namespace FdkElevator.Controllers
     [ApiController]
     public class ProjectMaintenanceController : ControllerBase
     {
-
         private readonly IProjectMaintenance _projectMaintenance;
         private readonly IMapper _mapper;
-
         public ProjectMaintenanceController(IProjectMaintenance projectMaintenance, IMapper mapper)
         {
-            _projectMaintenance = projectMaintenance;
             _mapper = mapper;
+            _projectMaintenance = projectMaintenance;
         }
 
-        [HttpPost("add")]
-        public ActionResult<string> AddProjectMaintenance([FromBody] ProjectMaintenanceRequest request)
+        [HttpPost]
+        public ActionResult<string> addLiftAsset(CreateLiftAssetRequest clR)
         {
             try
             {
-                var mapped = _mapper.Map<ProjectMaintenances>(request);
-                var result = _projectMaintenance.addProjectMaintenance(mapped);
+                var liftAsset = _mapper.Map<LiftAsset>(clR);
+                var result = _projectMaintenance.addLiftAsset(liftAsset);
                 return Ok(result);
             }
             catch (Exception ex)
@@ -35,92 +34,50 @@ namespace FdkElevator.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        [HttpGet("project/{projectId}")]
-        public ActionResult<ProjectWithContractDto> GetProjectMaintenancesByProjectId(Guid projectId)
+
+        [HttpGet    ]
+        public ActionResult<List<LiftAssetDetailResponse>> GetLiftAssets()
         {
             try
             {
-                var result = _projectMaintenance.getProjectMaintenancesByProjectId(projectId);
-                return Ok(result);
+                var liftAssets = _projectMaintenance.GetLiftAssets();
+                return Ok(liftAssets);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
         }
 
-        [HttpGet("contract/{id}")]
-        public ActionResult<AMCContract> GetContractById(Guid id)
+        [HttpPut("{id}")]
+        public ActionResult<string> updateLiftAsset(Guid id, UpdateLiftAssetRequest ulR)
         {
             try
             {
-                var result = _projectMaintenance.getContractById(id);
-                return Ok(result);
-            }
-            catch(Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
-
-        [HttpPut("contract/update/{contractId}")]
-        public ActionResult<string> UpdateContract(Guid contractId, [FromBody] AMCContractRequest request)
-        {
-            try
-            {
-
-                var existingContract = _projectMaintenance.getContractById(contractId);
-
-                if(existingContract == null)
+               var existingLiftAsset= _projectMaintenance.GetLiftAssetById(id);
+                if (existingLiftAsset == null)
                 {
-                    return NotFound("Contract Not Found");
+                    return NotFound($"Lift asset with ID {id} not found.");
                 }
-                var mapped = _mapper.Map(request, existingContract);
+                var liftAsset = _mapper.Map(ulR, existingLiftAsset);
 
-                var result = _projectMaintenance.updateContract(mapped);
-
-                return Ok(result);
-            }
-            catch(Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
-
-        [HttpPost("payment/add")]
-        public ActionResult<string> AddPayment([FromBody] List<ProjectMaintenancePaymentRequest> requests)
-        {
-            try
-            {
-                var mapped = _mapper.Map<List<ProjectMaintenancePayment>>(requests);
-                var result = _projectMaintenance.addpayment(mapped);
+                var result = _projectMaintenance.updateLiftAsset(liftAsset);
                 return Ok(result);
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
-        }
-        [HttpPut("payment/mark-paid/{paymentId}")]
-        public ActionResult<string> MarkPaymentAsPaid(Guid paymentId, [FromBody] string paymentReceiptImage)
-        {
-            try
-            {
-                var result = _projectMaintenance.markPaymentAsPaid(paymentId, paymentReceiptImage);
-                return Ok(result);
-            }catch(Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+
         }
 
-        [HttpPost("schedule/add")]
-        public ActionResult<string> AddMaintenanceSchedule([FromBody] List<MaintenanceScheduleRequest> requests)
+        [HttpPost("new/component")]
+        public ActionResult<string> addLiftAsset(CreateAssetComponentRequest clR)
         {
             try
             {
-                var mapped = _mapper.Map<List<MaintenanceSchedule>>(requests);
-                var result = _projectMaintenance.addMaintenanceSchedule(mapped);
+                var component = _mapper.Map<AssetComponent>(clR);
+                var result = _projectMaintenance.addNewComponent(component);
                 return Ok(result);
             }
             catch (Exception ex)
@@ -129,79 +86,48 @@ namespace FdkElevator.Controllers
             }
         }
 
-        [HttpPut("schedule/update")]
-        public ActionResult<string> UpdateMaintenanceSchedule([FromBody] MaintenanceScheduleRequest request)
+        [HttpPut("component/{id}")]
+        public ActionResult<string> updatetAssetComponent(Guid id, CreateAssetComponentRequest ulR)
         {
             try
             {
-                var mapped = _mapper.Map<MaintenanceSchedule>(request);
-                var result = _projectMaintenance.updateMaintenanceSchedule(mapped);
+                var existingComponent = _projectMaintenance.getAssetComponentById(id);
+                if (existingComponent == null)
+                {
+                    return NotFound($"Asset Component with ID {id} not found.");
+                }
+                var component = _mapper.Map(ulR, existingComponent);
+
+                var result = _projectMaintenance.updateAssetComponent(component);
                 return Ok(result);
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
+
         }
 
-        [HttpGet("schedule/project/{projectId}")]
-        public ActionResult<List<MaintenanceSchedule>> GetMaintenanceSchedulesByProjectId(Guid projectId)
+        [HttpDelete("component/{id}")]
+        public ActionResult<string> updatetAssetComponent(Guid id)
         {
             try
             {
-                var result = _projectMaintenance.getMaintenanceSchedulesByProjectId(projectId);
+                var existingComponent = _projectMaintenance.getAssetComponentById(id);
+                if (existingComponent == null)
+                {
+                    return NotFound($"Asset Component with ID {id} not found.");
+                }
+                var result = _projectMaintenance.deleteAssetComponent(existingComponent);
                 return Ok(result);
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
-
-            }
-        }
-
-        [HttpPost("report/add")]
-        public ActionResult<string> AddTechnicianReport([FromBody] TechnicianReportRequest request)
-        {
-            try
-            {
-                var mapped = _mapper.Map<TechnicianReport>(request);
-                var result = _projectMaintenance.addTechnicianReport(mapped);
-                return Ok(result);
-            }catch(Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
-
-        [HttpGet("report/project/{projectId}")]
-        public ActionResult<TechnicianReport> GetTechnicianReportsByProjectId(Guid projectId)
-        {
-            try
-            {
-                var result = _projectMaintenance.getTechnicianReportsByProjectId(projectId);
-                return Ok(result);
-            }catch(Exception ex)
-            {
-                return BadRequest(ex.Message);
             }
 
         }
 
-        [HttpGet("summary/{projectId}")]
-        public async Task<ActionResult<ProjectMaintenanceSummaryDto>> getProjectSummary(Guid projectId)
-        {
-
-            try
-            {
-                var response = await _projectMaintenance.GetProjectSummaryAsync(projectId);
-
-                return Ok(response);
-            }catch(Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-
-        }
 
     }
 }

@@ -114,22 +114,6 @@ namespace FdkElevator.AppDbContext
         public DbSet<GeneratedDocumentsCertificate> generatedDocumentsCertificates { get; set; }
 
         public DbSet<Certificate> certificates { get; set; }
-
-
-        public DbSet<ProjectMaintenances> projectMaintenances { get; set; }
-
-        public DbSet<AMCContract> AMCContracts { get; set; }
-
-        public DbSet<ProjectMaintenancePayment> projectMaintenancePayments { get; set; }
-
-        public DbSet<MaintenanceSchedule> maintenanceSchedules { get; set; }
-
-        public DbSet<TechnicianReport> technicianReports { get; set; }
-
-        public DbSet<ReportAttachments> reportAttachments { get; set; }
-
-        //BreakDown
-
         public DbSet<BreakdownComplaint> breakdownComplaints { get; set; }
 
         public DbSet<BreakdownDispatch> breakdownDispatches { get; set; }
@@ -149,5 +133,33 @@ namespace FdkElevator.AppDbContext
         public DbSet<QuotationLineItem> QuotationLineItems { get; set; }
 
         public DbSet<RootCauseAnalysis> RootCauseAnalyses { get; set; }
+
+        public DbSet<LiftAsset> LiftAssets { get; set; }
+        public DbSet<AssetComponent> AssetComponents { get; set; }
+        public DbSet<AssetStatusHistory> AssetStatusHistories { get; set; }
+
+   
+        public DbSet<AMCContract> AMCContracts { get; set; }
+        public DbSet<AMCContractAsset> AMCContractAssets { get; set; }
+        public DbSet<WarrantyRecord> WarrantyRecords { get; set; }
+
+        public DbSet<MaintenanceSchedule> MaintenanceSchedules { get; set; }
+
+ 
+        public DbSet<ServiceTicket> ServiceTickets { get; set; }
+        public DbSet<ServiceJob> ServiceJobs { get; set; }
+        public DbSet<JobAssignment> JobAssignments { get; set; }
+        public DbSet<JobStatusHistory> JobStatusHistories { get; set; }
+
+        public DbSet<ChecklistTemplate> ChecklistTemplates { get; set; }
+        public DbSet<ChecklistItem> ChecklistItems { get; set; }
+        public DbSet<JobChecklistResponse> JobChecklistResponses { get; set; }
+
+        public DbSet<EvidenceUpload> EvidenceUploads { get; set; }
+
+
+        public DbSet<ServicePartsRequest> ServicePartsRequests { get; set; }
+        public DbSet<ServiceQuote> ServiceQuotes { get; set; }
+        public DbSet<ServiceInvoice> ServiceInvoices { get; set; }
     }
 }

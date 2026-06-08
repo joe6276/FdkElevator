@@ -82,9 +82,6 @@ namespace FdkElevator.Models.Auth
 
         public ICollection<MaintenanceSchedule> maintenanceSchedules { get; set; }
 
-        public ICollection<TechnicianReport> technicianReports { get; set; }
-
-
      
 
     }

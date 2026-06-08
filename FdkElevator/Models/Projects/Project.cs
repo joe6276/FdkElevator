@@ -54,11 +54,6 @@ public class Project
 
         public HandoverWarranty warranty { get; set; }
         public Commission Commission { get; set; }
-
-        public ICollection<TechnicianReport> reports { get; set; }
-
-        public ICollection<ProjectMaintenances> maintenances { get; set; }
-
         public ICollection<BreakdownComplaint> breakdownComplaints { get; set; }
 
         public ICollection<RootCauseAnalysis> rootCauseAnalyses { get; set; }

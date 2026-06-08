@@ -131,16 +131,6 @@ builder.Services.AddAutoMapper(cfg =>
     cfg.CreateMap<ClientTraining, ClientTrainingResponse>();
     cfg.CreateMap<GeneratedDocumentsCertificate, GeneratedDocumentsCertificateResponse>();
     cfg.CreateMap<Certificate, CertificateResponse>();
-
-
-    cfg.CreateMap<ProjectMaintenanceRequest, ProjectMaintenances>();
-    cfg.CreateMap<AMCContractRequest, AMCContract>();
-    cfg.CreateMap<ProjectMaintenancePaymentRequest, ProjectMaintenancePayment>();
-    cfg.CreateMap<ProjectMaintenancePaymentRequest, ProjectMaintenancePayment>();
-    cfg.CreateMap<MaintenanceScheduleRequest, MaintenanceSchedule>();
-    cfg.CreateMap<TechnicianReportRequest, TechnicianReport>();
-    cfg.CreateMap<ReportAttachmentsRequest, ReportAttachments>();
-
     cfg.CreateMap<CreateComplaintDto, BreakdownComplaint>();
     cfg.CreateMap<DispatchTechnicianDto, BreakdownDispatch>();
     cfg.CreateMap<SubmitDiagnosisDto, TechnicianDiagnosis>();
@@ -202,7 +192,12 @@ builder.Services.AddAutoMapper(cfg =>
     cfg.CreateMap<RootCauseAnalysis, RCASummaryDto>()
         .ForMember(dest => dest.Outcome,
                    opt => opt.MapFrom(src => src.Outcome.ToString()));
-
+    cfg.CreateMap<CreateLiftAssetRequest, LiftAsset>();
+    cfg.CreateMap<CreateAssetComponentRequest, AssetComponent>();
+    cfg.CreateMap<CreateAMCContractRequest, AMCContract>();
+    cfg.CreateMap<UpdateAMCContractRequest, AMCContract>();
+    cfg.CreateMap<CreateAMCContractAssetRequest, AMCContractAsset>();
+    cfg.CreateMap<CreateWarrantyRecordRequest, WarrantyRecord>();
 });
 
 //Services
@@ -240,6 +235,7 @@ builder.Services.AddScoped<IWarranty, WarrantyService>();
 builder.Services.AddScoped<ICommission, CommissionService>();
 builder.Services.AddScoped<IProjectMaintenance, ProjectMaintenanceService>();
 builder.Services.AddScoped<IBreakdownService, BreakdownService>();
+builder.Services.AddScoped<IprojectMaintenanceContract, ProjectMaintenanceContract>();
 
 //custom
 Stripe.StripeConfiguration.ApiKey = builder.Configuration.GetSection("Stripe:Key").Get<string>();

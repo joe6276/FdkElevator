@@ -1,30 +1,27 @@
 ﻿using FdkElevator.Models.Projects;
 using Microsoft.EntityFrameworkCore.Update.Internal;
+using System.Globalization;
 using static FdkElevator.DTOS.ProjectDTOS.ProjectMaintenanceDTO;
+using static FdkElevator.DTOS.ProjectDTOS.ProjectMaintenanceResponses;
 
 namespace FdkElevator.Services.IServices
 {
     public interface IProjectMaintenance
     {
-        string addProjectMaintenance(ProjectMaintenances projectMaintenance);
-        ProjectWithContractDto getProjectMaintenancesByProjectId(Guid projectId);
+        string addLiftAsset(LiftAsset liftAsset);
 
-        AMCContract getContractById(Guid Id);
-        string updateContract(AMCContract contract);
-        string addpayment(List<ProjectMaintenancePayment> payments);
+        List<LiftAssetDetailResponse> GetLiftAssets();
 
-        string markPaymentAsPaid(Guid paymentId, string paymentReceiptImage);
+        LiftAsset GetLiftAssetById(Guid id);
+        string updateLiftAsset(LiftAsset liftAsset);
 
-        string addMaintenanceSchedule(List<MaintenanceSchedule> schedule);
+        AssetComponent getAssetComponentById(Guid Id);
 
-        string updateMaintenanceSchedule(MaintenanceSchedule schedule);
+        string updateAssetComponent(AssetComponent ac);
 
-        List<MaintenanceSchedule> getMaintenanceSchedulesByProjectId(Guid projectId);
 
-        string addTechnicianReport(TechnicianReport report);
+        string addNewComponent(AssetComponent aC);
 
-        TechnicianReport getTechnicianReportsByProjectId(Guid projectId);
-
-        Task<ProjectMaintenanceSummaryDto?> GetProjectSummaryAsync(Guid projectId);
+        string deleteAssetComponent(AssetComponent ac);
     }
 }
