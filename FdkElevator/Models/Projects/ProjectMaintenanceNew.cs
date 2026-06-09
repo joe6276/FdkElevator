@@ -395,7 +395,12 @@ namespace FdkElevator.Models.Projects
         [ForeignKey("LiftAssetId")]
         public LiftAsset LiftAsset { get; set; }
         public Guid LiftAssetId { get; set; }
- 
+
+        [ForeignKey("ProjectId")]
+        public Project project { get; set; }
+        public Guid ProjectId { get; set; }
+
+
         [ForeignKey("AMCContractId")]
         public AMCContract? AMCContract { get; set; }
         public Guid? AMCContractId { get; set; }

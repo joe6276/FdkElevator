@@ -192,12 +192,22 @@ builder.Services.AddAutoMapper(cfg =>
     cfg.CreateMap<RootCauseAnalysis, RCASummaryDto>()
         .ForMember(dest => dest.Outcome,
                    opt => opt.MapFrom(src => src.Outcome.ToString()));
+
+
     cfg.CreateMap<CreateLiftAssetRequest, LiftAsset>();
     cfg.CreateMap<CreateAssetComponentRequest, AssetComponent>();
     cfg.CreateMap<CreateAMCContractRequest, AMCContract>();
     cfg.CreateMap<UpdateAMCContractRequest, AMCContract>();
     cfg.CreateMap<CreateAMCContractAssetRequest, AMCContractAsset>();
     cfg.CreateMap<CreateWarrantyRecordRequest, WarrantyRecord>();
+    cfg.CreateMap<CreateChecklistTemplateRequest, ChecklistTemplate>();
+    cfg.CreateMap<CreateChecklistItemRequest, ChecklistItem>();
+    cfg.CreateMap<CreateJobChecklistResponseRequest, JobChecklistResponse>();
+    cfg.CreateMap<CreateEvidenceUploadRequest, EvidenceUpload>();
+    cfg.CreateMap<CreateMaintenanceScheduleRequest, MaintenanceSchedule>();
+    cfg.CreateMap<CreateServiceJobRequest, ServiceJob>();
+    cfg.CreateMap<CreateServiceTicketRequest, ServiceTicket>();
+
 });
 
 //Services
@@ -236,7 +246,13 @@ builder.Services.AddScoped<ICommission, CommissionService>();
 builder.Services.AddScoped<IProjectMaintenance, ProjectMaintenanceService>();
 builder.Services.AddScoped<IBreakdownService, BreakdownService>();
 builder.Services.AddScoped<IprojectMaintenanceContract, ProjectMaintenanceContract>();
-
+builder.Services.AddScoped<IProjectChecklistTemplate, ProjectChecklistTemplateService>();
+builder.Services.AddScoped<IChecklistItemService, CheckListItemService>();
+builder.Services.AddScoped<IJobChecklistResponseService, JobCheckListResponseService>();
+builder.Services.AddScoped<IEvidenceUploadService, EvidenceUploadService>();
+builder.Services.AddScoped<IProjectMaintenanceSchedule, ProjectMaintenanceScheduleService>();
+builder.Services.AddScoped<IServiceTicket, TicketService>();
+builder.Services.AddScoped<IJobService, JobService>();
 //custom
 Stripe.StripeConfiguration.ApiKey = builder.Configuration.GetSection("Stripe:Key").Get<string>();
 

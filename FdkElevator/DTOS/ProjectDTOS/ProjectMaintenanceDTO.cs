@@ -177,6 +177,7 @@ namespace FdkElevator.DTOS.ProjectDTOS
         {
             public Guid LiftAssetId { get; set; }
             public Guid? AMCContractId { get; set; }
+            public Guid?  ProjectId { get; set; }
             public Guid? ChecklistTemplateId { get; set; }
             public ProjectMaintenanceScheduleType ScheduleType { get; set; }
             public ProjectMaintenanceScheduleFrequency Frequency { get; set; }
