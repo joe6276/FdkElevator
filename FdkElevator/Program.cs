@@ -207,7 +207,10 @@ builder.Services.AddAutoMapper(cfg =>
     cfg.CreateMap<CreateMaintenanceScheduleRequest, MaintenanceSchedule>();
     cfg.CreateMap<CreateServiceJobRequest, ServiceJob>();
     cfg.CreateMap<CreateServiceTicketRequest, ServiceTicket>();
-
+    cfg.CreateMap<CreateJobAssignmentRequest, JobAssignment>();
+    cfg.CreateMap<CreateServicePartsRequestDto, ServicePartsRequest>();
+    cfg.CreateMap<CreateServiceQuoteRequest, ServiceQuote>();
+    cfg.CreateMap<CreateServiceInvoiceRequest, ServiceInvoice>();
 });
 
 //Services
@@ -253,6 +256,10 @@ builder.Services.AddScoped<IEvidenceUploadService, EvidenceUploadService>();
 builder.Services.AddScoped<IProjectMaintenanceSchedule, ProjectMaintenanceScheduleService>();
 builder.Services.AddScoped<IServiceTicket, TicketService>();
 builder.Services.AddScoped<IJobService, JobService>();
+builder.Services.AddScoped<IJobAssignment, JobAssignmentService>();
+builder.Services.AddScoped<IServicePartsRequest, ServicePartsRequestService>();
+builder.Services.AddScoped<IServiceQuote, ServiceQuoteService>();
+builder.Services.AddScoped<IServiceInvoice, ServiceInvoiceService>();
 //custom
 Stripe.StripeConfiguration.ApiKey = builder.Configuration.GetSection("Stripe:Key").Get<string>();
 
