@@ -259,7 +259,6 @@ namespace FdkElevator.Models.Projects
         public ProjectMaintenanceAssetStatus CurrentStatus { get; set; } = ProjectMaintenanceAssetStatus.Active;
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public DateTime? UpdatedAt { get; set; }
- 
         public ICollection<AssetComponent> Components { get; set; } = new List<AssetComponent>();
         public ICollection<AMCContractAsset> ContractAssets { get; set; } = new List<AMCContractAsset>();
         public ICollection<WarrantyRecord> WarrantyRecords { get; set; } = new List<WarrantyRecord>();

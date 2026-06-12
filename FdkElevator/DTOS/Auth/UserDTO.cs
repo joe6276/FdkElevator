@@ -16,6 +16,10 @@ namespace FdkElevator.DTOS.Auth
 
         [Required]
         public Guid TenantId { get; set; }
+        [Required]
+        public decimal? Latitude { get; set; }
+        [Required]
+        public decimal? Longitude { get; set; }
 
     }
 

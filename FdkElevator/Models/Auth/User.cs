@@ -42,6 +42,11 @@ namespace FdkElevator.Models.Auth
 
         public string PhoneNumber { get; set; } = string.Empty;
 
+        public decimal? Latitude { get; set; }
+
+        public decimal? Longitude { get; set; }
+
+        public DateTime LastUpdatedTime { get; set; } = DateTime.UtcNow;
 
         public string PasswordResetToken { get; set; } = string.Empty;
 

@@ -60,6 +60,8 @@ namespace FdkElevator.Controllers
             }
         }
 
+
+
         [HttpGet("getAllSuppliers")]
         public ActionResult<List<Supplier>> getAllSuppliers()
         {
@@ -73,6 +75,21 @@ namespace FdkElevator.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpGet("getAllSuppliersitems")]
+        public ActionResult<List<SupplierResponseDTO>> getAllSuppliersItems()
+        {
+            try
+            {
+                var result = _supplier.getSupplierItems();
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
 
         [HttpGet("getSupplierById/{id}")]
         public ActionResult<SupplierResponseDTO> getSupplierById(Guid id)

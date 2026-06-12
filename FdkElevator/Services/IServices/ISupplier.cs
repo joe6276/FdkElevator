@@ -15,6 +15,7 @@ namespace FdkElevator.Services.IServices
 
         LoginResponse loginUser(string email, string password);
 
+        public List<SupplierResponseDTO> getSupplierItems();
         SupplierResponseDTO getSupplierById(Guid id);
         Supplier getSupplierById1(Guid id);
         string deleteSupplier(Supplier supplier);

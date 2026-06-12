@@ -72,6 +72,10 @@ namespace FdkElevator.Models.Surveyors
         
         public Guid Id { get; set; }
 
+        public decimal? Latitude { get; set; }
+
+        public decimal? Longitude { get; set; }
+
         public ProjectInfo ProjectInfo { get; set; }
 
         public ShaftStructural ShaftStructuralInfo { get; set; } = null!;

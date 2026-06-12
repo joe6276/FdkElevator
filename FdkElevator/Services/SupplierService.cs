@@ -88,6 +88,31 @@ namespace FdkElevator.Services
             return _context.suppliers.ToList();
         }
 
+
+        public List<SupplierResponseDTO> getSupplierItems()
+        {
+            return _context.suppliers.Select(s => new SupplierResponseDTO
+            {
+
+                Name = s.Name,
+                ContactEmail = s.ContactEmail,
+                ContactPhone = s.ContactPhone,
+                PostalCode = s.PostalCode,
+                Address = s.Address,
+                City = s.City,
+                Items = s.Suppliers.Select(i => new SupItemResponseDTO
+                {
+                    supplierItemId = i.Id,
+                    ItemName = i.ItemName,
+                    Description = i.Description,
+                    Price = i.Price,
+                    Quantity = i.Quantity,
+                    ImageURL = i.ImageURL,
+
+                }).ToList()
+            }).ToList();
+        }
+
         public SupplierResponseDTO getSupplierById(Guid id)
         {
             return _context.suppliers.Where(x=>x.Id ==id).Select(s => new SupplierResponseDTO
