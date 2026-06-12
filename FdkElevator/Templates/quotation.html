@@ -1,0 +1,179 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quotation Report</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #f4f4f4;
+            font-family: Arial,sans-serif;
+            color: #333;
+        }
+
+        .wrapper {
+            max-width: 620px;
+            margin: 40px auto;
+            background: #ffffff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,.12);
+        }
+
+        /* Header */
+        .header {
+            background: #1a3c6e;
+            padding: 32px 40px;
+            text-align: center;
+        }
+
+            .header h1 {
+                margin: 0;
+                color: #ffffff;
+                font-size: 22px;
+                letter-spacing: .5px;
+            }
+
+            .header p {
+                margin: 6px 0 0;
+                color: #a8c4e0;
+                font-size: 13px;
+            }
+
+        /* Body */
+        .body {
+            padding: 36px 40px;
+        }
+
+            .body h2 {
+                margin: 0 0 12px;
+                font-size: 18px;
+                color: #1a3c6e;
+            }
+
+            .body p {
+                margin: 0 0 16px;
+                line-height: 1.6;
+                font-size: 14px;
+            }
+
+        /* Info box */
+        .info-box {
+            background: #f0f5fb;
+            border-left: 4px solid #1a3c6e;
+            border-radius: 4px;
+            padding: 16px 20px;
+            margin: 24px 0;
+        }
+
+            .info-box table {
+                width: 100%;
+                border-collapse: collapse;
+            }
+
+            .info-box td {
+                padding: 6px 0;
+                font-size: 14px;
+            }
+
+                .info-box td:first-child {
+                    color: #555;
+                    width: 140px;
+                }
+
+                .info-box td:last-child {
+                    font-weight: bold;
+                    color: #1a3c6e;
+                }
+
+        /* Attachment note */
+        .attachment-note {
+            background: #fffbe6;
+            border: 1px solid #ffe58f;
+            border-radius: 4px;
+            padding: 14px 18px;
+            font-size: 13px;
+            color: #7a5f00;
+            margin-bottom: 24px;
+        }
+
+            .attachment-note strong {
+                display: block;
+                margin-bottom: 4px;
+            }
+
+        /* Footer */
+        .footer {
+            background: #f9f9f9;
+            border-top: 1px solid #e8e8e8;
+            padding: 20px 40px;
+            text-align: center;
+            font-size: 12px;
+            color: #888;
+        }
+
+            .footer a {
+                color: #1a3c6e;
+                text-decoration: none;
+            }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+
+        <!-- Header -->
+        <div class="header">
+            <h1>FDK Elevators</h1>
+            <p>Quotation Report</p>
+        </div>
+
+        <!-- Body -->
+        <div class="body">
+            <h2>Dear {name},</h2>
+            <p>
+                Thank you for your interest. Please find attached the quotation report
+                for your project. Kindly review the details below and do not hesitate
+                to reach out if you have any questions.
+            </p>
+
+            <!-- Project details -->
+            <div class="info-box">
+                <table>
+                    <tr>
+                        <td>Project Name</td>
+                        <td>{project_name}</td>
+                    </tr>
+                    <tr>
+                        <td>Date Created</td>
+                        <td>{created_date}</td>
+                    </tr>
+                </table>
+            </div>
+
+            <!-- Attachment callout -->
+            <div class="attachment-note">
+                <strong>📎 Attachment included</strong>
+                Your quotation PDF is attached to this email. If you cannot see it,
+                please check your spam folder or contact us directly.
+            </div>
+
+            <p>
+                We look forward to working with you. If you'd like to discuss this
+                quotation or request any changes, please reply to this email or call
+                our support line.
+            </p>
+
+            <p>Warm regards,<br /><strong>The FDK Elevators Team</strong></p>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            &copy; 2024 FDK Elevators &nbsp;|&nbsp;
+            <a href="mailto:info@fdkelevators.com">info@fdkelevators.com</a>
+        </div>
+
+    </div>
+</body>
+</html>

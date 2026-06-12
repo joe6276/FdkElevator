@@ -23,6 +23,15 @@ namespace FdkElevator.DTOS.Auth
 
     }
 
+
+    public class UpdateTimeStamp {
+        [Required]
+        public decimal? Latitude { get; set; }
+        [Required]
+        public decimal? Longitude { get; set; }
+
+        public DateTime LastUpdatedTime { get; set; } 
+    }
     public class ResponseUserDTO
     {
         public Guid Id { get; set; }

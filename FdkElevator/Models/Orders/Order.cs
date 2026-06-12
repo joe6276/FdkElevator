@@ -6,9 +6,12 @@ namespace FdkElevator.Models.Orders
 {
    public enum OrderStatus
     {
-        Pending,
-        Completed,
-        Failed
+        Draft,
+        Issued,
+        Supplier_Confirmed,
+        Partially_Received,
+        Closed
+    
     }
     public class Order
     {
@@ -21,7 +24,7 @@ namespace FdkElevator.Models.Orders
 
         public ShippingAddress ShippingAddress { get; set; }
 
-        public OrderStatus Status { get; set; } = OrderStatus.Pending;
+        public OrderStatus Status { get; set; } = OrderStatus.Draft;
         public DateTime OrderDate { get; set; }
 
         [ForeignKey("TenantId")]

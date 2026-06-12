@@ -138,6 +138,22 @@ namespace FdkElevator.Controllers
             }
         }
 
+        [HttpPut("updateTimeStamp/{Id}")]
+        public ActionResult<string> updateUser(Guid Id, UpdateTimeStamp uts)
+        {
+            try
+            {
+               var result= _user.updateTimeStamp(Id, uts);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+
+
+
 
         [HttpDelete("deleteuser/{Id}")]
         public ActionResult<string> deleteUser(Guid Id)

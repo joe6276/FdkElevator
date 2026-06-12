@@ -24,11 +24,13 @@ namespace FdkElevator.Models.Leads
     public enum Status
     {
         New,
+        Assigned,
         Contacted,
-        Being_Surveyed,
         Qualified,
+        Site_Survey_Required,
+        Won,
         Lost,
-        Converted
+        Dormant
     }
 
     public enum LeadSource

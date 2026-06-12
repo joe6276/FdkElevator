@@ -90,6 +90,23 @@ namespace FdkElevator.Services
             return _context.Users.Where(x=>x.TenantId == tenantId).ToList();
         }
 
+        public string updateTimeStamp (Guid Id, UpdateTimeStamp uts)
+        {
+            var user = _context.Users.Where(x=>x.Id == Id).FirstOrDefault();
+            if(user == null)
+            {
+                throw new Exception("User not found");
+            }
+
+            user.Latitude = uts.Latitude;
+            user.Longitude = uts.Longitude;
+            user.LastUpdatedTime= uts.LastUpdatedTime;
+            _context.Users.Update(user);
+            _context.SaveChanges();
+
+            return "User updated Successfully!";
+        }
+
         public LoginResponse loginUser(string email, string password)
         {
             var user = _context.Users.FirstOrDefault(u => u.Email == email);

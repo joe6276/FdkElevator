@@ -14,13 +14,15 @@ namespace FdkElevator.Controllers
     {
         private readonly IPdf _pdf;
         private readonly IBlob _blob;
+        private readonly IEmail _email;
         private readonly IQuotation _quotation;
 
-        public PdfController(IPdf pdf, IBlob blob, IQuotation quotation)
+        public PdfController(IPdf pdf, IBlob blob, IQuotation quotation, IEmail email)
         {
             _pdf = pdf;
             _blob = blob;
             _quotation = quotation;
+            _email = email;
         }
 
         [HttpPost("generate-pdf/test/{QuotationID}")]
@@ -43,6 +45,8 @@ namespace FdkElevator.Controllers
             byte[] url = _pdf.GeneratePdf(response, tenantInformation);
 
            var urlBlob = await _blob.UploadAsync(url, $"{response.ProjectName}_{response.QuotationNumber}.pdf", "application/pdf");
+
+            await _email.QuotationEmail("Joe", "PRJ_OLEJU", "joendambuki16@gmail.com", DateTime.UtcNow.ToShortTimeString(), urlBlob);
 
             return Ok(new
             {

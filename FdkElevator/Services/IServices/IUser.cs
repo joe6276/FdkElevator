@@ -21,6 +21,7 @@ namespace FdkElevator.Services.IServices
 
         string resetPassword(ResetPassword resetPasswordRequest);
 
+        string updateTimeStamp(Guid Id, UpdateTimeStamp uts);
         Task<string> forgotPassword(string email);
 
 

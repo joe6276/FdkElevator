@@ -31,8 +31,8 @@ namespace FdkElevator.Services
 
             var options = new SessionCreateOptions()
             {
-                SuccessUrl = "https://autopartafrica.com/success",
-                CancelUrl = "https://autopartafrica.com/orders/payment-cancelled",
+                SuccessUrl = " https://thankful-island-0f523aa0f.7.azurestaticapps.net/client/quotations?payment=success",
+                CancelUrl = "https://thankful-island-0f523aa0f.7.azurestaticapps.net/client/quotations?payment=failure",
                 Mode = "payment",
                 LineItems = new List<SessionLineItemOptions>()
             };

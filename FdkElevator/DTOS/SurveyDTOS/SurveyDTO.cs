@@ -19,7 +19,11 @@ namespace FdkElevator.DTOS.SurveyDTOS
     }
     public class SurveyDTO
     {
-    
+        [Required]
+        public decimal? Latitude { get; set; }
+        [Required]
+        public decimal? Longitude { get; set; }
+
         [Required]
         public ProjectInfoRequest ProjectInfo { get; set; } = new();
         [Required]

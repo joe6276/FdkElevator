@@ -1,4 +1,5 @@
 ﻿using FdkElevator.Services.IServices;
+using MailKit.Security;
 using MimeKit;
 
 namespace FdkElevator.Services
@@ -134,5 +135,51 @@ namespace FdkElevator.Services
             }
 
         }
+        public async Task<bool> QuotationEmail(string clientName,string project_name,string clientEmail,string createdDate,string pdfBlobUrl)         
+        {
+            var myemail = _configuration.GetSection("EmailService:Email").Get<string>();
+            var password = _configuration.GetSection("EmailService:Password").Get<string>();
+
+            MimeMessage message = new MimeMessage();
+            message.From.Add(new MailboxAddress("FDK Elevators", myemail));
+            message.To.Add(new MailboxAddress(clientName, clientEmail));
+            message.Subject = "Your Quotation Report – " + project_name;
+
+            // ── Build body ──────────────────────────────────────────────
+            var builder = new BodyBuilder();
+            string htmlTemplate = await File.ReadAllTextAsync("Templates/quotation.html");
+            builder.HtmlBody = htmlTemplate
+                .Replace("{name}", clientName)
+                .Replace("{project_name}", project_name)
+                .Replace("{created_date}", createdDate);
+
+            // ── Download PDF from Azure Blob and attach it ───────────────
+            using var httpClient = new HttpClient();
+            byte[] pdfBytes = await httpClient.GetByteArrayAsync(pdfBlobUrl);
+
+            // Extract a clean filename from the URL  e.g. "Fred test_QTT-D81843D2.pdf"
+            string fileName = Path.GetFileName(new Uri(pdfBlobUrl).LocalPath);
+            builder.Attachments.Add(fileName, pdfBytes, ContentType.Parse("application/pdf"));
+
+            message.Body = builder.ToMessageBody();
+
+            // ── Send ─────────────────────────────────────────────────────
+            using var client = new MailKit.Net.Smtp.SmtpClient();
+            try
+            {
+                await client.ConnectAsync("smtp.gmail.com", 587, SecureSocketOptions.StartTls);
+                await client.AuthenticateAsync(myemail, password);
+                await client.SendAsync(message);
+                await client.DisconnectAsync(true);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                // Log ex here (ILogger, Serilog, etc.)
+                return false;
+            }
+        }
+
+
     }
 }
