@@ -32,5 +32,7 @@ namespace FdkElevator.Services.IServices
         Task<ClientSummaryResponse> GetClientByIdAsync(Guid clientId);
 
         Task<List<ClientSummaryResponse>> GetAllClientsAsync();
+
+        List<User> getUsersByRoles(Role roles);
     }
 }

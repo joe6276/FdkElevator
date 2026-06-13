@@ -53,7 +53,7 @@ namespace FdkElevator.DTOS.ProjectDTOS
 
         public class CreateAssetComponentRequest
         {
-            public Guid LiftAssetId { get; set; }
+            
             public string ComponentType { get; set; } = string.Empty;
             public string ComponentName { get; set; } = string.Empty;
             public string SerialNumber { get; set; } = string.Empty;

@@ -21,6 +21,21 @@ namespace FdkElevator.Controllers
             _project = project;
         }
 
+        [HttpPost]
+        public ActionResult<string> addProject(AddProjectDTO apd)
+        {
+            try
+            {
+                var project = _mapper.Map<Project>(apd);
+                var result = _project.addProject(project);
+
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
 
         [HttpGet("GetAllProjects/{tenantId}")]
         public ActionResult<List<Project>> GetAll(Guid tenantId)

@@ -12,9 +12,15 @@ namespace FdkElevator.Services
         {
             _context = context;
         }
+        public string GenerateProjectCode()
+        {
+            return $"PRJ-{Guid.NewGuid().ToString("N")[..8].ToUpper()}";
+        }
         public string addProject(Project project)
         {
-           _context.projects.Add(project);
+           
+            project.ProjectCode = GenerateProjectCode();
+            _context.projects.Add(project);
             _context.SaveChanges();
             return "Project added successfully!";
         }

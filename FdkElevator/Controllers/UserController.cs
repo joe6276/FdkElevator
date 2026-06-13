@@ -153,6 +153,19 @@ namespace FdkElevator.Controllers
         }
 
 
+        [HttpGet("users/role")]
+        public ActionResult<List<User>> getUsersBasedonRole(Role role)
+        {
+            try
+            {
+                var users= _user.getUsersByRoles(role);
+                return Ok(users);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
 
 
         [HttpDelete("deleteuser/{Id}")]

@@ -288,6 +288,10 @@ namespace FdkElevator.Services
                 HasWarranty = p.warranty is not null,
             }).ToList() ?? new(),
         };
-    
-}
+
+        public List<User> getUsersByRoles(Role roles)
+        {
+           return _context.Users.Where(x=>x.Role == roles).ToList();
+        }
+    }
 }
