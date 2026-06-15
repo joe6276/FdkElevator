@@ -17,6 +17,19 @@ namespace FdkElevator.DTOS.ProjectDTOS
         public DateTime CreatedAt { get; set; }
     }
 
+    public class ProjectResponseDTO1
+    {
+        public string ProjectCode { get; set; } = string.Empty;
+
+        public Guid ProjectId { get; set; }
+        public string clientName { get; set; }
+        public Guid ClientId { get; set; }
+        public Guid LeadId { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public bool IsCivicReady { get; set; }  
+    }
+
+
 
     public class ClientDetailsDTO
     {

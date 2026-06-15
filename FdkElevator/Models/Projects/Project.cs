@@ -32,6 +32,7 @@ public class Project
         [ForeignKey("ClientId")]
         public User user { get; set; }
 
+        public Guid LeadId { get; set; }
         public ProjectStatus ProjectStatus { get; set; } = ProjectStatus.NotStarted;
 
         public ICollection<ProjectTeam> Teams { get; set; }

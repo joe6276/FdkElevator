@@ -1,5 +1,6 @@
 ﻿using FdkElevator.AppDbContext;
 using FdkElevator.DTOS.TenantDTOS;
+using FdkElevator.Models.Leads;
 using FdkElevator.Models.Projects;
 using FdkElevator.Models.Quotations;
 using FdkElevator.Models.Tenants;
@@ -113,11 +114,15 @@ namespace FdkElevator.Services
                 _context.quotationPayments.Update(payment);
                 _context.SaveChanges();
 
+                var quotation = _context.Quotations.Where(x=>x.Id ==payment.QuotationId).FirstOrDefault();
+                
                var TenantId = payment.QuotationId==null? payment.revision.Lead.TenantId : payment.quotation.Lead.TenantId;
                 var project = new Project()
                 {
+
                     ClientId = payment.ClientId,
                     TenantId = TenantId,
+                    LeadId=  quotation.LeadId,
                     ProjectCode = GenerateProjectCode(),
                 };
                 _context.projects.Add(project);

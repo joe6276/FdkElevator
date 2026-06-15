@@ -8,7 +8,7 @@ namespace FdkElevator.Services.IServices
 
         string addProject(Project project);
 
-        List<Project> getAllProjects(Guid tenantId);
+        List<ProjectResponseDTO1> getAllProjects(Guid tenantId);
 
         List<ProjectResponseDTO> getProjectByClientId(Guid id);
 

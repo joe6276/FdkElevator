@@ -38,7 +38,7 @@ namespace FdkElevator.Controllers
         }
 
         [HttpGet("GetAllProjects/{tenantId}")]
-        public ActionResult<List<Project>> GetAll(Guid tenantId)
+        public ActionResult<List<ProjectResponseDTO1>> GetAll(Guid tenantId)
         {
             try
             {

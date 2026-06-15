@@ -25,49 +25,61 @@ namespace FdkElevator.Services
             return "Project added successfully!";
         }
 
-        public List<Project> getAllProjects(Guid tenantId)
+        public List<ProjectResponseDTO1> getAllProjects(Guid tenantId)
         {
-          return   _context.projects.Where(x => x.TenantId == tenantId).ToList();
+            var projectDTO = _context.projects
+            .Where(x => x.TenantId == tenantId)
+            .Select(x => new ProjectResponseDTO1
+            {
+             ProjectCode = x.ProjectCode,
+             ClientId = x.ClientId,
+             CreatedAt = x.CreatedAt,
+             ProjectId = x.Id,
+             clientName = x.user.Name,
+             LeadId=x.LeadId,
+             IsCivicReady=x.IsCivicReady,
+
+            }).ToList();
+            return projectDTO;
         }
 
         public List<ProjectResponseDTO> getProjectByClientId(Guid id)
         {
             var projectDTO = _context.projects
-       .Where(x => x.ClientId == id)
-       .Select(x => new ProjectResponseDTO
-       {
-           ProjectCode = x.ProjectCode,
-           ClientId = x.ClientId,
-           CreatedAt = x.CreatedAt,
-           ProjectId= x.Id,
-           ClientDetails = new ClientDetailsDTO
-           {
-               Name = x.user.Name,
-               Email = x.user.Email,
-               PhoneNumber = x.user.PhoneNumber
-           },
+         .Where(x => x.ClientId == id)
+         .Select(x => new ProjectResponseDTO
+         {
+             ProjectCode = x.ProjectCode,
+             ClientId = x.ClientId,
+             CreatedAt = x.CreatedAt,
+             ProjectId = x.Id,
+             ClientDetails = new ClientDetailsDTO
+             {
+                 Name = x.user.Name,
+                 Email = x.user.Email,
+                 PhoneNumber = x.user.PhoneNumber
+             },
 
-           Phases = x.ProjectPhases.Select(t => new ProjectResponseTasksDTO
-           {
-             PhaseCode = t.PhaseCode,
-               PhaseName = t.PhaseName,
-               Status = t.Status,
-               PlannedEndDate = t.PlannedEndDate,
-               PlannedStartedDate = t.PlannedStartedDate
-           }).ToList(),
+             Phases = x.ProjectPhases.Select(t => new ProjectResponseTasksDTO
+             {
+                 PhaseCode = t.PhaseCode,
+                 PhaseName = t.PhaseName,
+                 Status = t.Status,
+                 PlannedEndDate = t.PlannedEndDate,
+                 PlannedStartedDate = t.PlannedStartedDate
+             }).ToList(),
 
-           Team = x.Teams.Select(t => new ProjectResponseTeamDTO
-           {
-               Name = t.user.Name,
-               Email = t.user.Email,
-               PhoneNumber = t.user.PhoneNumber,
-               Role = t.user.Role 
-           }).ToList()
-
-       }).ToList();
-
+             Team = x.Teams.Select(t => new ProjectResponseTeamDTO
+             {
+                 Name = t.user.Name,
+                 Email = t.user.Email,
+                 PhoneNumber = t.user.PhoneNumber,
+                 Role = t.user.Role
+             }).ToList()
+         }).ToList();
+         
             return projectDTO;
-        }
+         }
 
         public ProjectResponseDTO getProjectById(Guid id)
         {
