@@ -39,7 +39,7 @@ namespace FdkElevator.Services
             var options = new SessionCreateOptions()
             {
                 SuccessUrl = "https://thankful-island-0f523aa0f.7.azurestaticapps.net/client/quotations?payment=success",
-                CancelUrl = " https://thankful-island-0f523aa0f.7.azurestaticapps.net/client/quotations?payment=failure",
+                CancelUrl = "https://thankful-island-0f523aa0f.7.azurestaticapps.net/client/quotations?payment=failure",
                 Mode = "payment",
                 LineItems = new List<SessionLineItemOptions>()
             };
