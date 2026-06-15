@@ -109,7 +109,11 @@ namespace FdkElevator.Models.Surveyors
 
         public Guid TenantId { get; set; }
 
+
+        public DateTime surveyBy { get; set; }
     }
+
+
 
     public class ProjectInfo
     {

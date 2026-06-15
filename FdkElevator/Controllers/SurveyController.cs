@@ -81,7 +81,7 @@ namespace FdkElevator.Controllers
         }
 
         [HttpGet("surveys/surveyor/{surveyorId}")]
-        public async Task<ActionResult<List<AllSurvey>>> GetSurveyorSurveys(Guid surveyorId)
+        public async Task<ActionResult<List<SurveyListDto>>> GetSurveyorSurveys(Guid surveyorId)
         {
             try
             {
@@ -95,7 +95,7 @@ namespace FdkElevator.Controllers
         }
 
         [HttpGet("survey/{Id}")]
-        public async Task<ActionResult<AllSurvey>> getSurvey(Guid Id)
+        public async Task<ActionResult<SurveyListDto>> getSurvey(Guid Id)
         {
             try
             {

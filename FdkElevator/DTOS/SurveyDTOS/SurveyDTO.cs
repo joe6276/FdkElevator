@@ -16,6 +16,21 @@ namespace FdkElevator.DTOS.SurveyDTOS
         public Guid SurveyorId { get; set; }
         [Required]
         public Guid TenantId { get; set; }
+        [Required]
+        public DateTime surveyBy { get; set; }
+
+    }
+
+    public class SurveyListDto
+    {
+        public Guid LeadId { get; set; }
+        public Guid SurveyId { get; set; }
+
+        public string LeadName { get; set; } = string.Empty;
+        public string SurveyorName { get; set; } = string.Empty;
+
+        public DateTime CreatedDate { get; set; }
+        public DateTime? DueDate { get; set; }
     }
     public class SurveyDTO
     {

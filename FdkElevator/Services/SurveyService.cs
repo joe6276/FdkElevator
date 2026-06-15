@@ -1,7 +1,9 @@
 ﻿using FdkElevator.AppDbContext;
+using FdkElevator.DTOS.SurveyDTOS;
 using FdkElevator.Models.Auth;
 using FdkElevator.Models.Leads;
 using FdkElevator.Models.Surveyors;
+using FdkElevator.Models.Tenants;
 using FdkElevator.Services.IServices;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography;
@@ -78,41 +80,48 @@ namespace FdkElevator.Services
         }
 
 
-        public async Task<List<AllSurvey>> GetSurveyorsListAsync(Guid surveyorId)
+        public async Task<List<SurveyListDto>> GetSurveyorsListAsync(Guid surveyorId)
         {
-            return await _context.AllSurveys
-                .Where(x => x.SurveyorId == surveyorId)
-                .Include(x => x.ProjectInfo)
-                .Include(x => x.ShaftStructuralInfo)
-                .Include(x => x.EntranceDoorDetails)
-                .Include(x => x.PowerElectricalInfo)
-                .Include(x => x.UsageTrafficInfo)
-                .Include(x => x.FinishingDesignPreferences)
-                .Include(x => x.SafetyComplianceInfo)
-                .Include(x => x.MaintenanceServiceInfo)
-                .Include(x => x.SiteMediaAttachments)
-                .Include(x => x.AdditionalNotes)
-                .ToListAsync();
+            var surveys = await _context.AllSurveys
+            .Where(x => x.SurveyorId == surveyorId)
+            .Select(x => new SurveyListDto
+            {
+              SurveyId = x.Id,
+              LeadId = x.LeadId,
+
+              LeadName = x.Lead.CompanyName,
+              SurveyorName = x.User.Name,
+
+              CreatedDate = x.Lead.CreatedAt,
+              DueDate = x.surveyBy
+            })
+            .ToListAsync();
+
+
+            return surveys;
         }
 
-        public async Task<List<AllSurvey>> GetSurveysByTenantAsync(Guid tenantId)
+        public async Task<List<SurveyListDto>> GetSurveysByTenantAsync(Guid tenantId)
         {
-            return await _context.AllSurveys
-                .Where(x => x.TenantId == tenantId)
-                .Include(x => x.ProjectInfo)
-                .Include(x => x.ShaftStructuralInfo)
-                .Include(x => x.EntranceDoorDetails)
-                .Include(x => x.PowerElectricalInfo)
-                .Include(x => x.UsageTrafficInfo)
-                .Include(x => x.FinishingDesignPreferences)
-                .Include(x => x.SafetyComplianceInfo)
-                .Include(x => x.MaintenanceServiceInfo)
-                .Include(x => x.SiteMediaAttachments)
-                .Include(x => x.AdditionalNotes)
-                .ToListAsync();
+           var surveys= await _context.AllSurveys
+        .Where(x => x.TenantId == tenantId)
+        .Select(x => new SurveyListDto
+        {
+            SurveyId = x.Id,
+            LeadId = x.LeadId,
+
+            LeadName = x.Lead.ContactPerson, 
+            SurveyorName = x.User.Name ,
+
+            CreatedDate = x.Lead.CreatedAt,
+            DueDate = x.surveyBy 
+        })
+        .ToListAsync();
+
+            return surveys;
         }
 
-      
+
 
         public async Task<string> UpdateSurveyAsync(AllSurvey survey)
         {
