@@ -119,6 +119,26 @@ namespace FdkElevator.DTOS.QuotationDTOS
     }
 
 
+
+    public class QuotationResponseDTO1
+    {
+        public Guid Id { get; set; }
+        public Guid LeadId { get; set; }
+
+        public Guid ClientId { get; set; }
+        public float Amount { get; set; }
+        public QuotationStatus Status { get; set; }
+
+        public string QuotationNumber { get; set; }
+
+        public string clientName { get; set; }
+        public int Revision { get; set; } = 1;
+
+        public DateTime CreatedAt { get; set; }
+
+     
+    }
+
     public class RevisionResponseDTO
     {
 

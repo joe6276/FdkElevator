@@ -61,7 +61,7 @@ namespace FdkElevator.Controllers
         }
 
         [HttpGet("listQuotations/{tenantId}")]
-        public ActionResult<List<QuotationResponseDTO>> listQuotations(Guid tenantId)
+        public ActionResult<List<QuotationResponseDTO1>> listQuotations(Guid tenantId)
         {
             try
             {

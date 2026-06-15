@@ -9,7 +9,7 @@ namespace FdkElevator.Services.IServices
 
         string addQuotation(Quotation quotation);
 
-        List<QuotationResponseDTO> getAllQuotations(Guid tenantId);
+        List<QuotationResponseDTO1> getAllQuotations(Guid tenantId);
 
         List<QuotationResponseDTO> getQuotationByClientId(Guid id);
 

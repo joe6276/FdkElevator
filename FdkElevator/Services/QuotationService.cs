@@ -173,64 +173,25 @@ namespace FdkElevator.Services
     };
             }
         
-        public List<QuotationResponseDTO> getAllQuotations(Guid tenantId)
+        public List<QuotationResponseDTO1> getAllQuotations(Guid tenantId)
         {   
             var leadIds = _context.Leads.Where(l => l.TenantId == tenantId).Select(l => l.Id).ToList();
 
             return _context.Quotations
        .Where(q => leadIds.Contains(q.LeadId))
-       .Select(q => new QuotationResponseDTO
+       .Select(q => new QuotationResponseDTO1
        {
            Id = q.Id,
-           SubTotal = q.SubTotal,
            Amount = q.Amount,
            ClientId = q.ClientId,
-           Discount = q.Discount,
+           CreatedAt=q.CreatedAt,
+           clientName=q.Lead.CompanyName,
            LeadId = q.LeadId,
            Status = q.Status,
            Revision = q.Revision,
-           InstallationCost = q.InstallationCost,
-           FreightCost = q.FreightCost,
-           CustomsCost = q.CustomsCost,
-           SubcontractorCost = q.SubcontractorCost,
-           Warranty = q.Warranty,
-           AmcOption = q.AmcOption,
-           ValidityDays = q.ValidityDays,
            QuotationNumber = q.QuotationNumber,
-
-           PaymentTerms = q.Payment.Any()
-               ? new QuotationPaymentResponseDTO
-               {
-                   Id = q.Payment.FirstOrDefault().Id,
-                   Amount = q.Payment.FirstOrDefault().Amount,
-                   Status = q.Payment.FirstOrDefault().Status,
-               }
-               : null,
-
-           config = q.configuration != null
-               ? new AddLiftConfiguration
-               {
-                   LiftType = q.configuration.LiftType,
-                   DriveType = q.configuration.DriveType,
-                   Capacity = q.configuration.Capacity,
-                   Speed = q.configuration.Speed,
-                   Stops = q.configuration.Stops,
-                   DoorType = q.configuration.DoorType,
-                   ControllerType = q.configuration.ControllerType,
-                   CabinFinish = q.configuration.CabinFinish,
-               }
-               : null,
-
-           Items = q.Items != null
-               ? q.Items.Select(i => new QuotationItemDTO
-               {
-                   ItemName = i.ItemName,
-                   Description = i.Description,
-                   ImageURL = i.ImageURL,
-                   Price = i.Price,
-                   Quantity = i.Quantity
-               }).ToList()
-               : new List<QuotationItemDTO>()
+           
+       
        })
        .ToList();
 
