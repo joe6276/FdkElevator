@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using FdkElevator.DTOS.Auth;
+using FdkElevator.DTOS.OrderDTO;
 using FdkElevator.DTOS.SupplierDTO;
 using FdkElevator.Models.Auth;
 using FdkElevator.Models.Suppliers;
@@ -90,6 +91,21 @@ namespace FdkElevator.Controllers
             }
         }
 
+        //Task<SupplierPaymentProgressDto?> GetSupplierPaymentProgressAsync(Guid supplierId)
+
+        [HttpGet("supplier/payments/{supplierId}")]
+        public async Task<ActionResult<List<SupplierResponseDTO>>> getAllSuppliersPaymentStatus(Guid supplierId)
+        {
+            try
+            {
+                var result = await _supplier.GetSupplierPaymentProgressAsync(supplierId);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
 
         [HttpGet("getSupplierById/{id}")]
         public ActionResult<SupplierResponseDTO> getSupplierById(Guid id)

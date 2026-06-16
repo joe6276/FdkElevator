@@ -1,9 +1,11 @@
 ﻿using FdkElevator.AppDbContext;
 using FdkElevator.DTOS.Auth;
+using FdkElevator.DTOS.OrderDTO;
 using FdkElevator.DTOS.SupplierDTO;
 using FdkElevator.Models.Auth;
 using FdkElevator.Models.Suppliers;
 using FdkElevator.Services.IServices;
+using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography;
 
 namespace FdkElevator.Services
@@ -46,6 +48,47 @@ namespace FdkElevator.Services
             return "Supplier added successfully!";
         }
 
+
+        public async Task<SupplierPaymentProgressDto?> GetSupplierPaymentProgressAsync(Guid supplierId)
+        {
+            var items = await _context.OrderItems
+                .Include(x => x.SupplierItem)
+                .Include(x => x.Order)
+                .Where(x => x.SupplierId == supplierId)
+                .ToListAsync();
+
+            if (!items.Any())
+                return null;
+
+            var totalItems = items.Count;
+            var paidItems = items.Count(x => x.isPaid);
+
+            var response = new SupplierPaymentProgressDto
+            {
+                SupplierId = supplierId,
+                TotalItems = totalItems,
+                PaidItems = paidItems,
+                PendingItems = totalItems - paidItems,
+                PaymentProgressPercentage = totalItems == 0
+                    ? 0
+                    : Math.Round((decimal)paidItems / totalItems * 100, 2),
+
+                Items = items.Select(x => new SupplierPaymentItemDto
+                {
+                    OrderId = x.OrderId,
+                    OrderItemId = x.Id,
+                    OrderDate = x.Order.OrderDate,
+                    ItemName = x.SupplierItem.ItemName,
+                    Price = x.SupplierItem.Price,
+                    Quantity = x.SupplierItem.Quantity,
+                    IsPaid = x.isPaid,
+                    PaymentImageUrl = x.PaymentImageURL,
+                    OrderStatus = x.Order.Status
+                }).ToList()
+            };
+
+            return response;
+        }
 
 
         public LoginResponse loginUser(string email, string password)

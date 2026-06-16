@@ -1,4 +1,5 @@
 ﻿using FdkElevator.DTOS.Auth;
+using FdkElevator.DTOS.OrderDTO;
 using FdkElevator.DTOS.SupplierDTO;
 using FdkElevator.Models.Suppliers;
 
@@ -19,5 +20,7 @@ namespace FdkElevator.Services.IServices
         SupplierResponseDTO getSupplierById(Guid id);
         Supplier getSupplierById1(Guid id);
         string deleteSupplier(Supplier supplier);
+        Task<SupplierPaymentProgressDto?> GetSupplierPaymentProgressAsync(Guid supplierId);
+
     }
 }
