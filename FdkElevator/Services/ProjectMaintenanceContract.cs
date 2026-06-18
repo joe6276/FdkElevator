@@ -43,7 +43,12 @@ namespace FdkElevator.Services
             foreach( var proj in projects)
             {
                 var amcContract = _context.AMCContracts.Where(x => x.ProjectId == proj).FirstOrDefault();
-                listofContact.Add(amcContract);
+
+                if(amcContract != null)
+                {
+                    listofContact.Add(amcContract);
+                }
+              
             }
             return listofContact;
         }
