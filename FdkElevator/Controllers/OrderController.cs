@@ -99,5 +99,23 @@ namespace FdkElevator.Controllers
             }
         }
 
+
+        [HttpPut("orderStatus/{orderId}")]
+
+        public ActionResult<string> updatePaymentDetails(Guid orderId , OrderStatus status)
+        {
+            try
+            {
+                var result = _order.updateStatus(orderId, status);
+                return Ok(result);
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+
     }
 }

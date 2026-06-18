@@ -260,6 +260,8 @@ builder.Services.AddScoped<IJobAssignment, JobAssignmentService>();
 builder.Services.AddScoped<IServicePartsRequest, ServicePartsRequestService>();
 builder.Services.AddScoped<IServiceQuote, ServiceQuoteService>();
 builder.Services.AddScoped<IServiceInvoice, ServiceInvoiceService>();
+builder.Services.AddScoped<IFinances, FinanceService>();
+builder.Services.AddScoped<IWarehouse, WarehouseService>();
 //custom
 Stripe.StripeConfiguration.ApiKey = builder.Configuration.GetSection("Stripe:Key").Get<string>();
 

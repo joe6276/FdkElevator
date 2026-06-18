@@ -49,6 +49,22 @@ namespace FdkElevator.Controllers
             }
         }
 
+
+
+        [HttpGet("jobs/{jobId}")]
+        public async Task<ActionResult<List<ServiceJob>>> getServiceJob(Guid jobId)
+        {
+            try
+            {
+                var result = await _jobService.GetJobById(jobId);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
         [HttpPut("{Id}")]
         public async Task<ActionResult<string>> updateServiceJob(Guid Id, CreateServiceJobRequest req)
         {

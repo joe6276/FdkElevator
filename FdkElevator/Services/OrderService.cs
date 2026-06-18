@@ -17,7 +17,14 @@ namespace FdkElevator.Services
         }
         public string addOrder(Order order)
         {
-        
+            var project = _context.projects.Where(x => x.Id == order.ProjectId).FirstOrDefault();
+
+            if(project == null)
+            {
+                throw new Exception("Project Not Found!");
+            }
+
+            order.ClientId = project.ClientId;
             float total = 0;
 
             foreach( var ord in order.OrderItems)
@@ -51,7 +58,26 @@ namespace FdkElevator.Services
             }
         }
 
-public async Task<List<OrderResponseDTO>> GetOrdersBySupplierId(Guid supplierId)
+        public string updateStatus(Guid orderId, OrderStatus orderStatus)
+        {
+            var orderItem = _context.Orders.Where(x => x.Id == orderId).FirstOrDefault();
+
+            if (orderItem == null)
+            {
+                throw new Exception("Order Item not Found!");
+            }
+            else
+            {
+               orderItem.Status=orderStatus;
+                _context.Orders.Update(orderItem);
+                _context.SaveChanges();
+
+                return "Order Status Is updated";
+            }
+        }
+
+
+        public async Task<List<OrderResponseDTO>> GetOrdersBySupplierId(Guid supplierId)
     {
         var orders = await _context.Orders
             .Where(o => o.OrderItems.Any(oi => oi.SupplierId == supplierId))

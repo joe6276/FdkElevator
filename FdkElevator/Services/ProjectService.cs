@@ -2,6 +2,7 @@
 using FdkElevator.DTOS.ProjectDTOS;
 using FdkElevator.Models.Projects;
 using FdkElevator.Services.IServices;
+using Microsoft.EntityFrameworkCore;
 
 namespace FdkElevator.Services
 {
@@ -41,6 +42,21 @@ namespace FdkElevator.Services
 
             }).ToList();
             return projectDTO;
+        }
+
+        public async Task<List<ProjectClientDto>?> GetProjectClientAsync(Guid tenantId)
+        {
+            return await _context.projects
+                .Where(p => p.TenantId == tenantId)
+                .Select(p => new ProjectClientDto
+                {
+                    ProjectId = p.Id,
+                    ProjectCode = p.ProjectCode,
+                    ClientName = p.user.Name
+                })
+
+
+                .ToListAsync();
         }
 
         public List<ProjectResponseDTO> getProjectByClientId(Guid id)

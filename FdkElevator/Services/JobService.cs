@@ -34,10 +34,35 @@ namespace FdkElevator.Services
             return await _context.ServiceJobs.FirstOrDefaultAsync(x => x.Id == JobId);
         }
 
-        public async Task<List<ServiceJob>> GetJobs(Guid ScheduleId)
+        public async Task<ServiceJob> GetJobs(Guid ScheduleId)
         {
-            return  await  _context.ServiceJobs.Where(x=>x.ScheduleId == ScheduleId).ToListAsync();
+      
+            return await  _context.ServiceJobs
+        .Include(x => x.Assignments)
+        .Include(x => x.ChecklistResponses)
+        .Include(x => x.EvidenceUploads)
+        .Include(x => x.PartsRequests)
+        .Include(x => x.Quotes)
+        .Include(x => x.Invoices)
+        .Include(x => x.StatusHistory)
+        .FirstOrDefaultAsync(x => x.ScheduleId == ScheduleId);
+
         }
+        public async Task<ServiceJob> GetJobsBYid(Guid jobId)
+        {
+
+            return await _context.ServiceJobs
+        .Include(x => x.Assignments)
+        .Include(x => x.ChecklistResponses)
+        .Include(x => x.EvidenceUploads)
+        .Include(x => x.PartsRequests)
+        .Include(x => x.Quotes)
+        .Include(x => x.Invoices)
+        .Include(x => x.StatusHistory)
+        .FirstOrDefaultAsync(x => x.Id == jobId);
+
+        }
+
 
         public async Task<string> UpsertJob(ServiceJob job)
         {

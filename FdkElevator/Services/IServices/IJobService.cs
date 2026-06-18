@@ -7,11 +7,13 @@ namespace FdkElevator.Services.IServices
 
         Task<string> addJobService(ServiceJob jobService);
 
-       Task<List<ServiceJob>> GetJobs( Guid ScheduleId);
+       Task<ServiceJob> GetJobs( Guid ScheduleId);
 
         Task<ServiceJob> GetJobById( Guid JobId);
         Task<string> UpsertJob(ServiceJob job);
 
         Task<string> deleteJob(ServiceJob job);
+
+        Task<ServiceJob> GetJobsBYid(Guid jobId);
     }
 }

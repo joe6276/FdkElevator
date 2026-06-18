@@ -8,6 +8,8 @@ namespace FdkElevator.DTOS.OrderDTO
     {
         public Guid TenantId { get; set; }
 
+        public Guid ProjectId { get; set; }
+
         public List<CreateOrderItemDTO> OrderItems { get; set; }
 
         public CreateShippingAddressDTO ShippingAddress { get; set; }

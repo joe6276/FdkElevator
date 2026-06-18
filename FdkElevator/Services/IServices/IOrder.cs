@@ -19,5 +19,7 @@ namespace FdkElevator.Services.IServices
 
         string updatePayment(Guid orderItemId, string PaymentUrl);
 
+        string updateStatus(Guid orderId, OrderStatus orderStatus);
+
     }
 }

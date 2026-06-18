@@ -66,6 +66,19 @@ namespace FdkElevator.Controllers
             }
         }
 
+        [HttpGet("getProjectandClientNames/{tenantId}")]
+        public async Task<ActionResult<List<ProjectClientDto>>> GetProjectByTenantId(Guid tenantId)
+        {
+            try
+            {
+                var projects = await _project.GetProjectClientAsync(tenantId);
+                return Ok(projects);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
         [HttpGet("GetProjectById/{id}")]
         public ActionResult<ProjectResponseDTO> GetProjectById(Guid id)
         {

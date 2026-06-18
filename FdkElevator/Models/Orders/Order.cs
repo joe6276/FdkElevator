@@ -1,4 +1,6 @@
-﻿using FdkElevator.Models.Suppliers;
+﻿using FdkElevator.Models.Auth;
+using FdkElevator.Models.Projects;
+using FdkElevator.Models.Suppliers;
 using FdkElevator.Models.Tenants;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -31,6 +33,14 @@ namespace FdkElevator.Models.Orders
         public Tenant Tenant { get; set; }
 
         public Guid TenantId { get; set; }
+
+        [ForeignKey("ProjectId")]
+        public Project Projects { get; set; }
+        public Guid ProjectId { get; set; }
+
+        [ForeignKey("ClientId")]
+        public User user { get; set; }
+        public Guid ClientId { get; set; }
     }
 
 

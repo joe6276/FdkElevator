@@ -16,5 +16,8 @@ namespace FdkElevator.Services.IServices
 
         Project getProjectByProjId(Guid id);
         string updateProjectStatus(Guid id, ProjectStatus status);
+
+
+        Task<List<ProjectClientDto>?>  GetProjectClientAsync(Guid tenantid);
     }
 }
