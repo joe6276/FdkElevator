@@ -63,7 +63,11 @@ namespace FdkElevator.Services
             {
                 throw new Exception("User not Found!");
             }
-            var token = Convert.ToBase64String(RandomNumberGenerator.GetBytes(64));
+            var token = Convert.ToBase64String(RandomNumberGenerator.GetBytes(64))
+            .Replace("+", "-")
+            .Replace("/", "_")
+            .TrimEnd('=');
+
             user.PasswordResetToken = token;
             user.PasswordResetExpires = DateTime.UtcNow.AddHours(1);
             _context.SaveChanges();
